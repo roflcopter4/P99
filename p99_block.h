@@ -11,8 +11,8 @@
 /* without even the implied warranty of merchantability or fitness for a      */
 /* particular purpose.                                                        */
 /*                                                                            */
-#ifndef     P99_BLOCK_H_
-# define    P99_BLOCK_H_
+#ifndef P99_BLOCK_H_
+#define P99_BLOCK_H_
 
 #include "p99_int.h"
 
@@ -32,47 +32,44 @@
  **/
 
 #ifndef P00_DOXYGEN
-#define P00_ROBUST(...) __VA_ARGS__
+#  define P00_ROBUST(...) __VA_ARGS__
 
-#define P00 P99_FILEID(blk)
+#  define P00 P99_FILEID(blk)
 
-#define P00_BLK_GEN(BEFORE, COND, ...) for (P00_ROBUST(BEFORE); (COND) && P00; (__VA_ARGS__), P00 = 0)
-#define P00_BLK_BEFORE(...) for (__VA_ARGS__; P00; P00 = 0)
-#define P00_BLK_AFTER(...) P00_BLK_BEFAFT(, (__VA_ARGS__))
-#define P00_BLK_CONDITIONAL(...) for (; (__VA_ARGS__) && P00; P00 = 0)
-#define P00_BLK_START P00_BLK_BEFORE(_Bool P00 = 1)
-#define P00_BLK_END P00_BLK_BEFORE()
+#  define P00_BLK_GEN(BEFORE, COND, ...) \
+        for (P00_ROBUST(BEFORE); (COND) && P00; (__VA_ARGS__), P00 = 0)
+#  define P00_BLK_BEFORE(...) for (__VA_ARGS__; P00; P00 = 0)
+#  define P00_BLK_AFTER(...) P00_BLK_BEFAFT(, (__VA_ARGS__))
+#  define P00_BLK_CONDITIONAL(...) for (; (__VA_ARGS__) && P00; P00 = 0)
+#  define P00_BLK_START P00_BLK_BEFORE(_Bool P00 = 1)
+#  define P00_BLK_END P00_BLK_BEFORE()
 
 /* The idea of this macro is that it evaluates INIT before the
    declaration of NAME. Therefore we may then push a variable on the
    stack with the same name as a variable of an enclosing scope, and
    use its value of inside the expression. */
-#define P00_BLK_DECL_REC(TYPE, NAME, ...)                                  \
-P00_BLK_BEFORE(TYPE P99_PASTE2(p00_decl_, NAME) = P00_ROBUST(__VA_ARGS__)) \
-P00_BLK_BEFAFT(TYPE NAME = P99_PASTE2(p00_decl_, NAME), (void)NAME)
+#  define P00_BLK_DECL_REC(TYPE, NAME, ...)                                        \
+        P00_BLK_BEFORE(TYPE P99_PASTE2(p00_decl_, NAME) = P00_ROBUST(__VA_ARGS__)) \
+        P00_BLK_BEFAFT(TYPE NAME = P99_PASTE2(p00_decl_, NAME), (void)NAME)
 
 /* If no initializer is given, the variable is initialized by
    default. */
-#define P00_BLK_DECL(...)                                      \
-P99_IF_EQ_2(P99_NARG(__VA_ARGS__))                             \
-(P00_BLK_DECL_2(__VA_ARGS__))                                  \
-(P00_BLK_DECL_3(__VA_ARGS__))
+#  define P00_BLK_DECL(...)                \
+        P99_IF_EQ_2(P99_NARG(__VA_ARGS__)) \
+        (P00_BLK_DECL_2(__VA_ARGS__))(P00_BLK_DECL_3(__VA_ARGS__))
 
-#define P00_BLK_DECL_3(TYPE, NAME, ...) P00_BLK_BEFAFT(TYPE NAME = __VA_ARGS__, (void)NAME)
+#  define P00_BLK_DECL_3(TYPE, NAME, ...) P00_BLK_BEFAFT(TYPE NAME = __VA_ARGS__, (void)NAME)
 
-#define P00_BLK_DECL_2(TYPE, NAME) P00_BLK_DECL_3(TYPE, NAME, P99_INIT)
+#  define P00_BLK_DECL_2(TYPE, NAME) P00_BLK_DECL_3(TYPE, NAME, P99_INIT)
 
 /* Declare @a NAME to be a pointer to a static variable of type @a
  * TYPE for the depending block. */
-#define P00_BLK_DECL_STATIC(TYPE, NAME, ...)                                          \
-P00_BLK_DECL_STATIC4(TYPE, NAME, P99_UNIQ(p00_static, NAME), P00_ROBUST(__VA_ARGS__))
+#  define P00_BLK_DECL_STATIC(TYPE, NAME, ...) \
+        P00_BLK_DECL_STATIC4(TYPE, NAME, P99_UNIQ(p00_static, NAME), P00_ROBUST(__VA_ARGS__))
 
-#define P00_BLK_DECL_STATIC4(TYPE, NAME, ID, INIT)             \
-P00_BLK_BEFORE(TYPE* NAME = 0)                                 \
-P99_PREFER(                                                    \
-  static TYPE ID = INIT;                                       \
-  NAME = &ID;                                                  \
-  goto ID; ) ID:
+#  define P00_BLK_DECL_STATIC4(TYPE, NAME, ID, INIT) \
+        P00_BLK_BEFORE(TYPE *NAME = 0)               \
+        P99_PREFER(static TYPE ID = INIT; NAME = &ID; goto ID;) ID:
 
 #endif
 
@@ -82,9 +79,9 @@ P99_PREFER(                                                    \
  ** the source line number and the token @a X
  **/
 #ifdef __GNUC__
-# define P99_MARK(X) ({ __asm__ volatile ("# " P99_STRINGIFY(__LINE__: X)); })
+#  define P99_MARK(X) p99_extension({ __asm__ volatile("# " P99_STRINGIFY(__LINE__ : X)); })
 #else
-# define P99_MARK(X) P99_NOP
+#  define P99_MARK(X) P99_NOP
 #endif
 
 /**
@@ -92,15 +89,11 @@ P99_PREFER(                                                    \
  **
  ** @remark @a X should be an identifier token
  **/
-#define P99_BLK_MARK(X)                                        \
-P00_BLK_BEFAFT(P99_MARK(P99_PASTE2(X, _bef)),                  \
-               P99_MARK(P99_PASTE2(X, _end)))
+#define P99_BLK_MARK(X) P00_BLK_BEFAFT(P99_MARK(P99_PASTE2(X, _bef)), P99_MARK(P99_PASTE2(X, _end)))
 
 
-
-
-#define P00_UNWIND_DOCUMENT                                                                                                                                                                                                                                                                                                                                             \
-/** @warning Utilities that change control flow in an unexpected way may result in the loss of some modifications that are effected on variables. A modern compiler should tell you when you are in such a situation. If it is the case you'd have to declare the variable in question with the @c volatile qualifier. For an explanation see ::P99_UNWIND_PROTECT. **/
+#define P00_UNWIND_DOCUMENT \
+        /** @warning Utilities that change control flow in an unexpected way may result in the loss of some modifications that are effected on variables. A modern compiler should tell you when you are in such a situation. If it is the case you'd have to declare the variable in question with the @c volatile qualifier. For an explanation see ::P99_UNWIND_PROTECT. **/
 
 /**
  ** @addtogroup validity Checking code validity
@@ -119,15 +112,16 @@ P00_BLK_BEFAFT(P99_MARK(P99_PASTE2(X, _bef)),                  \
  ** @see P99_INHIBIT_CHECK
  ** @see P99_CHECK_RETURN for an example
  **/
-#define P99_DECLARE_INHIBIT(NAME) enum { P00_INHIBIT(NAME,) = 0 }
+#define P99_DECLARE_INHIBIT(NAME) enum { P00_INHIBIT(NAME, ) = 0 }
 
 /**
  ** @brief Error out at compile time if @a NAME is inhibited.
  **
  ** @see P99_DECLARE_INHIBIT
  **/
-#define P99_INHIBIT_CHECK(NAME)                                         \
-switch (P99_STRINGIFY(P00_INHIBIT(NAME,))[P00_INHIBIT(NAME,)]) default:
+#define P99_INHIBIT_CHECK(NAME)                                          \
+        switch (P99_STRINGIFY(P00_INHIBIT(NAME, ))[P00_INHIBIT(NAME, )]) \
+        default:
 
 
 /**
@@ -136,9 +130,9 @@ switch (P99_STRINGIFY(P00_INHIBIT(NAME,))[P00_INHIBIT(NAME,)]) default:
  ** @see P99_DECLARE_INHIBIT
  ** @see P99_ALLOW
  **/
-#define P99_INHIBIT(NAME)                                                              \
-P00_BLK_START                                                                          \
-for (unsigned const*const P00_INHIBIT(NAME,) = 0; !P00_INHIBIT(NAME,) && P00; P00 = 0)
+#define P99_INHIBIT(NAME) \
+        P00_BLK_START     \
+        for (unsigned const *const P00_INHIBIT(NAME, ) = 0; !P00_INHIBIT(NAME, ) && P00; P00 = 0)
 
 
 /**
@@ -147,15 +141,15 @@ for (unsigned const*const P00_INHIBIT(NAME,) = 0; !P00_INHIBIT(NAME,) && P00; P0
  ** @see P99_DECLARE_INHIBIT
  ** @see P99_INHIBIT
  **/
-#define P99_ALLOW(NAME)                                        \
-P00_BLK_START                                                  \
-P00_BLK_DECL(unsigned const, P00_INHIBIT(NAME,), 0)
+#define P99_ALLOW(NAME) \
+        P00_BLK_START   \
+        P00_BLK_DECL(unsigned const, P00_INHIBIT(NAME, ), 0)
 
 
 P99_DECLARE_INHIBIT(RETURN);
 
 #if defined(P99_CHECK_RETURN) && !defined(P00_DOXYGEN)
-#define return P99_INHIBIT_CHECK(RETURN) return
+#  define return P99_INHIBIT_CHECK(RETURN) return
 #endif
 
 #ifdef P00_DOXYGEN
@@ -167,16 +161,16 @@ P99_DECLARE_INHIBIT(RETURN);
  ** development via, e.g, a <code>-DP99_CHECK_RETURN</code> compiler
  ** option.
  **/
-#define P99_CHECK_RETURN
+#  define P99_CHECK_RETURN
 #endif
 
 /** @}
  **/
 
 
-#define P00_BLK_BEFAFT(BEFORE, ...)                            \
-P99_INHIBIT(RETURN)                                            \
-P00_BLK_GEN(P00_ROBUST(BEFORE), true, __VA_ARGS__)
+#define P00_BLK_BEFAFT(BEFORE, ...) \
+        P99_INHIBIT(RETURN)         \
+        P00_BLK_GEN(P00_ROBUST(BEFORE), true, __VA_ARGS__)
 
 #ifdef P00_DOXYGEN
 /**
@@ -206,16 +200,16 @@ P00_BLK_GEN(P00_ROBUST(BEFORE), true, __VA_ARGS__)
  ** and this would trigger an assertion whenever the condition is not
  ** fulfilled when entering or leaving the block.
  **/
-#define P99_PROTECTED_BLOCK(BEFORE, AFTER)
+#  define P99_PROTECTED_BLOCK(BEFORE, AFTER)
 #else
-#define P99_PROTECTED_BLOCK(BEFORE, ...)                       \
-P00_BLK_START                                                  \
-P00_BLK_BEFAFT(P00_ROBUST(BEFORE), __VA_ARGS__)                \
-/* Ensure that a `break' will still execute AFTER */           \
-P00_BLK_END
+#  define P99_PROTECTED_BLOCK(BEFORE, ...)                   \
+        P00_BLK_START                                        \
+        P00_BLK_BEFAFT(P00_ROBUST(BEFORE), __VA_ARGS__)      \
+        /* Ensure that a `break' will still execute AFTER */ \
+        P00_BLK_END
 #endif
 
-# ifndef P99_SIMPLE_BLOCKS
+#ifndef P99_SIMPLE_BLOCKS
 /**
  ** @brief A bug avoiding macro to reduce the depth of some code
  ** produced by P99
@@ -230,7 +224,7 @@ P00_BLK_END
  ** the block constructs. Use with care.
  **/
 #  define P99_SIMPLE_BLOCKS 0
-# endif
+#endif
 
 #ifdef P00_DOXYGEN
 /**
@@ -258,27 +252,30 @@ P00_BLK_END
  ** @see P99_UNWIND_RETURN to return from the enclosing function
  **/
 P00_UNWIND_DOCUMENT
-#define P99_GUARDED_BLOCK(T, NAME, INITIAL, BEFORE, AFTER)
+#  define P99_GUARDED_BLOCK(T, NAME, INITIAL, BEFORE, AFTER)
 #else
-# if !P99_SIMPLE_BLOCKS
+#  if !P99_SIMPLE_BLOCKS
 P00_DOCUMENT_WARN_VLA_ARGUMENT(P99_GUARDED_BLOCK, 0)
 P00_DOCUMENT_DECLARATION_ARGUMENT(P99_GUARDED_BLOCK, 1)
 P00_DOCUMENT_STATEMENT_ARGUMENT(P99_GUARDED_BLOCK, 4)
-#  define P99_GUARDED_BLOCK(T, NAME, INITIAL, BEFORE, AFTER)   \
-P00_BLK_START                                                  \
-P00_BLK_DECL_REC(T, NAME, P00_ROBUST(INITIAL))                 \
-P99_UNWIND_PROTECT if (0) { P99_PROTECT: AFTER; } else         \
-P00_BLK_BEFAFT(P00_ROBUST(BEFORE), AFTER)                      \
-/* Ensure that a `break' will still execute AFTER */           \
-P00_BLK_END
-# else
-#  define P99_GUARDED_BLOCK(T, NAME, INITIAL, BEFORE, AFTER)   \
-P00_BLK_START                                                  \
-P00_BLK_DECL(T, NAME, P00_ROBUST(INITIAL))                     \
-P00_BLK_BEFAFT(P00_ROBUST(BEFORE), AFTER)                      \
-/* Ensure that a `break' will still execute AFTER */           \
-P00_BLK_END
-# endif
+#    define P99_GUARDED_BLOCK(T, NAME, INITIAL, BEFORE, AFTER)                                              \
+        P00_BLK_START                                                                                       \
+        P00_BLK_DECL_REC(T, NAME, P00_ROBUST(INITIAL))                                                      \
+        P99_UNWIND_PROTECT if (0)                                                                           \
+        {                                                                                                   \
+        P99_PROTECT:                                                                                        \
+                AFTER;                                                                                      \
+        }                                                                                                   \
+        else P00_BLK_BEFAFT(P00_ROBUST(BEFORE), AFTER) /* Ensure that a `break' will still execute AFTER */ \
+            P00_BLK_END
+#  else
+#    define P99_GUARDED_BLOCK(T, NAME, INITIAL, BEFORE, AFTER)   \
+        P00_BLK_START                                        \
+        P00_BLK_DECL(T, NAME, P00_ROBUST(INITIAL))           \
+        P00_BLK_BEFAFT(P00_ROBUST(BEFORE), AFTER)            \
+        /* Ensure that a `break' will still execute AFTER */ \
+        P00_BLK_END
+#  endif
 #endif
 
 /**
@@ -316,10 +313,19 @@ P00_BLK_END
  ** @see P99_AVOID
  **/
 #if p99_has_feature(statement_expression)
-# define P99_PREFER(...) /* avoid the dangling else problem */              \
-for (_Bool p00 = 1; p00 && p99_extension ({ { __VA_ARGS__ } 1; }); p00 = 0)
+#  define P99_PREFER(...) /* avoid the dangling else problem */ \
+        for (_Bool p00 = 1; p00 && p99_extension({            \
+                                    {                         \
+                                            __VA_ARGS__       \
+                                    }                         \
+                                    1;                        \
+                            });                               \
+             p00       = 0)
 #else
-# define P99_PREFER(...) if (1) { __VA_ARGS__ } else
+#  define P99_PREFER(...)     \
+        if (1) {            \
+                __VA_ARGS__ \
+        } else
 #endif
 
 /**
@@ -349,7 +355,7 @@ for (_Bool p00 = 1; p00 && p99_extension ({ { __VA_ARGS__ } 1; }); p00 = 0)
  ** @endcode
  ** @see P99_PREFER
  **/
-#define P99_AVOID for (;0;)
+#define P99_AVOID for (; 0;)
 
 /**
  ** @brief Execute the statements in the argument list.
@@ -421,11 +427,13 @@ for (_Bool p00 = 1; p00 && p99_extension ({ { __VA_ARGS__ } 1; }); p00 = 0)
 #define P99_XDEFAULT P99_AVOID default
 
 typedef enum p00_uncase_enum {
-  p00_uncase = 0,
+        p00_uncase = 0,
 } p00_uncase_enum;
 
 
-#define P00_UNCASE switch((p00_uncase_enum)0) P99_XCASE 0
+#define P00_UNCASE                  \
+        switch ((p00_uncase_enum)0) \
+        P99_XCASE 0
 
 /**
  ** @brief A command prefixed with this cannot be a case target from
@@ -434,7 +442,8 @@ typedef enum p00_uncase_enum {
  ** Actually this might not produce errors but just spoofy warnings,
  ** but well then you have been warned...
  **/
-#define P99_UNCASE P00_UNCASE :
+#define P99_UNCASE \
+        P00_UNCASE:
 
 /**
  ** @brief Handle and reset @c errno.
@@ -461,26 +470,28 @@ typedef enum p00_uncase_enum {
  **   }
  ** @endcode
  **/
-#define P99_HANDLE_ERRNO                                       \
-P00_BLK_START                                                  \
-P00_BLK_DECL(int const, p99_errno, errno)                      \
-  switch (P99_UNLIKELY(!!p99_errno)) case true:                \
-        P00_BLK_AFTER(errno = 0)                               \
-          switch (p99_errno) case 0:
+#define P99_HANDLE_ERRNO                          \
+        P00_BLK_START                             \
+        P00_BLK_DECL(int const, p99_errno, errno) \
+        switch (P99_UNLIKELY(!!p99_errno))        \
+        case true:                                \
+                P00_BLK_AFTER(errno = 0)          \
+        switch (p99_errno)                        \
+        case 0:
 
 
 enum p99_unwind {
-  /**
-   ** @brief The level of nesting ::P99_UNWIND_PROTECT
-   **
-   ** This will always be accessible as a read-only constant and taking
-   ** its address will produce an error.
-   **/
-  p99_unwind_level = 0,
-  p00_unwind_top = 0,
-  p00_unwind_prev = 0,
-  p00_unwind_bottom = 0,
-  p99_unwind_return = INT_MAX,
+        /**
+         ** @brief The level of nesting ::P99_UNWIND_PROTECT
+         **
+         ** This will always be accessible as a read-only constant and taking
+         ** its address will produce an error.
+         **/
+        p99_unwind_level  = 0,
+        p00_unwind_top    = 0,
+        p00_unwind_prev   = 0,
+        p00_unwind_bottom = 0,
+        p99_unwind_return = INT_MAX,
 };
 
 /**
@@ -501,29 +512,30 @@ enum p99_unwind {
 P99_DECLARE_STRUCT(p00_jmp_buf0);
 
 struct p00_jmp_buf0 {
-  p00_jmp_buf0 * p99_lifo;
-  bool volatile p00_returning;
-  int volatile p00_code;
-  jmp_buf p00_buf;
+        p00_jmp_buf0 *p99_lifo;
+        bool volatile p00_returning;
+        int volatile p00_code;
+        jmp_buf p00_buf;
 };
 
 #define P00_JMP_BUF0_INITIALIZER { .p00_returning = 0 /* initialize .p00_buf implicitly */ }
 
 typedef p00_jmp_buf0 p00_jmp_buf[1];
 
-#define P00_JMP_BUF_INITIALIZER { [0] = P00_JMP_BUF0_INITIALIZER }
+#define P00_JMP_BUF_INITIALIZER \
+        { [0] = P00_JMP_BUF0_INITIALIZER }
 
 P99_DECLARE_STRUCT(p00_inhibitor);
 
 struct p00_inhibitor {
-  int p00_a;
+        int p00_a;
 };
 
-p99_inline
-noreturn
-void p00_longjmp(p00_jmp_buf0 * p00_buf, int p00_val) {
-  p00_buf->p00_code = p00_val;
-  longjmp(p00_buf->p00_buf, 1);
+p99_inline noreturn void
+p00_longjmp(p00_jmp_buf0 *p00_buf, int p00_val)
+{
+        p00_buf->p00_code = p00_val;
+        longjmp(p00_buf->p00_buf, 1);
 }
 
 /**
@@ -602,68 +614,64 @@ void p00_longjmp(p00_jmp_buf0 * p00_buf, int p00_val) {
  ** @see ::p99_unwind_level
  ** @see ::P99_TRY and ::P99_THROW for a construct that can be used across function calls.
  **/
-#define P99_UNWIND_PROTECT                                                                       \
-P00_BLK_START                                                                                    \
-/* The jump buffer for the case that P99_UNWIND_RETURN is launched                               \
-   inside this construct. Only the lowest level variable will be                                 \
-   needed but since we don't know our level yet, we have to declare                              \
-   this at every level. */                                                                       \
-P00_BLK_BEFAFT(auto p00_jmp_buf p00_unwind_return = P00_ROBUST(P00_JMP_BUF_INITIALIZER),         \
-               /* returning can only be on because it was set by                                 \
-                  P99_UNWIND_RETURN and we fell of the edge after all                            \
-                  P99_PROTECT clauses */                                                         \
-               p00_unwind_return[0].p00_returning ? p00_longjmp(p00_unwind_return, 1) : P99_NOP) \
-/* Detect the bottom of enclosing other P99_UNWIND_PROTECT. If it                                \
-   exists set it to that one, otherwise set it to our newly allocated                            \
-   jump buffer. We have to do this in two steps such that the                                    \
-   initializer of the variable is not the variable itself. */                                    \
-P00_BLK_DECL_REC(register p00_jmp_buf *const, p00_unwind_bottom,                                 \
-             (p00_unwind_bottom ? p00_unwind_bottom : &p00_unwind_return))                       \
-  /* inhibit further access of the p00_unwind_return variable */                                 \
-  P00_BLK_DECL(register p00_inhibitor const, p00_unwind_return, { INT_MAX })                     \
-/* are we unwinding or not? */                                                                   \
-  P00_BLK_DECL(auto _Bool volatile, p00_unw)                                                     \
-/* The return code from the longjmp to which we apply the                                        \
-   special convention concerning the value 0. */                                                 \
-  P00_BLK_BEFAFT(auto int volatile p00_code = 0,                                                 \
-                 /* An eventual continuation of the unwind process is                            \
-                    decided here, since here the p00_unwind_top                                  \
-                    variable that is visible is that of the enclosing                            \
-                    scope, but the unwind code variable is ours.  If                             \
-                    the enclosing scope is the outer scope,                                      \
-                    p00_unwind_top is a integer with value zero. So                              \
-                    even then the P99_UNWIND is syntactically correct,                           \
-                    but fortunately the underlying call to longjmp                               \
-                    will not be issued. */                                                       \
-                 (p00_unw                                                                        \
-                  ? P99_UNWIND(p00_code < 0 ? p00_code : p00_code - 1)                           \
-                  : P99_NOP))                                                                    \
-/* maintain the level of nesting of different calls to                                           \
-   P99_UNWIND_PROTECT */                                                                         \
-  P00_BLK_DECL_REC(register unsigned const, p99_unwind_level, p99_unwind_level + 1)              \
-  P00_BLK_DECL(p00_jmp_buf0*, p00_unwind_prev, p00_unwind_top)                                   \
-/* the buffer variable for setjmp/longjump */                                                    \
-  P00_BLK_DECL(auto p00_jmp_buf, p00_unwind_top, P00_JMP_BUF_INITIALIZER)                        \
-  P00_BLK_END                                                                                    \
-/* force interpretation of the setjmp return to 0 or 1, and ensure                               \
-   that it occurs in a context where it is permitted. */                                         \
-  switch (!setjmp(p00_unwind_top[0].p00_buf))                                                    \
-    if (0) {                                                                                     \
-                                                                                                 \
-    /* The switch expression of the surrounding switch from                                      \
-       P99_UNWIND_PROTECT should only have values true and false. So                             \
-       this default label can only trigger if there is no "case 0". It                           \
-       is also here to ensure that no other "default" label is placed on                         \
-       the same level of "switch" by error. */                                                   \
-  default:                                                                                       \
-    p00_code = p00_unwind_top[0].p00_code;                                                       \
-    p00_unw = !!p00_code;                                                                        \
-  } else                                                                                         \
-  case 1:
+#define P99_UNWIND_PROTECT                                                                                \
+        P00_BLK_START                                                                                     \
+        /* The jump buffer for the case that P99_UNWIND_RETURN is launched                                \
+           inside this construct. Only the lowest level variable will be                                  \
+           needed but since we don't know our level yet, we have to declare                               \
+           this at every level. */                                                                        \
+        P00_BLK_BEFAFT(auto p00_jmp_buf p00_unwind_return = P00_ROBUST(P00_JMP_BUF_INITIALIZER),          \
+                            /* returning can only be on because it was set by P99_UNWIND_RETURN and
+                             * we fell of the edge after all P99_PROTECT clauses */ \
+                       p00_unwind_return[0].p00_returning ? p00_longjmp(p00_unwind_return, 1) : P99_NOP)  \
+        /* Detect the bottom of enclosing other P99_UNWIND_PROTECT. If it                                 \
+           exists set it to that one, otherwise set it to our newly allocated                             \
+           jump buffer. We have to do this in two steps such that the                                     \
+           initializer of the variable is not the variable itself. */                                     \
+        P00_BLK_DECL_REC(register p00_jmp_buf *const, p00_unwind_bottom,                                  \
+                         (p00_unwind_bottom ? p00_unwind_bottom : &p00_unwind_return))                    \
+        /* inhibit further access of the p00_unwind_return variable */                                    \
+        P00_BLK_DECL(register p00_inhibitor const, p00_unwind_return, {INT_MAX})                          \
+        /* are we unwinding or not? */                                                                    \
+        P00_BLK_DECL(auto _Bool volatile, p00_unw)                                                        \
+        /* The return code from the longjmp to which we apply the                                         \
+           special convention concerning the value 0. */                                                  \
+        P00_BLK_BEFAFT(                                                                                   \
+            auto int volatile p00_code = 0, /* An eventual continuation of the unwind process is          \
+                                               decided here, since here the p00_unwind_top                \
+                                               variable that is visible is that of the enclosing          \
+                                               scope, but the unwind code variable is ours.  If           \
+                                               the enclosing scope is the outer scope,                    \
+                                               p00_unwind_top is a integer with value zero. So            \
+                                               even then the P99_UNWIND is syntactically correct,         \
+                                               but fortunately the underlying call to longjmp             \
+                                               will not be issued. */                                     \
+            (p00_unw ? P99_UNWIND(p00_code < 0 ? p00_code : p00_code - 1) : P99_NOP))                     \
+        /* maintain the level of nesting of different calls to                                            \
+           P99_UNWIND_PROTECT */                                                                          \
+        P00_BLK_DECL_REC(register unsigned const, p99_unwind_level, p99_unwind_level + 1)                 \
+        P00_BLK_DECL(p00_jmp_buf0 *, p00_unwind_prev, p00_unwind_top)                                     \
+        /* the buffer variable for setjmp/longjump */                                                     \
+        P00_BLK_DECL(auto p00_jmp_buf, p00_unwind_top, P00_JMP_BUF_INITIALIZER)                           \
+        P00_BLK_END                                                                                       \
+        /* force interpretation of the setjmp return to 0 or 1, and ensure                                \
+           that it occurs in a context where it is permitted. */                                          \
+        switch (!setjmp(p00_unwind_top[0].p00_buf))                                                       \
+                if (0) {                                                                                  \
+                        /* The switch expression of the surrounding switch from                           \
+                           P99_UNWIND_PROTECT should only have values true and false. So                  \
+                           this default label can only trigger if there is no "case 0". It                \
+                           is also here to ensure that no other "default" label is placed on              \
+                           the same level of "switch" by error. */                                        \
+                default: p00_code = p00_unwind_top[0].p00_code; p00_unw = !!p00_code;                     \
+                } else                                                                                    \
+                case 1:
 
-p99_inline
-void p00_unwind(void* p00_top, unsigned p00_level, int p00_cond) {
-  if (p00_level && p00_cond && p00_top) p00_longjmp(p00_top, p00_cond);
+p99_inline void
+p00_unwind(void *p00_top, unsigned p00_level, int p00_cond)
+{
+        if (p00_level && p00_cond && p00_top)
+                p00_longjmp(p00_top, p00_cond);
 }
 
 /**
@@ -712,20 +720,21 @@ P00_UNWIND_DOCUMENT
  ** @endcode
  **/
 P00_UNWIND_DOCUMENT
-#define P99_UNWIND_RETURN                                             \
-/* we use a special form of short circuit evaluation here, since      \
-   setjmp is only allowed in restricted contexts */                   \
-switch (!!p00_unwind_bottom)                                          \
- case 1:                                                              \
-  /* If an unwind is possible, i.e if we are not in the outer frame   \
-     this will stop the evaluation of the expression here, and unwind \
-     as side effect. Otherwise, this will continue normally and       \
-     directly proceed with the return. */                             \
-  if (!setjmp(p00_unwind_bottom[0]->p00_buf)) {                       \
-    /* assign before we unwind all the way down */                    \
-    p00_unwind_bottom[0]->p00_returning = 1;                          \
-    P99_UNWIND(-p99_unwind_return);                                   \
-  } else case 0: P99_ALLOW(RETURN) return
+#define P99_UNWIND_RETURN                                                           \
+        /* we use a special form of short circuit evaluation here, since            \
+           setjmp is only allowed in restricted contexts */                         \
+        switch (!!p00_unwind_bottom)                                                \
+        case 1:                                                                     \
+                /* If an unwind is possible, i.e if we are not in the outer frame   \
+                   this will stop the evaluation of the expression here, and unwind \
+                   as side effect. Otherwise, this will continue normally and       \
+                   directly proceed with the return. */                             \
+                if (!setjmp(p00_unwind_bottom[0]->p00_buf)) {                       \
+                        /* assign before we unwind all the way down */              \
+                        p00_unwind_bottom[0]->p00_returning = 1;                    \
+                        P99_UNWIND(-p99_unwind_return);                             \
+                } else                                                              \
+                case 0: P99_ALLOW(RETURN) return
 
 /**
  ** @brief The pseudo label to which we jump when we unwind the stack
@@ -744,14 +753,12 @@ switch (!!p00_unwind_bottom)                                          \
  ** @see p99_unwind_level
  **/
 P00_UNWIND_DOCUMENT
-#define P99_PROTECT                                            \
-P99_DECLARE_INHIBIT(RETURN);                                   \
- if (0) {                                                      \
- case 0 :                                                      \
- p00_code = p00_unwind_top[0].p00_code;                        \
- p00_unw = !!p00_code;                                         \
- }                                                             \
- P00_UNCASE
+#define P99_PROTECT                                                          \
+        P99_DECLARE_INHIBIT(RETURN);                                         \
+        if (0) {                                                             \
+        case 0: p00_code = p00_unwind_top[0].p00_code; p00_unw = !!p00_code; \
+        }                                                                    \
+        P00_UNCASE
 
 /**
  ** @brief Add some default documentation and links to the following
@@ -769,8 +776,9 @@ P99_DECLARE_INHIBIT(RETURN);                                   \
  **/
 P00_DOCUMENT_MULTIPLE_ARGUMENT(P99_INVARIANT, 0)
 P99_BLOCK_DOCUMENT
-#define P99_INVARIANT(EXPR)                                                                                       \
-P99_PROTECTED_BLOCK(assert((EXPR) && "failed at beginning of block"), assert((EXPR) && "failed at end of block"))
+#define P99_INVARIANT(EXPR)                                                   \
+        P99_PROTECTED_BLOCK(assert((EXPR) && "failed at beginning of block"), \
+                            assert((EXPR) && "failed at end of block"))
 
 
 /** @}
@@ -779,7 +787,7 @@ P99_PROTECTED_BLOCK(assert((EXPR) && "failed at beginning of block"), assert((EX
 
 /* Disable bogus warnings that are provoked by the code in this file. */
 
-P99_IF_COMPILER(INTEL, warning(disable: 589)) /* transfer of control bypasses initialization of... */
+P99_IF_COMPILER(INTEL, warning(disable : 589)) /* transfer of control bypasses initialization of... */
 
 
-#endif      /* !P99_BLOCK_H_ */
+#endif /* !P99_BLOCK_H_ */

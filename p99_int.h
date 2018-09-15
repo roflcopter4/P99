@@ -40,6 +40,7 @@
 #if P99_COMPILER & (P99_COMPILER_GNU | P99_COMPILER_OPEN64)
 # if P99_GCC_VERSION >= 40200UL
 #   pragma GCC diagnostic ignored "-Wmissing-braces"
+#   pragma GCC diagnostic ignored "-Wsign-compare"
 # endif
 #endif
 
