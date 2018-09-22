@@ -744,7 +744,7 @@ p00_isin0(char p00_c, rsize_t p00_s2l, uint8_t const p00_s2[const restrict p00_s
 
 P99_PURE_FUNCTION
 p99_inline rsize_t
-           p99_span(rsize_t p00_s1l, uint8_t p00_s1[const restrict p00_s1l], rsize_t p00_s2l, uint8_t const p00_s2[const restrict p00_s2l])
+p99_span(rsize_t p00_s1l, uint8_t p00_s1[const restrict p00_s1l], rsize_t p00_s2l, uint8_t const p00_s2[const restrict p00_s2l])
 {
         for (rsize_t p00_ret = 0; p00_ret < p00_s1l; ++p00_ret) {
                 if (!p00_s1[p00_ret] || !P00_ISIN(p00_s1[p00_ret], p00_s2l, p00_s2))
@@ -754,7 +754,7 @@ p99_inline rsize_t
 }
 
 p99_inline rsize_t
-           p00_cskip(rsize_t p00_s1l, uint8_t p00_s1[const restrict p00_s1l], rsize_t p00_s2l, uint8_t const p00_s2[const restrict p00_s2l])
+p00_cskip(rsize_t p00_s1l, uint8_t p00_s1[const restrict p00_s1l], rsize_t p00_s2l, uint8_t const p00_s2[const restrict p00_s2l])
 {
         rsize_t p00_ret = 0;
         for (; p00_ret < p00_s1l && p00_s1[p00_ret]; ++p00_ret) {
@@ -767,7 +767,7 @@ p99_inline rsize_t
 }
 
 p99_inline uint8_t *
-           p00_strtok_inner(rsize_t *restrict p00_s1max,
+p00_strtok_inner(rsize_t *restrict p00_s1max,
                             uint8_t           p00_ret0[restrict(*p00_s1max)],
                             rsize_t           p00_s2max,
                             const uint8_t     p00_s2[const restrict p00_s2max],
@@ -885,7 +885,7 @@ p00_tm_valid(struct tm const *p00_tm)
 }
 
 p99_inline errno_t
-           p00_asctime_s(char const *p00_file, char const *p00_context, char *p00_s, rsize_t p00_maxsize, const struct tm *p00_tptr)
+p00_asctime_s(char const *p00_file, char const *p00_context, char *p00_s, rsize_t p00_maxsize, const struct tm *p00_tptr)
 {
         errno_t p00_ret = 0;
         if (P99_UNLIKELY(p00_maxsize < 26 || p00_maxsize > RSIZE_MAX)) {
