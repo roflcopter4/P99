@@ -94,12 +94,12 @@ void p99_cm_destroy(p99_cm* p00_cm) {
   p99_futex_destroy(&p00_cm->p00_m);
 }
 
+enum { p00_cm_unlocked, p00_cm_locked, };
+
 /**
  ** @brief Initialize an ::p99_cm object.
  **/
-# define P99_CM_INITIALIZER P99_FUTEX_INITIALIZER(p99_cm_unlocked)
-
-enum { p00_cm_unlocked, p00_cm_locked, };
+# define P99_CM_INITIALIZER P99_FUTEX_INITIALIZER(p00_cm_unlocked)
 
 /* This is only for internal use. Other than @c cnd_signal this
    supposes that the corresponding mutex part of the condition-mutex

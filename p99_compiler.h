@@ -1081,6 +1081,9 @@ P99_IF_COMPILER(OPEN64, GCC diagnostic ignored "-Wmissing-field-initializers")
 P99_IF_COMPILER(CLANG, GCC diagnostic ignored "-Wnon-literal-null-conversion")
 P99_IF_COMPILER(CLANG, GCC diagnostic ignored "-Wswitch-bool")
 
+P99_IF_COMPILER(GNU, GCC diagnostic ignored "-Wswitch-unreachable")
+P99_IF_COMPILER(GNU, GCC diagnostic ignored "-Wclobbered")
+
 /**
  ** @def P99_WARN_INIT_PUSH
  ** @brief Switch bogus warnings about initializers off.

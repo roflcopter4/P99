@@ -614,6 +614,7 @@ p00_longjmp(p00_jmp_buf0 *p00_buf, int p00_val)
  ** @see ::p99_unwind_level
  ** @see ::P99_TRY and ::P99_THROW for a construct that can be used across function calls.
  **/
+/* #pragma GCC diagnostic ignored "-Wswitch-unreachable" */
 #define P99_UNWIND_PROTECT                                                                                \
         P00_BLK_START                                                                                     \
         /* The jump buffer for the case that P99_UNWIND_RETURN is launched                                \

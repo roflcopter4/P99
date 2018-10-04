@@ -165,7 +165,7 @@ void p99_constraint_handler(const char *restrict p00_msg, void *restrict p00_ptr
 
 P99_PURE_FUNCTION
 p99_inline size_t
-           strnlen_s(const char *p00_s, size_t p00_maxsize)
+strnlen_s(const char *p00_s, size_t p00_maxsize)
 {
         size_t p00_ret = p00_maxsize;
         if (p00_s && p00_maxsize) {
@@ -177,7 +177,7 @@ p99_inline size_t
 }
 
 p99_inline errno_t
-           strerror_s(char *p00_s, rsize_t p00_maxsize, errno_t p00_errnum)
+strerror_s(char *p00_s, rsize_t p00_maxsize, errno_t p00_errnum)
 {
         if (!p00_maxsize || p00_maxsize > RSIZE_MAX)
                 p99_constraint_handler(", call to strerror_s, dynamic constraint violation", 0, EINVAL);
@@ -231,6 +231,12 @@ p00_strerror_s(char *p00_s, rsize_t p00_maxsize, errno_t p00_errnum)
         (P00_STRERROR(__VA_ARGS__, P99_STRERROR_MAX, (char[P99_STRERROR_MAX]){0}))( \
             P99_IF_LT(P99_NARG(__VA_ARGS__), 3)(P00_STRERROR02(__VA_ARGS__))(P00_STRERROR(__VA_ARGS__)))
 
+#ifdef P44_EXCEPTION_ID
+#  define P00_EXCEPTION_ID ", " P44_EXCEPTION_ID ": "
+#else
+#  define P00_EXCEPTION_ID ": "
+#endif
+
 p99_inline void
 p00_constraint_report(errno_t p00_cond, char const *p00_file, char const *p00_context, char const *p00_info)
 {
@@ -245,32 +251,29 @@ p00_constraint_report(errno_t p00_cond, char const *p00_file, char const *p00_co
                 p00_file = P00_JMP_BUF_FILE;
         if (!p00_file)
                 p00_file = "<unknown location>";
-        fputs(p00_context, stderr);
-        fputc(':', stderr);
-        fputs(p00_file, stderr);
-        fputs(": ", stderr);
-        if (p00_info) {
-                fputs(p00_info, stderr);
-                fputs(", ", stderr);
-        }
-        fputs("exception ", stderr);
-        {
+
+        fprintf(stderr, "%s:%s: Uncaught exception: ", p00_context, p00_file);
+
+        if (p00_info)
+                fprintf(stderr, "\"%s\"", p00_info);
+
+        if (p00_cond > 0) {
                 char const *const p00_errname = p99_errno_getname(p00_cond);
+                fputs(", ", stderr);
                 if (p00_errname) {
                         fputs(p00_errname, stderr);
                         fputc('=', stderr);
                 }
-        }
-        {
+
                 sprintf(p00_str, "%d", p00_cond);
                 fputs(p00_str, stderr);
-        }
-        if (!p00_cond && errno)
-                p00_cond = errno;
-        P99_STRERROR(p00_cond, p00_str);
-        if (p00_str[0]) {
-                fputs(", library error: ", stderr);
-                fputs(p00_str, stderr);
+                if (!p00_cond && errno)
+                        p00_cond = errno;
+                P99_STRERROR(p00_cond, p00_str);
+                if (p00_str[0]) {
+                        fputs(P00_EXCEPTION_ID, stderr);
+                        fputs(p00_str, stderr);
+                }
         }
         fputc('\n', stderr);
 }
@@ -292,7 +295,7 @@ p99_ignore_handler(const char *restrict p00_msg, void *restrict p00_ptr, errno_t
 }
 
 noreturn p99_inline void
-         p99_abort_handler(const char *restrict p00_msg, void *restrict p00_ptr, errno_t p00_err)
+p99_abort_handler(const char *restrict p00_msg, void *restrict p00_ptr, errno_t p00_err)
 {
         P99_UNUSED(p00_ptr);
         p00_constraint_report(p00_err, 0, 0, p00_msg);
@@ -301,7 +304,7 @@ noreturn p99_inline void
 }
 
 noreturn p99_inline void
-         p99_exit_handler(const char *restrict p00_msg, void *restrict p00_ptr, errno_t p00_err)
+p99_exit_handler(const char *restrict p00_msg, void *restrict p00_ptr, errno_t p00_err)
 {
         P99_UNUSED(p00_ptr);
         P99_UNUSED(p00_err);
@@ -369,7 +372,7 @@ abort_handler_s(const char *restrict p00_msg, void *restrict p00_ptr, errno_t p0
 }
 
 p99_inline constraint_handler_t
-           set_constraint_handler_s(constraint_handler_t p00_hand)
+set_constraint_handler_s(constraint_handler_t p00_hand)
 {
         if (!p00_hand)
                 p00_hand = P99_CONSTRAINT_HANDLER;
@@ -379,7 +382,7 @@ p99_inline constraint_handler_t
 #endif
 
 p99_inline errno_t
-           p00_constraint_call(errno_t p00_cond, char const *p00_file, char const *p00_context, char const *p00_info)
+p00_constraint_call(errno_t p00_cond, char const *p00_file, char const *p00_context, char const *p00_info)
 {
         if (p00_cond) {
                 if (p00_file)
@@ -412,7 +415,7 @@ p99_inline errno_t
 #if !defined(__STDC_LIB_EXT1__) || defined(P00_DOXYGEN)
 
 p99_inline errno_t
-           p00_memcpy_s(_Bool p00_overlap, void *restrict p00_s1, rsize_t p00_s1max, const void *restrict p00_s2, rsize_t p00_n)
+p00_memcpy_s(_Bool p00_overlap, void *restrict p00_s1, rsize_t p00_s1max, const void *restrict p00_s2, rsize_t p00_n)
 {
         errno_t p00_ret = 0;
         if (!p00_s1) {
@@ -463,7 +466,7 @@ P00_SEVERE:
                                "memmove_s runtime constraint violation")
 
 p99_inline errno_t
-           p00_strcpy_s(void *restrict p00_s1, rsize_t p00_s1max, const void *restrict p00_s2)
+p00_strcpy_s(void *restrict p00_s1, rsize_t p00_s1max, const void *restrict p00_s2)
 {
         size_t p00_len = strnlen_s(p00_s2, p00_s1max) + 1;
         return p00_memcpy_s(false, p00_s1, p00_s1max, p00_s2, p00_len);
@@ -475,7 +478,7 @@ p99_inline errno_t
                                "strcpy_s runtime constraint violation")
 
 p99_inline errno_t
-           p00_strncpy_s(char *restrict p00_s1, rsize_t p00_s1max, const char *restrict p00_s2, rsize_t p00_n)
+p00_strncpy_s(char *restrict p00_s1, rsize_t p00_s1max, const char *restrict p00_s2, rsize_t p00_n)
 {
         if (!p00_s1 || !p00_s1max || p00_s1max > RSIZE_MAX)
                 return memcpy_s(p00_s1, p00_s1max, p00_s2, p00_n);
@@ -498,7 +501,7 @@ p99_inline errno_t
                                "strncpy_s runtime constraint violation")
 
 p99_inline errno_t
-           p00_strcat_s(char *restrict p00_s1, rsize_t p00_s1max, const char *restrict p00_s2)
+p00_strcat_s(char *restrict p00_s1, rsize_t p00_s1max, const char *restrict p00_s2)
 {
         if (!p00_s1 || !p00_s1max || p00_s1max > RSIZE_MAX)
                 return memcpy_s(p00_s1, p00_s1max, p00_s2, 0);
@@ -527,7 +530,7 @@ p99_inline errno_t
                                "strcat_s runtime constraint violation")
 
 p99_inline errno_t
-           p00_strncat_s(char *restrict p00_s1, rsize_t p00_s1max, const char *restrict p00_s2, rsize_t p00_n)
+p00_strncat_s(char *restrict p00_s1, rsize_t p00_s1max, const char *restrict p00_s2, rsize_t p00_n)
 {
         if (!p00_s1 || !p00_s1max || p00_s1max > RSIZE_MAX)
                 return memcpy_s(p00_s1, p00_s1max, p00_s2, 0);
@@ -601,12 +604,12 @@ p00_bsearch_s(char const *p00_file,
 #define bsearch_s(...) p00_bsearch_s(P99_STRINGIFY(__LINE__), __func__, __VA_ARGS__)
 
 p99_inline errno_t
-           p00_getenv_s(char const *p00_file,
-                        char const *p00_context,
-                        size_t *restrict p00_len,
-                        char *restrict p00_value,
-                        rsize_t        p00_maxsize,
-                        const char *restrict p00_name)
+p00_getenv_s(char const *p00_file,
+             char const *p00_context,
+             size_t *restrict p00_len,
+             char *restrict p00_value,
+             rsize_t        p00_maxsize,
+             const char *restrict p00_name)
 {
         errno_t p00_ret = 0;
         size_t  p00_le  = 0;
@@ -636,7 +639,7 @@ p99_inline errno_t
 #define getenv_s(...) p00_getenv_s(P99_STRINGIFY(__LINE__), __func__, __VA_ARGS__)
 
 p99_inline errno_t
-           p00_tmpfile_s(char const *p00_file, char const *p00_context, FILE *restrict *restrict p00_streamptr)
+p00_tmpfile_s(char const *p00_file, char const *p00_context, FILE *restrict *restrict p00_streamptr)
 {
         errno_t p00_ret = 0;
         if (!p00_streamptr) {
@@ -657,7 +660,7 @@ p99_inline errno_t
 #define tmpfile_s(...) p00_tmpfile_s(P99_STRINGIFY(__LINE__), __func__, __VA_ARGS__)
 
 p99_inline errno_t
-           p00_tmpnam_s(char const *p00_file, char const *p00_context, char *p00_s, rsize_t p00_maxsize)
+p00_tmpnam_s(char const *p00_file, char const *p00_context, char *p00_s, rsize_t p00_maxsize)
 {
         errno_t p00_ret = 0;
         if (p00_maxsize > RSIZE_MAX) {
@@ -885,7 +888,7 @@ p00_tm_valid(struct tm const *p00_tm)
 }
 
 p99_inline errno_t
-p00_asctime_s(char const *p00_file, char const *p00_context, char *p00_s, rsize_t p00_maxsize, const struct tm *p00_tptr)
+           p00_asctime_s(char const *p00_file, char const *p00_context, char *p00_s, rsize_t p00_maxsize, const struct tm *p00_tptr)
 {
         errno_t p00_ret = 0;
         if (P99_UNLIKELY(p00_maxsize < 26 || p00_maxsize > RSIZE_MAX)) {
