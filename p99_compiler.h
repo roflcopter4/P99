@@ -277,6 +277,8 @@ signed p00_trailing_comma_in_initializer__(void) {
 #endif
 
 #if __GNUC__
+# define p00_has_feature_c_noreturn 1
+# define p00_has_feature_c_thread_local 1
 # define p00_has_attribute_always_inline 1
 # define p00_has_attribute_weak 1
 # define p00_has_attribute_weakref 1
@@ -427,16 +429,15 @@ signed p00_trailing_comma_in_initializer__(void) {
 # define P99_FIXED_REGISTER(REG)
 /* clang has no stdatomic.h, yet. It can't use the one from gcc, since
    that (gratuously) uses __auto_type. */
-# if P99_VERSION_NO < 100000UL
-#  define __STDC_NO_ATOMICS__ 1
-# endif
+/* Above is wrong, clang now has fine support for stdatomic.h (and also for
+ * __auto_type -- I was unaware it ever lacked such support). */
 # if P99_VERSION_NO > 30200UL
 #  define p00_has_feature_stdnoreturn_h 1
 # endif
 /* stdalign.h exists but is not usable, at least up to 3.2 */
-//# if P99_VERSION_NO >= 30000UL
-//#  define p00_has_feature_stdalign_h 1
-//# endif
+# if P99_VERSION_NO >= 30000UL
+#  define p00_has_feature_stdalign_h 1
+# endif
 
 #elif P99_COMPILER & (P99_COMPILER_GNU | P99_COMPILER_OPEN64)
 # define P99_ATLEAST
@@ -879,7 +880,8 @@ static_assert(1);
 # define thread_local
 #elif !defined(thread_local)
 # define thread_local _Thread_local
-# if p99_has_feature(gnu_thread_local)
+# if p99_has_feature(c_thread_local)
+# elif p99_has_feature(gnu_thread_local)
 #  define _Thread_local __thread
 # elif p99_has_feature(declspec_thread)
 #  define _Thread_local __declspec(thread)
