@@ -103,7 +103,8 @@ p00_strerror(int p00_errname, size_t p00_maxsize, char p00_s[p00_maxsize])
            try to get away with it by re-interpreting the return value as
            integer. If it is small we suppose that we had an ABI breakage,
            and return that small integer value. */
-#if _GNU_SOURCE && __GLIBC__
+#ifdef _GNU_SOURCE
+#  ifdef  __GLIBC__
         char *p00_ret = strerror_r(p00_errname, p00_s, p00_maxsize);
         if ((uintptr_t)p00_ret < 2048)
                 return (intptr_t)p00_ret;
@@ -116,6 +117,9 @@ p00_strerror(int p00_errname, size_t p00_maxsize, char p00_s[p00_maxsize])
                 }
         }
         return 0;
+#  else
+        return strerror_r(p00_errname, p00_s, p00_maxsize);
+#  endif
 #else
         return strerror_r(p00_errname, p00_s, p00_maxsize);
 #endif

@@ -55,7 +55,9 @@ P99_IF_EQ_1(P99_NARG(__VA_ARGS__))                                              
 P99_DECLARE_ATOMIC(float);
 P99_DECLARE_ATOMIC(double);
 #else
+/* #ifndef __NWCC__
 #  error "This should never be necessary."
+#endif */
 /**
  ** @addtogroup atomic_stub Stub replacements of C11 atomic operations
  **
