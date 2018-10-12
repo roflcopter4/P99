@@ -256,7 +256,7 @@ p00_constraint_report(errno_t p00_cond, char const *p00_file, char const *p00_co
         if (!p00_file)
                 p00_file = "<unknown location>";
 
-        fprintf(stderr, "%s:%s: Uncaught exception: ", p00_context, p00_file);
+        fprintf(stderr, "%s:%s: Uncaught exception (%d): ", p00_context, p00_file, p00_cond);
 
         if (p00_info)
                 fprintf(stderr, "\"%s\"", p00_info);
