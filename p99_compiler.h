@@ -16,6 +16,10 @@
 #ifndef P99_COMPILER_H
 #define P99_COMPILER_H
 
+#if (defined(__MINGW32__) || defined(__MINGW64__)) && !defined(__MINGW__)
+#  define __MINGW__
+#endif
+
 #include "p99_args.h"
 
 /**
@@ -511,7 +515,9 @@ signed p00_trailing_comma_in_initializer__(void) {
 #  endif
 # endif
 
-#if p99_has_attribute(weak)
+#if defined (__MINGW__)
+# define P00_WEAK1(ID) _Pragma(P99_STRINGIFY(weak ID))
+#elif p99_has_attribute(weak)
 # define P00_WEAK1(ID) __attribute__((__weak__))
 #elif P99_COMPILER & P99_COMPILER_MICROSOFT
 # define P00_WEAK1(ID) __declspec(selectany)

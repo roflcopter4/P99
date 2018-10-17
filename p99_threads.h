@@ -19,7 +19,7 @@
 
 #if p99_has_feature(threads_h)
 # include <threads.h>
-#elif defined(_XOPEN_SOURCE) || defined(_POSIX_C_SOURCE)
+#elif defined(_XOPEN_SOURCE) || defined(_POSIX_C_SOURCE) || defined(__MINGW__)
 # include "p99_threads_posix.h"
 #else
 # error "no suitable thread implementation found"

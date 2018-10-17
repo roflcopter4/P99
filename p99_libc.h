@@ -190,7 +190,7 @@ typedef size_t rsize_t;
 # ifndef  __STDC_NO_ATOMICS__
 #  define p00_has_feature_stdatomic_h 1
 # endif
-# ifndef __STDC_NO_THREADS__
+# if !defined(__STDC_NO_THREADS__) && !defined(__MINGW__)
 #  define p00_has_feature_threads_h 1
 # endif
 #endif

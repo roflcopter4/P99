@@ -222,7 +222,7 @@ p00_futex_broadcast(int *uaddr)
 }
 
 #ifndef P99_FUTEX_INITIALIZER
-#define P99_FUTEX_INITIALIZER(INITIAL) ATOMIC_VAR_INIT(INITIAL)
+#  define P99_FUTEX_INITIALIZER(INITIAL) ATOMIC_VAR_INIT(INITIAL)
 #endif
 
 p99_inline p99_futex *
@@ -260,10 +260,11 @@ p99_futex_wakeup(p99_futex volatile *p00_cntp, unsigned p00_wmin, unsigned p00_w
                 for (;;) {
                         register signed p00_wok = p00_futex_wake((int *)p00_cnt, p00_wmax);
                         assert(p00_wok >= 0);
-                        if (p00_wok >= p00_wmin)
+                        register unsigned p00_wok_u = (unsigned)p00_wok;
+                        if (p00_wok_u >= p00_wmin)
                                 break;
-                        p00_wmax -= p00_wok;
-                        p00_wmin -= p00_wok;
+                        p00_wmax -= p00_wok_u;
+                        p00_wmin -= p00_wok_u;
                 }
         }
 }
