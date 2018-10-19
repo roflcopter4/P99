@@ -51,7 +51,7 @@ p99_count* p99_count_init(p99_count* p00_c, unsigned p00_v) {
 }
 
 #define p99_count_init(...) P99_CALL_DEFARG(p99_count_init, 2, __VA_ARGS__)
-#define p99_count_init_defarg_1() 0U
+#define p99_count_init_defarg_1() (0)
 
 p99_inline
 void p99_count_destroy(p99_count* p00_c) {
