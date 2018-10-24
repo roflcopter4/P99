@@ -359,7 +359,7 @@ P00_DOCUMENT_TYPE_ARGUMENT(P99_DECLARE_DELETE, 0)
 
 P99_CONST_FUNCTION
 p99_inline size_t
-           p99_maxof(size_t p00_m, size_t p00_n)
+p99_maxof(size_t p00_m, size_t p00_n)
 {
         return p00_m < p00_n ? p00_n : p00_m;
 }

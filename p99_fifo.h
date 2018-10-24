@@ -58,14 +58,14 @@ do {                                                                            
   register const P99_MACRO_VAR(p00_el, (EL));                                                                               \
   register const P99_MACRO_VAR(p00_h, &p00_l->p00_head);                                                                    \
   register const P99_MACRO_VAR(p00_t, &p00_l->p00_tail);                                                                    \
-  p00_el->p99_lifo = 0;                                                                                                     \
+  p00_el->p99_fifo = 0;                                                                                                     \
   P99_MACRO_VAR(p00_head, atomic_load_explicit(p00_h, memory_order_relaxed));                                               \
   for (;;) {                                                                                                                \
     if (p00_head) {                                                                                                         \
       /* spin lock the whole fifo */                                                                                        \
       if (atomic_compare_exchange_weak_explicit(p00_h, &p00_head, 0, memory_order_acq_rel, memory_order_relaxed)) {         \
         /* make p00_el the last element */                                                                                  \
-        atomic_exchange_explicit(p00_t, p00_el, memory_order_acq_rel)->p99_lifo = p00_el;                                   \
+        atomic_exchange_explicit(p00_t, p00_el, memory_order_acq_rel)->p99_fifo = p00_el;                                   \
         /* unlock the fifo */                                                                                               \
         atomic_store_explicit(p00_h, p00_head, memory_order_release);                                                       \
         break;                                                                                                              \
@@ -89,7 +89,7 @@ do {                                                                            
  **
  ** This implements a generic interface to an atomic FIFO (First In -
  ** First Out) data structure. To use it you just have do some
- ** preparatory declarations and add a @c p99_lifo field to your data
+ ** preparatory declarations and add a @c p99_fifo field to your data
  ** structure:
  **
  ** @code
@@ -99,7 +99,7 @@ do {                                                                            
  **
  ** struct myData {
  **   ...
- **   myData_ptr p99_lifo;
+ **   myData_ptr p99_fifo;
  **   ...
  ** };
  ** extern P99_FIFO(myData_ptr) head;
@@ -138,15 +138,15 @@ p99_extension                                                                   
     if (p00_head) {                                                                                                 \
       /* spin lock the whole fifo */                                                                                \
       if (atomic_compare_exchange_weak_explicit(p00_h, &p00_head, 0, memory_order_acq_rel, memory_order_consume)) { \
-        if (p00_head->p99_lifo)                                                                                     \
+        if (p00_head->p99_fifo)                                                                                     \
           /* there is still another element to come in the fifo, make it                                            \
              the head */                                                                                            \
-          atomic_store_explicit(p00_h, p00_head->p99_lifo, memory_order_release);                                   \
+          atomic_store_explicit(p00_h, p00_head->p99_fifo, memory_order_release);                                   \
         else                                                                                                        \
           /* this was the last element in the fifo, set the tail to 0,                                              \
              too */                                                                                                 \
           atomic_store_explicit(p00_t, 0, memory_order_release);                                                    \
-        p00_head->p99_lifo = 0;                                                                                     \
+        p00_head->p99_fifo = 0;                                                                                     \
         break;                                                                                                      \
       }                                                                                                             \
     } else {                                                                                                        \
@@ -211,7 +211,7 @@ p99_extension                                                  \
 ({                                                             \
   P99_MACRO_VAR(p00_l, (L));                                   \
   P99_MACRO_VAR(p00_el, (EL));                                 \
-  p00_el->p99_lifo = (*p00_l)[1];                              \
+  p00_el->p99_fifo = (*p00_l)[1];                              \
   (*p00_l)[1] = p00_el;                                        \
   if (!(*p00_l)[0]) (*p00_l)[0] = p00_el;                      \
 })
@@ -221,9 +221,9 @@ p99_extension                                                  \
 ({                                                             \
   P99_MACRO_VAR(p00_l, (L));                                   \
   P99_MACRO_VAR(p00_el, (*p00_l)[0]);                          \
-  (*p00_l)[0] = p00_el->p99_lifo;                              \
+  (*p00_l)[0] = p00_el->p99_fifo;                              \
   if (!(*p00_l)[0]) = (*p00_l)[0] = 0;                         \
-  if (p00_el) p00_el->p99_lifo = 0;                            \
+  if (p00_el) p00_el->p99_fifo = 0;                            \
   /* be sure that the result can not be used as an lvalue */   \
   register const __typeof__(p00_el = p00_el) p00_r = p00_el;   \
   p00_r;                                                       \
@@ -251,13 +251,13 @@ size_t P99_PASTE2(ID, _cnt) = 0;                               \
 TYPE * P99_PASTE2(ID, _head) = P99_FIFO_CLEAR(L);              \
 for (TYPE * p00_e = P99_PASTE2(ID, _head);                     \
      p00_e;                                                    \
-     p00_e = p00_e->p99_lifo)                                  \
+     p00_e = p00_e->p99_fifo)                                  \
   ++P99_PASTE2(ID, _cnt);                                      \
 TYPE * TAB[P99_PASTE2(ID, _cnt)];                              \
 for (TYPE ** p00_t = &(TAB[0]),                                \
        * p00_e = P99_PASTE2(ID, _head);                        \
      p00_e;                                                    \
-     p00_e = p00_e->p99_lifo,                                  \
+     p00_e = p00_e->p99_fifo,                                  \
        ++p00_t)                                                \
   *p00_t = p00_e
 
