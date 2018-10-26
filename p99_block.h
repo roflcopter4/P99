@@ -721,6 +721,7 @@ P00_UNWIND_DOCUMENT
  ** @endcode
  **/
 P00_UNWIND_DOCUMENT
+#pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
 #define P99_UNWIND_RETURN                                                           \
         /* we use a special form of short circuit evaluation here, since            \
            setjmp is only allowed in restricted contexts */                         \

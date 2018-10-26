@@ -664,7 +664,7 @@ P00_UNWIND_DOCUMENT
 P00_UNWIND_DOCUMENT
 #define P99_FINALLY \
         P00_FINALLY \
-        P00_BLK_AFTER(p00_unw ? P99_RETHROW : P99_NOP)
+        P00_BLK_AFTER(p00_code ? P99_RETHROW : P99_NOP)
 
 /**
  ** @brief Designate a block that is executed regardless of the
