@@ -104,6 +104,7 @@ P00_POSIX_DEFARG_DOCU(inet_ntop, char const*, int af, const void *src, char *dst
 #define inet_ntop_defarg_3() INET6_ADDRSTRLEN
 
 
+#ifndef _WIN32
 P00_POSIX_DEFARG_DOCU(realpath, char*, char const *path, char *resolved_path)
 /**
  ** @param  path is required
@@ -112,6 +113,7 @@ P00_POSIX_DEFARG_DOCU(realpath, char*, char const *path, char *resolved_path)
  **/
 #define realpath(...) P99_CALL_DEFARG(realpath, 2, __VA_ARGS__)
 #define realpath_defarg_1() P99_LVAL(char[PATH_MAX])
+#endif
 
 
 P00_POSIX_DEFARG_DOCU(getsockopt, int, int sockfd, int level, int optname, void* optval, socklen_t*optlen)

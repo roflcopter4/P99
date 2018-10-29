@@ -92,7 +92,7 @@ p99_inline size_t
 }
 #endif
 
-#if (_XOPEN_SOURCE >= 600)
+#if (_XOPEN_SOURCE >= 600) && !defined(__CYGWIN__)
 p99_inline int
 p00_strerror(int p00_errname, size_t p00_maxsize, char p00_s[p00_maxsize])
 {
