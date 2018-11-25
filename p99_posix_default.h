@@ -104,6 +104,7 @@ P00_POSIX_DEFARG_DOCU(inet_ntop, char const*, int af, const void *src, char *dst
 #define inet_ntop_defarg_3() INET6_ADDRSTRLEN
 
 
+#ifndef _WIN32
 P00_POSIX_DEFARG_DOCU(realpath, char*, char const *path, char *resolved_path)
 /**
  ** @param  path is required
