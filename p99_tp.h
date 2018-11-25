@@ -13,6 +13,7 @@
 #ifndef P99_RP_H
 #define P99_RP_H 1
 
+#include "p00_pragmas.h"
 #include "p99_enum.h"
 #include "p99_generic.h"
 
@@ -184,7 +185,10 @@ struct p99_tp_state {
 p99_inline
 bool p00_tp_cmpxchg(_Atomic(p00_tp_glue) volatile*const p00_p, p00_tp_glue volatile*const p00_prev, p00_tp_glue p00_new) {
   P99_MARK("wide cmpxchg start");
+  P01_GCC_IGNORE_UNKNOWN_PRAGMAS() 
+  P01_CLANG_IGNORE_DISCARDED_QUALS() 
   bool ret = atomic_compare_exchange_weak_explicit(p00_p, p00_prev, p00_new, memory_order_acq_rel, memory_order_consume);
+  P01_POP_BOTH() 
   P99_MARK("wide cmpxchg end");
   return ret;
 }

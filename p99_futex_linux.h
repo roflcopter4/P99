@@ -10,6 +10,9 @@
 /* without even the implied warranty of merchantability or fitness for a      */
 /* particular purpose.                                                        */
 /*                                                                            */
+
+#include "p00_pragmas.h"
+
 #if !defined(P99_FUTEX_LINUX_H) && !defined(P00_DOXYGEN)
 #define P99_FUTEX_LINUX_H
 
@@ -350,37 +353,38 @@ P00_DOCUMENT_IDENTIFIER_ARGUMENT(P99_FUTEX_COMPARE_EXCHANGE, 1)
                 }                                                                                      \
         } while (false)
 #endif
-#define P99_FUTEX_COMPARE_EXCHANGE(FUTEX, VAR, CONDITION, NEW_VAL, WAKEMIN, WAKEMAX)                     \
-        do {                                                                                             \
-                _Pragma("GCC diagnostic push");                                                          \
-                _Pragma("GCC diagnostic ignored \"-Wunreachable-code\"");                                \
-                _Atomic(unsigned) volatile *const p00Mcntp = (FUTEX);                                    \
-                volatile unsigned                 p00Mact  = atomic_load(p00Mcntp);                      \
-                for (;;) {                                                                               \
-                        register unsigned const VAR     = p00Mact;                                       \
-                        if (CONDITION) {                                                                 \
-                                register unsigned const p00Mdes = (NEW_VAL);                             \
-                                if ((VAR) == p00Mdes)                                                    \
-                                        break;                                                           \
-                                if (atomic_compare_exchange_strong(p00Mcntp, &p00Mact, p00Mdes)) {       \
-                                        register unsigned p00Mwmin = (WAKEMIN);                          \
-                                        register unsigned p00Mwmax = (WAKEMAX);                          \
-                                        p99_futex_wakeup(p00Mcntp, p00Mwmin, p00Mwmax);                  \
-                                        break;                                                           \
-                                }                                                                        \
-                        } else {                                                                         \
-                                register int p00Mret = p00_futex_wait_once((int *)p00Mcntp, (int)(VAR)); \
-                                switch (p00Mret) {                                                       \
-                                default: assert(!p00Mret);                                               \
-                                case 0:;                                                                 \
-                                case EWOULDBLOCK:;                                                       \
-                                case EINTR:;                                                             \
-                                }                                                                        \
-                                p00Mact = atomic_load(p00Mcntp);                                         \
-                        }                                                                                \
-                }                                                                                        \
-                _Pragma("GCC diagnostic pop");                                                           \
-        } while (false)
+#define P99_FUTEX_COMPARE_EXCHANGE(FUTEX, VAR, CONDITION, NEW_VAL, WAKEMIN, WAKEMAX)               \
+        do {                                                                                       \
+                P01_GCC_IGNORE_UNKNOWN_PRAGMAS()                                                   \
+                P01_CLANG_IGNORE_DISCARDED_QUALS();                                                \
+                volatile atomic_uint *const p00Mcntp = (FUTEX);                                    \
+                volatile unsigned           p00Mact  = atomic_load(p00Mcntp);                      \
+                for (;;) {                                                                         \
+                        register unsigned const VAR = p00Mact;                                     \
+                        if (CONDITION) {                                                           \
+                                register unsigned const p00Mdes = (NEW_VAL);                       \
+                                if ((VAR) == p00Mdes)                                              \
+                                        break;                                                     \
+                                if (atomic_compare_exchange_strong(p00Mcntp, &p00Mact, p00Mdes)) { \
+                                        register unsigned p00Mwmin = (WAKEMIN);                    \
+                                        register unsigned p00Mwmax = (WAKEMAX);                    \
+                                        p99_futex_wakeup(p00Mcntp, p00Mwmin, p00Mwmax);            \
+                                        break;                                                     \
+                                }                                                                  \
+                        } else {                                                                   \
+                                register int p00Mret = p00_futex_wait_once(                        \
+                                    (int *)p00Mcntp, (int)(VAR));                                  \
+                                switch (p00Mret) {                                                 \
+                                default: assert(!p00Mret);                                         \
+                                case 0:;                                                           \
+                                case EWOULDBLOCK:;                                                 \
+                                case EINTR:;                                                       \
+                                }                                                                  \
+                                p00Mact = atomic_load(p00Mcntp);                                   \
+                        }                                                                          \
+                }                                                                                  \
+                P01_POP_BOTH()                                                                     \
+        } while (0)
 #if 0
 #define P99_FUTEX_COMPARE_EXCHANGE(FUTEX, ACT, EXPECTED, DESIRED, WAKEMIN, WAKEMAX)                   \
         do {                                                                                          \

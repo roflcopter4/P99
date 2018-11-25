@@ -125,4 +125,7 @@ P99_CONST_FUNCTION p99_inline long double p99_cimagl(long double _Complex p00_c)
 #   undef P00_COMPLEX_PARTIAL
 #  endif
 # endif
+# ifdef I
+#  undef I
+# endif
 #endif      /* !P99_C99_H_ */

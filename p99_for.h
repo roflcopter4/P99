@@ -22,6 +22,7 @@
  **/
 
 #include "p99_block.h"
+#include "p99_compiler.h"
 
 
 
@@ -806,7 +807,7 @@ P00_DOCUMENT_NUMBER_ARGUMENT(P99_ANAME, 2)
  ** @see P99_PARALLEL_PRAGMA for the conditions under which this will
  ** result in a parallel execution.
  **/
-#define P99_PARALLEL_FOR _Pragma(P99_PARALLEL_PRAGMA) for
+#define P99_PARALLEL_FOR P99_PRAGMA(P99_PARALLEL_PRAGMA) for
 
 
 #define P00_PRAGMA_DO(PRAG, TYPE, VAR, LOW, LEN, INCR)                           \

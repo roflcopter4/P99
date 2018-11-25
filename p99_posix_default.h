@@ -110,9 +110,10 @@ P00_POSIX_DEFARG_DOCU(realpath, char*, char const *path, char *resolved_path)
  ** @param  resolved_path defaults to the address of a temporary that is returned in case of success
  ** @note to have realpath allocate its return value with @c malloc, @a resolved_path should be set to 0
  **/
-#define realpath(...) P99_CALL_DEFARG(realpath, 2, __VA_ARGS__)
-#define realpath_defarg_1() P99_LVAL(char[PATH_MAX])
-
+#ifndef realpath
+#  define realpath(...) P99_CALL_DEFARG(realpath, 2, __VA_ARGS__)
+#  define realpath_defarg_1() P99_LVAL(char[PATH_MAX])
+#endif
 
 P00_POSIX_DEFARG_DOCU(getsockopt, int, int sockfd, int level, int optname, void* optval, socklen_t*optlen)
 /**

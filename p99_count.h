@@ -13,6 +13,7 @@
 #ifndef P99_COUNT_H
 #define P99_COUNT_H
 
+#include "p00_pragmas.h"
 #include "p99_futex.h"
 
 /**
@@ -39,23 +40,25 @@ typedef p99_futex p99_count;
 /**
  ** @brief Initialize an ::p99_count object.
  **/
-# define P99_COUNT_INITIALIZER P99_FUTEX_INITIALIZER
+#define P99_COUNT_INITIALIZER P99_FUTEX_INITIALIZER
 
 /**
  ** @brief Initialize an ::p99_count object.
  **/
 P99_DEFARG_DOCU(p99_count_init)
-p99_inline
-p99_count* p99_count_init(p99_count* p00_c, unsigned p00_v) {
-  return p99_futex_init(p00_c, p00_v);
+p99_inline p99_count *
+p99_count_init(p99_count *p00_c, unsigned p00_v)
+{
+        return p99_futex_init(p00_c, p00_v);
 }
 
 #define p99_count_init(...) P99_CALL_DEFARG(p99_count_init, 2, __VA_ARGS__)
 #define p99_count_init_defarg_1() (0)
 
-p99_inline
-void p99_count_destroy(p99_count* p00_c) {
-  p99_futex_destroy(p00_c);
+p99_inline void
+p99_count_destroy(p99_count *p00_c)
+{
+        p99_futex_destroy(p00_c);
 }
 
 /**
@@ -63,9 +66,9 @@ void p99_count_destroy(p99_count* p00_c) {
  ** of a dependent block or statement.
  **/
 P99_BLOCK_DOCUMENT
-#define P99_ACCOUNT(COUNT)                                              \
-P00_BLK_DECL(p99_count*, p00Mcount, &(COUNT))                           \
-P99_PROTECTED_BLOCK(p99_count_inc(p00Mcount), p99_count_dec(p00Mcount))
+#define P99_ACCOUNT(COUNT)                             \
+        P00_BLK_DECL(p99_count *, p00Mcount, &(COUNT)) \
+        P99_PROTECTED_BLOCK(p99_count_inc(p00Mcount), p99_count_dec(p00Mcount))
 
 /**
  ** @brief increment the counter @a counter atomically by @a p00_hm.
@@ -74,8 +77,10 @@ P99_PROTECTED_BLOCK(p99_count_inc(p00Mcount), p99_count_dec(p00Mcount))
  ** @related p99_count
  **/
 P99_DEFARG_DOCU(p99_count_inc)
-p99_inline unsigned p99_count_inc(p99_count volatile* p00_c, unsigned p00_hm) {
-  return p99_futex_add(p00_c, p00_hm, 0U, 0U, 0U, 0U);
+p99_inline unsigned
+p99_count_inc(p99_count volatile *p00_c, unsigned p00_hm)
+{
+        return p99_futex_add(p00_c, p00_hm, 0U, 0U, 0U, 0U);
 }
 
 #define p99_count_inc(...) P99_CALL_DEFARG(p99_count_inc, 2, __VA_ARGS__)
@@ -89,28 +94,33 @@ p99_inline unsigned p99_count_inc(p99_count volatile* p00_c, unsigned p00_hm) {
  **/
 P99_DEFARG_DOCU(p99_count_inc_conditionally)
 P00_FUTEX_INLINE(p99_count_inc_conditionally)
-unsigned p99_count_inc_conditionally(p99_count volatile* p00_c, unsigned p00_hm) {
-  unsigned p00_ret = 0;
-  P99_FUTEX_COMPARE_EXCHANGE(p00_c, p00_act,
-                             /* never wait */
-                             true,
-                             /* only do something if positive */
-                             (!p00_act ? 0U : p00_act + p00_hm),
-                             /* capture the state for return, but
-                                never wakeup and waiters */
-                             ((p00_ret = p00_act), 0), 0);
-  return p00_ret;
+unsigned
+p99_count_inc_conditionally(p99_count volatile *p00_c, unsigned p00_hm)
+{
+        unsigned p00_ret = 0;
+        P99_FUTEX_COMPARE_EXCHANGE(p00_c, p00_act,
+                                   /* never wait */
+                                   true,
+                                   /* only do something if positive */
+                                   (!p00_act ? 0U : p00_act + p00_hm),
+                                   /* capture the state for return, but
+                                      never wakeup and waiters */
+                                   ((p00_ret = p00_act), 0), 0);
+        return p00_ret;
 }
 
-#define p99_count_inc_conditionally(...) P99_CALL_DEFARG(p99_count_inc_conditionally, 2, __VA_ARGS__)
+#define p99_count_inc_conditionally(...) \
+        P99_CALL_DEFARG(p99_count_inc_conditionally, 2, __VA_ARGS__)
 #define p99_count_inc_conditionally_defarg_1() (1U)
 
 /**
  ** @brief Obtain the value of counter @a p00_c atomically.
  ** @related p99_count
  **/
-p99_inline unsigned p99_count_value(p99_count volatile* p00_c) {
-  return p99_futex_load(p00_c);
+p99_inline unsigned
+p99_count_value(p99_count volatile *p00_c)
+{
+        return p99_futex_load(p00_c);
 }
 
 
@@ -123,10 +133,11 @@ p99_inline unsigned p99_count_value(p99_count volatile* p00_c) {
  ** @related p99_count
  **/
 P99_DEFARG_DOCU(p99_count_dec)
-p99_inline
-unsigned p99_count_dec(p99_count volatile* p00_c, unsigned p00_hm) {
-  unsigned ret = p99_futex_add(p00_c, -(signed)p00_hm, 0U, 1U, 0U, P99_FUTEX_MAX_WAITERS);
-  return ret - p00_hm;
+p99_inline unsigned
+p99_count_dec(p99_count volatile *p00_c, unsigned p00_hm)
+{
+        unsigned ret = p99_futex_add(p00_c, -(signed)p00_hm, 0U, 1U, 0U, P99_FUTEX_MAX_WAITERS);
+        return ret - p00_hm;
 }
 
 #define p99_count_dec(...) P99_CALL_DEFARG(p99_count_dec, 2, __VA_ARGS__)
@@ -139,8 +150,12 @@ unsigned p99_count_dec(p99_count volatile* p00_c, unsigned p00_hm) {
  ** @related p99_count
  **/
 P00_FUTEX_INLINE(p99_count_wait)
-void p99_count_wait(p99_count volatile* p00_c) {
-  P99_FUTEX_COMPARE_EXCHANGE(p00_c, p00_act, !p00_act, p00_act, 0U, 0U);
+void
+p99_count_wait(p99_count volatile *p00_c)
+{
+        P01_GCC_IGNORE_UNKNOWN_PRAGMAS()
+        P99_FUTEX_COMPARE_EXCHANGE(p00_c, p00_act, !p00_act, p00_act, 0U, 0U);
+        P01_GCC_POP()
 }
 
 /**

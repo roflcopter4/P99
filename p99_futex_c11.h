@@ -13,6 +13,8 @@
 #ifndef P99_FUTEX_C11_H
 #define P99_FUTEX_C11_H
 
+#include "p00_pragmas.h"
+
 /**
  ** @brief The structure that is used in the fallback implementation
  ** of ::p99_futex on non-linux systems
@@ -170,30 +172,36 @@ unsigned p99_futex_exchange(p99_futex volatile* p00_fut, unsigned p00_desired,
 
 #ifndef P99_FUTEX_COMPARE_EXCHANGE
 P00_DOCUMENT_IDENTIFIER_ARGUMENT(P99_FUTEX_COMPARE_EXCHANGE, 1)
-# define P99_FUTEX_COMPARE_EXCHANGE(FUTEX, ACT, EXPECTED, DESIRED, WAKEMIN, WAKEMAX) \
-do {                                                                                 \
-  p99_futex volatile*const p00Mfut = (FUTEX);                                        \
-  unsigned volatile p00Mwmin = 0;                                                    \
-  unsigned volatile p00Mwmax = 0;                                                    \
-  P99_MUTUAL_EXCLUDE(*(mtx_t*)&p00Mfut->p99_mut) {                                   \
-    for (;;) {                                                                       \
-      register unsigned const ACT = p00Mfut->p99_cnt;                                \
-      P99_UNUSED(ACT);                            /* Don't warn if ACT is unused. */ \
-      if (P99_LIKELY(EXPECTED)) {                                                    \
-        p00Mfut->p99_cnt = (DESIRED);                                                \
-        p00Mwmin = (WAKEMIN);                                                        \
-        p00Mwmax = (WAKEMAX);                                                        \
-        if (p00Mwmax < p00Mwmin) p00Mwmax = p00Mwmin;                                \
-        P00_FUTEX_WAKEUP(p00Mfut, p00Mwmin, p00Mwmax);                               \
-        break;                                                                       \
-      }                                                                              \
-      p00_futex_wait(p00Mfut);                                                       \
-    }                                                                                \
-  }                                                                                  \
-  /* If we haven't woken enough threads, we have to re-acquire the                   \
-     mutex and loop until enough threads will enter the futex wait. */               \
-  if (p00Mwmin) p99_futex_wakeup(p00Mfut, p00Mwmin, p00Mwmax);                       \
- } while (false)
+#define P99_FUTEX_COMPARE_EXCHANGE(FUTEX, ACT, EXPECTED, DESIRED, WAKEMIN, WAKEMAX)    \
+        do {                                                                           \
+                P01_GCC_IGNORE_UNKNOWN_PRAGMAS()                                       \
+                P01_CLANG_IGNORE_DISCARDED_QUALS()                                     \
+                p99_futex volatile *const p00Mfut = (FUTEX);                           \
+                unsigned volatile p00Mwmin        = 0;                                 \
+                unsigned volatile p00Mwmax        = 0;                                 \
+                P99_MUTUAL_EXCLUDE(*(mtx_t *)&p00Mfut->p99_mut)                        \
+                {                                                                      \
+                        for (;;) {                                                     \
+                                register unsigned const ACT = p00Mfut->p99_cnt;        \
+                                P99_UNUSED(ACT); /* Don't warn if ACT is unused. */    \
+                                if (P99_LIKELY(EXPECTED)) {                            \
+                                        p00Mfut->p99_cnt = (DESIRED);                  \
+                                        p00Mwmin         = (WAKEMIN);                  \
+                                        p00Mwmax         = (WAKEMAX);                  \
+                                        if (p00Mwmax < p00Mwmin)                       \
+                                                p00Mwmax = p00Mwmin;                   \
+                                        P00_FUTEX_WAKEUP(p00Mfut, p00Mwmin, p00Mwmax); \
+                                        break;                                         \
+                                }                                                      \
+                                p00_futex_wait(p00Mfut);                               \
+                        }                                                              \
+                }                                                                      \
+                /* If we haven't woken enough threads, we have to re-acquire the
+                   mutex and loop until enough threads will enter the futex wait. */   \
+                if (p00Mwmin)                                                          \
+                        p99_futex_wakeup(p00Mfut, p00Mwmin, p00Mwmax);                 \
+                P01_POP_BOTH()                                                         \
+        } while (false)
 #endif
 
 #endif /* P00_DOXYGEN */
