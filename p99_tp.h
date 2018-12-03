@@ -194,7 +194,8 @@ bool p00_tp_cmpxchg(_Atomic(p00_tp_glue) volatile*const p00_p, p00_tp_glue volat
 }
 
 p99_inline
-p00_tp_glue p00_tp_get(register p99_tp volatile*const p00_tp) {
+p00_tp_glue p00_tp_get(register p99_tp volatile*const p00_tp)
+{
   register p00_tp_glue p00_ret
     = P99_LIKELY(p00_tp)
       ? atomic_load_explicit(&p00_tp->p00_val, memory_order_consume)
