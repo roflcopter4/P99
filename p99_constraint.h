@@ -20,6 +20,17 @@
  ** @{
  **/
 
+#if defined _WIN64
+#  define P00_MKTIME   _mktime64
+#  define P00_DIFFTIME _difftime64
+#elif defined _WIN32
+#  define P00_MKTIME   _mktime32
+#  define P00_DIFFTIME _difftime32
+#else
+#  define P00_MKTIME   mktime
+#  define P00_DIFFTIME difftime
+#endif
+
 /**
  ** @brief calculates the length of the (untruncated) locale-specific
  ** message string that the strerror_s function maps to errnum.
@@ -934,7 +945,7 @@ p00_localtime_s(char const *p00_file, char const *p00_context, time_t const *res
                     .tm_year  = byear,
                     .tm_isdst = -1,
                 };
-                double  p00_diff = difftime(*p00_t, mktime(p00_tptr));
+                double  p00_diff = P00_DIFFTIME(*p00_t, P00_MKTIME(p00_tptr));
                 int64_t p00_sec  = p00_diff;
                 int64_t p00_min  = p00_sec / 60u;
                 p00_sec -= 60u * p00_min;
@@ -950,7 +961,7 @@ p00_localtime_s(char const *p00_file, char const *p00_context, time_t const *res
                     .tm_year  = byear,
                     .tm_isdst = 0,
                 };
-                if (mktime(p00_tptr) == (time_t)-1) {
+                if (P00_MKTIME(p00_tptr) == (time_t)-1) {
                         char date[26];
                         asctime_s(date, sizeof date, p00_tptr);
                         printf("warning, time might be before epoch:\t%s", date);
@@ -991,7 +1002,7 @@ p00_gmtime_s(char const *p00_file, char const *p00_context, time_t const *restri
                                 p00_min = -p00_min;
                         p00_tptr->tm_hour -= p00_hour;
                         p00_tptr->tm_min -= p00_min;
-                        mktime(p00_tptr);
+                        P00_MKTIME(p00_tptr);
                 }
                 p00_ret = p00_tptr;
         }
