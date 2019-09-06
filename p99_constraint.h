@@ -253,7 +253,7 @@ p00_strerror_s(char *p00_s, rsize_t p00_maxsize, errno_t p00_errnum)
 #endif
 
 p99_inline void
-p00_constraint_report(errno_t p00_cond, char const *p00_file, char const *p00_context, char const *p00_info)
+p00_constraint_report(errno_t p00_cond, const bool caught, char const *p00_file, char const *p00_context, char const *p00_info)
 {
         char p00_str[p00_ilen10] = P99_INIT;
         if (!p00_context)
@@ -267,14 +267,20 @@ p00_constraint_report(errno_t p00_cond, char const *p00_file, char const *p00_co
         if (!p00_file)
                 p00_file = "<unknown location>";
 
-        fprintf(stderr, "%s:%s: Uncaught exception (%d): ", p00_context, p00_file, p00_cond);
+        if (caught)
+                fprintf(stderr, "%s:%s: Caught exception (%d): ", p00_context, p00_file, p00_cond);
+        else
+                fprintf(stderr, "%s:%s: Uncaught exception (%d): ", p00_context, p00_file, p00_cond);
 
-        if (p00_info)
+        bool have_msg = p00_info && p00_info[0];
+
+        if (have_msg)
                 fprintf(stderr, "\"%s\"", p00_info);
 
         if (p00_cond > 0) {
                 char const *const p00_errname = p99_errno_getname(p00_cond);
-                fputs(", ", stderr);
+                if  (have_msg)
+                        fputs(", ", stderr);
                 if (p00_errname) {
                         fputs(p00_errname, stderr);
                         fputc('=', stderr);
@@ -297,7 +303,7 @@ p99_inline void
 p99_report_handler(const char *restrict p00_msg, void *restrict p00_ptr, errno_t p00_err)
 {
         P99_UNUSED(p00_ptr);
-        p00_constraint_report(p00_err, 0, 0, p00_msg);
+        p00_constraint_report(p00_err, 0, 0, 0, p00_msg);
 }
 
 /* P99_CONST_FUNCTION */
@@ -313,7 +319,7 @@ noreturn p99_inline void
 p99_abort_handler(const char *restrict p00_msg, void *restrict p00_ptr, errno_t p00_err)
 {
         P99_UNUSED(p00_ptr);
-        p00_constraint_report(p00_err, 0, 0, p00_msg);
+        p00_constraint_report(p00_err, 0, 0, 0, p00_msg);
         fputs("runtime constraint violation: ", stderr);
         abort();
 }
@@ -323,7 +329,7 @@ p99_exit_handler(const char *restrict p00_msg, void *restrict p00_ptr, errno_t p
 {
         P99_UNUSED(p00_ptr);
         P99_UNUSED(p00_err);
-        p00_constraint_report(p00_err, 0, 0, p00_msg);
+        p00_constraint_report(p00_err, 0, 0, 0, p00_msg);
         fputs("runtime constraint violation: ", stderr);
         exit(EXIT_FAILURE);
 }

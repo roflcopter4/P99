@@ -491,6 +491,7 @@ signed p00_trailing_comma_in_initializer__(void) {
  ** with this.
  **/
 #  define p99_inline static inline
+#  warning "p99_inline defaulted to 'static inline'. This will cause problems!"
 # endif
 
 #ifdef P00_FORCE_NOINLINE

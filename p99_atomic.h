@@ -44,9 +44,9 @@
 # include <stdatomic.h>
 # include "p99_atomic_flag.h"
 
-#define P00_DECLARE_ATOMIC2(T, ...) typedef _Atomic(T) __VA_ARGS__
+# define P00_DECLARE_ATOMIC2(T, ...) typedef _Atomic(T) __VA_ARGS__
 
-#define P99_DECLARE_ATOMIC(...)                                                                                        \
+# define P99_DECLARE_ATOMIC(...)                                                                                        \
 /** @brief Atomic access to a value of type <code>T</code> @see atomic_int for the possible operations on this type */ \
 P99_IF_EQ_1(P99_NARG(__VA_ARGS__))                                                                                     \
 (P00_DECLARE_ATOMIC2(__VA_ARGS__, P99_PASTE2(atomic_, __VA_ARGS__)))                                                   \
@@ -56,8 +56,8 @@ P99_DECLARE_ATOMIC(float);
 P99_DECLARE_ATOMIC(double);
 #else
 /* #ifndef __NWCC__
-#  error "This should never be necessary."
-#endif */
+ * #  error "This should never be necessary."
+ * #endif */
 /**
  ** @addtogroup atomic_stub Stub replacements of C11 atomic operations
  **
@@ -74,19 +74,19 @@ P99_DECLARE_ATOMIC(double);
  ** @{
  **/
 
-#ifdef P99_TEST_ATOMIC
-# undef __GCC_HAVE_SYNC_COMPARE_AND_SWAP_1
-# undef __GCC_HAVE_SYNC_COMPARE_AND_SWAP_2
-# undef __GCC_HAVE_SYNC_COMPARE_AND_SWAP_4
-# undef __GCC_HAVE_SYNC_COMPARE_AND_SWAP_8
-#endif
+# ifdef P99_TEST_ATOMIC
+#  undef __GCC_HAVE_SYNC_COMPARE_AND_SWAP_1
+#  undef __GCC_HAVE_SYNC_COMPARE_AND_SWAP_2
+#  undef __GCC_HAVE_SYNC_COMPARE_AND_SWAP_4
+#  undef __GCC_HAVE_SYNC_COMPARE_AND_SWAP_8
+# endif
 
 /**
  ** @addtogroup atomic_enum
  ** @{
  **/
 
-#if defined(P00_DOXYGEN) || !defined(__ATOMIC_RELAXED)
+# if defined(P00_DOXYGEN) || !defined(__ATOMIC_RELAXED)
 P99_DECLARE_ENUM(memory_order,
                  memory_order_relaxed,
                  memory_order_consume,
@@ -95,7 +95,7 @@ P99_DECLARE_ENUM(memory_order,
                  memory_order_acq_rel,
                  memory_order_seq_cst
                 );
-#else
+# else
 enum memory_order {
   memory_order_relaxed = __ATOMIC_RELAXED,
   memory_order_consume = __ATOMIC_CONSUME,
@@ -105,28 +105,28 @@ enum memory_order {
   memory_order_seq_cst = __ATOMIC_SEQ_CST,
 };
 typedef enum memory_order memory_order;
-#endif
+# endif
 
 /**
  ** @}
  **/
 
-#if defined(__GNUC__) && !defined(P00_ATOMIC_NO_GCC)
-# include "p99_atomic_gcc.h"
-#elif defined(__arm__)
-# include "p99_atomic_arm.h"
-#elif defined(__x86_64__) || defined(__i386__)
-# include "p99_atomic_x86.h"
-#else
-# warning "no support for atomic operations detected for this platform"
-# define P00_NO_ATOMICS
-#endif
+# if defined(__GNUC__) && !defined(P00_ATOMIC_NO_GCC)
+#  include "p99_atomic_gcc.h"
+#  elif defined(__arm__)
+#  include "p99_atomic_arm.h"
+#  elif defined(__x86_64__) || defined(__i386__)
+#  include "p99_atomic_x86.h"
+# else
+#  warning "no support for atomic operations detected for this platform"
+#  define P00_NO_ATOMICS
+# endif
 
 /**
  ** @}
  **/
 
-#if !defined(P00_NO_ATOMICS) || defined(P00_DOXYGEN)
+# if !defined(P00_NO_ATOMICS) || defined(P00_DOXYGEN)
 
 /**
  ** @addtogroup atomic_macros
@@ -152,232 +152,232 @@ typedef enum memory_order memory_order;
  **/
 
 
-#ifndef ATOMIC_INT8_LOCK_FREE
-#  if defined(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_1)
-#   define ATOMIC_INT8_LOCK_FREE 2
-#  else
-#   define ATOMIC_INT8_LOCK_FREE 0
+#  ifndef ATOMIC_INT8_LOCK_FREE
+#   if defined(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_1)
+#    define ATOMIC_INT8_LOCK_FREE 2
+#   else
+#    define ATOMIC_INT8_LOCK_FREE 0
+#   endif
 #  endif
-#endif
-#if ATOMIC_INT8_LOCK_FREE == 2
-# define P00_TYPE_LIST_ELEM1 , (1, uint8_t)
-#else
-# define P00_TYPE_LIST_ELEM1
-#endif
-
-#ifndef ATOMIC_INT16_LOCK_FREE
-#  if defined(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_2)
-#   define ATOMIC_INT16_LOCK_FREE 2
+#  if ATOMIC_INT8_LOCK_FREE == 2
+#   define P00_TYPE_LIST_ELEM1 , (1, uint8_t)
 #  else
-#   define ATOMIC_INT16_LOCK_FREE 0
+#   define P00_TYPE_LIST_ELEM1
 #  endif
-#endif
-#if ATOMIC_INT16_LOCK_FREE == 2
-# define P00_TYPE_LIST_ELEM2 , (2, uint16_t)
-#else
-# define P00_TYPE_LIST_ELEM2
-#endif
 
-#ifndef ATOMIC_INT32_LOCK_FREE
-#  if defined(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4)
-#   define ATOMIC_INT32_LOCK_FREE 2
+#  ifndef ATOMIC_INT16_LOCK_FREE
+#   if defined(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_2)
+#    define ATOMIC_INT16_LOCK_FREE 2
+#   else
+#    define ATOMIC_INT16_LOCK_FREE 0
+#   endif
+#  endif
+#  if ATOMIC_INT16_LOCK_FREE == 2
+#   define P00_TYPE_LIST_ELEM2 , (2, uint16_t)
 #  else
-#   define ATOMIC_INT32_LOCK_FREE 0
+#   define P00_TYPE_LIST_ELEM2
 #  endif
-#endif
-#if ATOMIC_INT32_LOCK_FREE == 2
-# define P00_TYPE_LIST_ELEM4 , (4, uint32_t)
-#else
-# define P00_TYPE_LIST_ELEM4
-#endif
 
-#ifndef ATOMIC_INT64_LOCK_FREE
-#  if defined(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_8)
-#   define ATOMIC_INT64_LOCK_FREE 2
+#  ifndef ATOMIC_INT32_LOCK_FREE
+#   if defined(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4)
+#    define ATOMIC_INT32_LOCK_FREE 2
+#   else
+#    define ATOMIC_INT32_LOCK_FREE 0
+#   endif
+#  endif
+#  if ATOMIC_INT32_LOCK_FREE == 2
+#   define P00_TYPE_LIST_ELEM4 , (4, uint32_t)
 #  else
-#   define ATOMIC_INT64_LOCK_FREE 0
+#   define P00_TYPE_LIST_ELEM4
 #  endif
-#endif
-#if ATOMIC_INT64_LOCK_FREE == 2
-# define P00_TYPE_LIST_ELEM8 , (8, uint64_t)
-#else
-# define P00_TYPE_LIST_ELEM8
-#endif
 
-#ifndef ATOMIC_INT128_LOCK_FREE
-#  if defined(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_16) && (defined(UINT128_MAX) || defined(p99x_uint128))
-#   define ATOMIC_INT128_LOCK_FREE 2
+#  ifndef ATOMIC_INT64_LOCK_FREE
+#   if defined(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_8)
+#    define ATOMIC_INT64_LOCK_FREE 2
+#   else
+#    define ATOMIC_INT64_LOCK_FREE 0
+#   endif
+#  endif
+#  if ATOMIC_INT64_LOCK_FREE == 2
+#   define P00_TYPE_LIST_ELEM8 , (8, uint64_t)
 #  else
-#   define ATOMIC_INT128_LOCK_FREE 0
+#   define P00_TYPE_LIST_ELEM8
 #  endif
-#endif
-#if ATOMIC_INT128_LOCK_FREE == 2
-# if defined(UINT128_MAX)
-#  define P00_TYPE_LIST_ELEM16 , (16, uint128_t)
-# else
-#  define P00_TYPE_LIST_ELEM16 , (16, p99x_uint128)
-# endif
-#else
-# define P00_TYPE_LIST_ELEM16
-#endif
+
+#  ifndef ATOMIC_INT128_LOCK_FREE
+#   if defined(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_16) && (defined(UINT128_MAX) || defined(p99x_uint128))
+#    define ATOMIC_INT128_LOCK_FREE 2
+#   else
+#    define ATOMIC_INT128_LOCK_FREE 0
+#   endif
+#  endif
+#  if ATOMIC_INT128_LOCK_FREE == 2
+#   if defined(UINT128_MAX)
+#    define P00_TYPE_LIST_ELEM16 , (16, uint128_t)
+#   else
+#    define P00_TYPE_LIST_ELEM16 , (16, p99x_uint128)
+#   endif
+#  else
+#   define P00_TYPE_LIST_ELEM16
+#  endif
 
 
-#ifndef ATOMIC_BOOL_LOCK_FREE
-# if defined(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4) && (UINT_MAX <= UINT32_MAX)
-#define ATOMIC_BOOL_LOCK_FREE 2
-# else
-#define ATOMIC_BOOL_LOCK_FREE 0
-# endif
-#endif
-#ifndef ATOMIC_CHAR_LOCK_FREE
-# define ATOMIC_CHAR_LOCK_FREE ATOMIC_INT8_LOCK_FREE
-#endif
-#if USHRT_MAX == UINT8_MAX
-# define ATOMIC_SHORT_LOCK_FREE ATOMIC_INT8_LOCK_FREE
-#elif USHRT_MAX == UINT16_MAX
-# define ATOMIC_SHORT_LOCK_FREE ATOMIC_INT16_LOCK_FREE
-#elif USHRT_MAX == UINT32_MAX
-# define ATOMIC_SHORT_LOCK_FREE ATOMIC_INT32_LOCK_FREE
-#elif USHRT_MAX == UINT64_MAX
-# define ATOMIC_SHORT_LOCK_FREE ATOMIC_INT64_LOCK_FREE
-#elif USHRT_MAX == UINT128_MAX
-# define ATOMIC_SHORT_LOCK_FREE ATOMIC_INT128_LOCK_FREE
-#else
-# define ATOMIC_SHORT_LOCK_FREE 0
-#endif
-#if UINT_MAX == UINT8_MAX
-# define ATOMIC_INT_LOCK_FREE ATOMIC_INT8_LOCK_FREE
-#elif UINT_MAX == UINT16_MAX
-# define ATOMIC_INT_LOCK_FREE ATOMIC_INT16_LOCK_FREE
-#elif UINT_MAX == UINT32_MAX
-# define ATOMIC_INT_LOCK_FREE ATOMIC_INT32_LOCK_FREE
-#elif UINT_MAX == UINT64_MAX
-# define ATOMIC_INT_LOCK_FREE ATOMIC_INT64_LOCK_FREE
-#elif UINT_MAX == UINT128_MAX
-# define ATOMIC_INT_LOCK_FREE ATOMIC_INT128_LOCK_FREE
-#else
-# define ATOMIC_INT_LOCK_FREE 0
-#endif
-#if ULONG_MAX == UINT8_MAX
-# define ATOMIC_LONG_LOCK_FREE ATOMIC_INT8_LOCK_FREE
-#elif ULONG_MAX == UINT16_MAX
-# define ATOMIC_LONG_LOCK_FREE ATOMIC_INT16_LOCK_FREE
-#elif ULONG_MAX == UINT32_MAX
-# define ATOMIC_LONG_LOCK_FREE ATOMIC_INT32_LOCK_FREE
-#elif ULONG_MAX == UINT64_MAX
-# define ATOMIC_LONG_LOCK_FREE ATOMIC_INT64_LOCK_FREE
-#elif ULONG_MAX == UINT128_MAX
-# define ATOMIC_LONG_LOCK_FREE ATOMIC_INT128_LOCK_FREE
-#else
-# define ATOMIC_LONG_LOCK_FREE 0
-#endif
-#if ULLONG_MAX == UINT8_MAX
-# define ATOMIC_LLONG_LOCK_FREE ATOMIC_INT8_LOCK_FREE
-#elif ULLONG_MAX == UINT16_MAX
-# define ATOMIC_LLONG_LOCK_FREE ATOMIC_INT16_LOCK_FREE
-#elif ULLONG_MAX == UINT32_MAX
-# define ATOMIC_LLONG_LOCK_FREE ATOMIC_INT32_LOCK_FREE
-#elif ULLONG_MAX == UINT64_MAX
-# define ATOMIC_LLONG_LOCK_FREE ATOMIC_INT64_LOCK_FREE
-#elif ULLONG_MAX == UINT128_MAX
-# define ATOMIC_LLONG_LOCK_FREE ATOMIC_INT128_LOCK_FREE
-#else
-# define ATOMIC_LLONG_LOCK_FREE 0
-#endif
-#if UINTPTR_MAX == UINT8_MAX
-# define ATOMIC_INTPTR_LOCK_FREE ATOMIC_INT8_LOCK_FREE
-#elif UINTPTR_MAX == UINT16_MAX
-# define ATOMIC_INTPTR_LOCK_FREE ATOMIC_INT16_LOCK_FREE
-#elif UINTPTR_MAX == UINT32_MAX
-# define ATOMIC_INTPTR_LOCK_FREE ATOMIC_INT32_LOCK_FREE
-#elif UINTPTR_MAX == UINT64_MAX
-# define ATOMIC_INTPTR_LOCK_FREE ATOMIC_INT64_LOCK_FREE
-#elif UINTPTR_MAX == UINT128_MAX
-# define ATOMIC_INTPTR_LOCK_FREE ATOMIC_INT128_LOCK_FREE
-#else
-# define ATOMIC_INTPTR_LOCK_FREE 0
-#endif
-#ifndef ATOMIC_POINTER_LOCK_FREE
-#define ATOMIC_POINTER_LOCK_FREE ATOMIC_INTPTR_LOCK_FREE
-#endif
-#if ATOMIC_INTPTR_LOCK_FREE == 2
-#if UINTPTR_MAX == UINT8_MAX
-# define P00_UINT_TYPE_LIST                                    \
+#  ifndef ATOMIC_BOOL_LOCK_FREE
+#   if defined(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4) && (UINT_MAX <= UINT32_MAX)
+#    define ATOMIC_BOOL_LOCK_FREE 2
+#   else
+#    define ATOMIC_BOOL_LOCK_FREE 0
+#   endif
+#  endif
+#  ifndef ATOMIC_CHAR_LOCK_FREE
+#   define ATOMIC_CHAR_LOCK_FREE ATOMIC_INT8_LOCK_FREE
+#  endif
+#  if USHRT_MAX == UINT8_MAX
+#   define ATOMIC_SHORT_LOCK_FREE ATOMIC_INT8_LOCK_FREE
+#   elif USHRT_MAX == UINT16_MAX
+#   define ATOMIC_SHORT_LOCK_FREE ATOMIC_INT16_LOCK_FREE
+#   elif USHRT_MAX == UINT32_MAX
+#   define ATOMIC_SHORT_LOCK_FREE ATOMIC_INT32_LOCK_FREE
+#   elif USHRT_MAX == UINT64_MAX
+#   define ATOMIC_SHORT_LOCK_FREE ATOMIC_INT64_LOCK_FREE
+#   elif USHRT_MAX == UINT128_MAX
+#   define ATOMIC_SHORT_LOCK_FREE ATOMIC_INT128_LOCK_FREE
+#  else
+#   define ATOMIC_SHORT_LOCK_FREE 0
+#  endif
+#  if UINT_MAX == UINT8_MAX
+#   define ATOMIC_INT_LOCK_FREE ATOMIC_INT8_LOCK_FREE
+#   elif UINT_MAX == UINT16_MAX
+#   define ATOMIC_INT_LOCK_FREE ATOMIC_INT16_LOCK_FREE
+#   elif UINT_MAX == UINT32_MAX
+#   define ATOMIC_INT_LOCK_FREE ATOMIC_INT32_LOCK_FREE
+#   elif UINT_MAX == UINT64_MAX
+#   define ATOMIC_INT_LOCK_FREE ATOMIC_INT64_LOCK_FREE
+#   elif UINT_MAX == UINT128_MAX
+#   define ATOMIC_INT_LOCK_FREE ATOMIC_INT128_LOCK_FREE
+#  else
+#   define ATOMIC_INT_LOCK_FREE 0
+#  endif
+#  if ULONG_MAX == UINT8_MAX
+#   define ATOMIC_LONG_LOCK_FREE ATOMIC_INT8_LOCK_FREE
+#   elif ULONG_MAX == UINT16_MAX
+#   define ATOMIC_LONG_LOCK_FREE ATOMIC_INT16_LOCK_FREE
+#   elif ULONG_MAX == UINT32_MAX
+#   define ATOMIC_LONG_LOCK_FREE ATOMIC_INT32_LOCK_FREE
+#   elif ULONG_MAX == UINT64_MAX
+#   define ATOMIC_LONG_LOCK_FREE ATOMIC_INT64_LOCK_FREE
+#   elif ULONG_MAX == UINT128_MAX
+#   define ATOMIC_LONG_LOCK_FREE ATOMIC_INT128_LOCK_FREE
+#  else
+#   define ATOMIC_LONG_LOCK_FREE 0
+#  endif
+#  if ULLONG_MAX == UINT8_MAX
+#   define ATOMIC_LLONG_LOCK_FREE ATOMIC_INT8_LOCK_FREE
+#   elif ULLONG_MAX == UINT16_MAX
+#   define ATOMIC_LLONG_LOCK_FREE ATOMIC_INT16_LOCK_FREE
+#   elif ULLONG_MAX == UINT32_MAX
+#   define ATOMIC_LLONG_LOCK_FREE ATOMIC_INT32_LOCK_FREE
+#   elif ULLONG_MAX == UINT64_MAX
+#   define ATOMIC_LLONG_LOCK_FREE ATOMIC_INT64_LOCK_FREE
+#   elif ULLONG_MAX == UINT128_MAX
+#   define ATOMIC_LLONG_LOCK_FREE ATOMIC_INT128_LOCK_FREE
+#  else
+#   define ATOMIC_LLONG_LOCK_FREE 0
+#  endif
+#  if UINTPTR_MAX == UINT8_MAX
+#   define ATOMIC_INTPTR_LOCK_FREE ATOMIC_INT8_LOCK_FREE
+#   elif UINTPTR_MAX == UINT16_MAX
+#   define ATOMIC_INTPTR_LOCK_FREE ATOMIC_INT16_LOCK_FREE
+#   elif UINTPTR_MAX == UINT32_MAX
+#   define ATOMIC_INTPTR_LOCK_FREE ATOMIC_INT32_LOCK_FREE
+#   elif UINTPTR_MAX == UINT64_MAX
+#   define ATOMIC_INTPTR_LOCK_FREE ATOMIC_INT64_LOCK_FREE
+#   elif UINTPTR_MAX == UINT128_MAX
+#   define ATOMIC_INTPTR_LOCK_FREE ATOMIC_INT128_LOCK_FREE
+#  else
+#   define ATOMIC_INTPTR_LOCK_FREE 0
+#  endif
+#  ifndef ATOMIC_POINTER_LOCK_FREE
+#   define ATOMIC_POINTER_LOCK_FREE ATOMIC_INTPTR_LOCK_FREE
+#  endif
+#  if ATOMIC_INTPTR_LOCK_FREE == 2
+#   if UINTPTR_MAX == UINT8_MAX
+#    define P00_UINT_TYPE_LIST                                    \
   (1, uintptr_t)                                               \
   P00_TYPE_LIST_ELEM2                                          \
   P00_TYPE_LIST_ELEM4                                          \
   P00_TYPE_LIST_ELEM8                                          \
   P00_TYPE_LIST_ELEM16
-#elif UINTPTR_MAX == UINT16_MAX
-# define P00_UINT_TYPE_LIST                                    \
+#    elif UINTPTR_MAX == UINT16_MAX
+#    define P00_UINT_TYPE_LIST                                    \
   (2, uintptr_t)                                               \
   P00_TYPE_LIST_ELEM1                                          \
   P00_TYPE_LIST_ELEM4                                          \
   P00_TYPE_LIST_ELEM8                                          \
   P00_TYPE_LIST_ELEM16
-#elif UINTPTR_MAX == UINT32_MAX
-# define P00_UINT_TYPE_LIST                                    \
+#    elif UINTPTR_MAX == UINT32_MAX
+#    define P00_UINT_TYPE_LIST                                    \
   (4, uintptr_t)                                               \
   P00_TYPE_LIST_ELEM1                                          \
   P00_TYPE_LIST_ELEM2                                          \
   P00_TYPE_LIST_ELEM8                                          \
   P00_TYPE_LIST_ELEM16
-#elif UINTPTR_MAX == UINT64_MAX
-# define P00_UINT_TYPE_LIST                                    \
+#    elif UINTPTR_MAX == UINT64_MAX
+#    define P00_UINT_TYPE_LIST                                    \
   (8, uintptr_t)                                               \
   P00_TYPE_LIST_ELEM1                                          \
   P00_TYPE_LIST_ELEM2                                          \
   P00_TYPE_LIST_ELEM4                                          \
   P00_TYPE_LIST_ELEM16
-#elif UINTPTR_MAX == UINT128_MAX
-# define P00_UINT_TYPE_LIST                                    \
+#    elif UINTPTR_MAX == UINT128_MAX
+#    define P00_UINT_TYPE_LIST                                    \
   (16, uintptr_t)                                              \
   P00_TYPE_LIST_ELEM1                                          \
   P00_TYPE_LIST_ELEM2                                          \
   P00_TYPE_LIST_ELEM4                                          \
   P00_TYPE_LIST_ELEM8
-#else
-# define P00_UINT_TYPE_LIST                                    \
+#   else
+#    define P00_UINT_TYPE_LIST                                    \
   (1, uint8_t)                                                 \
   P00_TYPE_LIST_ELEM2                                          \
   P00_TYPE_LIST_ELEM4                                          \
   P00_TYPE_LIST_ELEM8                                          \
   P00_TYPE_LIST_ELEM16
-#endif
-#endif
-#if UINT_LEAST16_MAX == UINT16_MAX
-# define ATOMIC_CHAR16_T_LOCK_FREE ATOMIC_INT16_LOCK_FREE
-#elif UINT_LEAST16_MAX == UINT32_MAX
-# define ATOMIC_CHAR16_T_LOCK_FREE ATOMIC_INT32_LOCK_FREE
-#elif UINT_LEAST16_MAX == UINT64_MAX
-# define ATOMIC_CHAR16_T_LOCK_FREE ATOMIC_INT64_LOCK_FREE
-#elif UINT_LEAST16_MAX == UINT128_MAX
-# define ATOMIC_CHAR16_T_LOCK_FREE ATOMIC_INT128_LOCK_FREE
-#else
-# define ATOMIC_CHAR16_T_LOCK_FREE 0
-#endif
-#if UINT_LEAST32_MAX == UINT32_MAX
-# define ATOMIC_CHAR32_T_LOCK_FREE ATOMIC_INT32_LOCK_FREE
-#elif UINT_LEAST32_MAX == UINT64_MAX
-# define ATOMIC_CHAR32_T_LOCK_FREE ATOMIC_INT64_LOCK_FREE
-#elif UINT_LEAST32_MAX == UINT128_MAX
-# define ATOMIC_CHAR32_T_LOCK_FREE ATOMIC_INT128_LOCK_FREE
-#else
-# define ATOMIC_CHAR32_T_LOCK_FREE 0
-#endif
-#if WCHAR_MAX == UINT8_MAX || (!WCHAR_MIN && (WCHAR_MAX == INT8_MAX))
-# define ATOMIC_WCHAR_LOCK_FREE ATOMIC_INT8_LOCK_FREE
-#elif WCHAR_MAX == UINT16_MAX || (!WCHAR_MIN && (WCHAR_MAX == INT16_MAX))
-# define ATOMIC_WCHAR_LOCK_FREE ATOMIC_INT16_LOCK_FREE
-#elif WCHAR_MAX == UINT32_MAX || (!WCHAR_MIN && (WCHAR_MAX == INT32_MAX))
-# define ATOMIC_WCHAR_LOCK_FREE ATOMIC_INT32_LOCK_FREE
-#elif WCHAR_MAX == UINT64_MAX || (!WCHAR_MIN && (WCHAR_MAX == INT64_MAX))
-# define ATOMIC_WCHAR_LOCK_FREE ATOMIC_INT64_LOCK_FREE
-#elif WCHAR_MAX == UINT128_MAX || (!WCHAR_MIN && (WCHAR_MAX == INT128_MAX))
-# define ATOMIC_WCHAR_LOCK_FREE ATOMIC_INT128_LOCK_FREE
-#else
-# define ATOMIC_WCHAR_LOCK_FREE 0
-#endif
+#   endif
+#  endif
+#  if UINT_LEAST16_MAX == UINT16_MAX
+#   define ATOMIC_CHAR16_T_LOCK_FREE ATOMIC_INT16_LOCK_FREE
+#   elif UINT_LEAST16_MAX == UINT32_MAX
+#   define ATOMIC_CHAR16_T_LOCK_FREE ATOMIC_INT32_LOCK_FREE
+#   elif UINT_LEAST16_MAX == UINT64_MAX
+#   define ATOMIC_CHAR16_T_LOCK_FREE ATOMIC_INT64_LOCK_FREE
+#   elif UINT_LEAST16_MAX == UINT128_MAX
+#   define ATOMIC_CHAR16_T_LOCK_FREE ATOMIC_INT128_LOCK_FREE
+#  else
+#   define ATOMIC_CHAR16_T_LOCK_FREE 0
+#  endif
+#  if UINT_LEAST32_MAX == UINT32_MAX
+#   define ATOMIC_CHAR32_T_LOCK_FREE ATOMIC_INT32_LOCK_FREE
+#   elif UINT_LEAST32_MAX == UINT64_MAX
+#   define ATOMIC_CHAR32_T_LOCK_FREE ATOMIC_INT64_LOCK_FREE
+#   elif UINT_LEAST32_MAX == UINT128_MAX
+#   define ATOMIC_CHAR32_T_LOCK_FREE ATOMIC_INT128_LOCK_FREE
+#  else
+#   define ATOMIC_CHAR32_T_LOCK_FREE 0
+#  endif
+#  if WCHAR_MAX == UINT8_MAX || (!WCHAR_MIN && (WCHAR_MAX == INT8_MAX))
+#   define ATOMIC_WCHAR_LOCK_FREE ATOMIC_INT8_LOCK_FREE
+#   elif WCHAR_MAX == UINT16_MAX || (!WCHAR_MIN && (WCHAR_MAX == INT16_MAX))
+#   define ATOMIC_WCHAR_LOCK_FREE ATOMIC_INT16_LOCK_FREE
+#   elif WCHAR_MAX == UINT32_MAX || (!WCHAR_MIN && (WCHAR_MAX == INT32_MAX))
+#   define ATOMIC_WCHAR_LOCK_FREE ATOMIC_INT32_LOCK_FREE
+#   elif WCHAR_MAX == UINT64_MAX || (!WCHAR_MIN && (WCHAR_MAX == INT64_MAX))
+#   define ATOMIC_WCHAR_LOCK_FREE ATOMIC_INT64_LOCK_FREE
+#   elif WCHAR_MAX == UINT128_MAX || (!WCHAR_MIN && (WCHAR_MAX == INT128_MAX))
+#   define ATOMIC_WCHAR_LOCK_FREE ATOMIC_INT128_LOCK_FREE
+#  else
+#   define ATOMIC_WCHAR_LOCK_FREE 0
+#  endif
 
 /**
  ** @brief A default unsigned integer type for type @a T
@@ -402,25 +402,25 @@ typedef enum memory_order memory_order;
  ** compilers.
  **/
 P00_DOCUMENT_TYPE_ARGUMENT(P99_UINT_DEFAULT, 0)
-#if defined(P00_UINT_TYPE_LIST) || defined(P00_DOXYGEN)
-# define P99_UINT_DEFAULT(T)                                                      \
+#  if defined(P00_UINT_TYPE_LIST) || defined(P00_DOXYGEN)
+#   define P99_UINT_DEFAULT(T)                                                      \
 __typeof__(P99_GENERIC_SIZE_LIT(sizeof(T), (uintptr_t){ 0 }, P00_UINT_TYPE_LIST))
-#else
-# define P00_UINT_TYPE_LIST
-# define P99_UINT_DEFAULT(T) uintptr_t
-#endif
+#  else
+#   define P00_UINT_TYPE_LIST
+#   define P99_UINT_DEFAULT(T) uintptr_t
+#  endif
 
 /**
  ** @brief Initialize a variable of type ::atomic_flag
  ** @see atomic_flag
  **/
-#define ATOMIC_FLAG_INIT P99_ENC_INIT(0)
+#  define ATOMIC_FLAG_INIT P99_ENC_INIT(0)
 
 /**
  ** @brief Initialize a variable of an atomic type.
  ** @see atomic_int
  **/
-#define ATOMIC_VAR_INIT(...) { .p00_xval = { .p00_t = __VA_ARGS__, }, }
+#  define ATOMIC_VAR_INIT(...) { .p00_xval = { .p00_t = __VA_ARGS__, }, }
 
 /**
  ** @brief A list of types that are supposed to have lock-free atomic
@@ -436,107 +436,107 @@ __typeof__(P99_GENERIC_SIZE_LIT(sizeof(T), (uintptr_t){ 0 }, P00_UINT_TYPE_LIST)
  ** @see ATOMIC_LONG_LOCK_FREE
  ** @see ATOMIC_LLONG_LOCK_FREE
  **/
-#ifndef P99_ATOMIC_LOCK_FREE_TYPES
-# define P99_ATOMIC_LOCK_FREE_TYPES P00_ATOMIC_LOCK_FREE_TYPES6_
+#  ifndef P99_ATOMIC_LOCK_FREE_TYPES
+#   define P99_ATOMIC_LOCK_FREE_TYPES P00_ATOMIC_LOCK_FREE_TYPES6_
 
-#if ATOMIC_BOOL_LOCK_FREE == 2
-# define P00_ATOMIC_LOCK_FREE_TYPES0 _Bool
-#endif
-#if ATOMIC_CHAR_LOCK_FREE == 2
-# define P00_ATOMIC_LOCK_FREE_TYPES1 char, signed char, unsigned char
-#endif
-#if ATOMIC_SHORT_LOCK_FREE == 2
-# define P00_ATOMIC_LOCK_FREE_TYPES2 short, unsigned short
-#endif
-#if ATOMIC_INT_LOCK_FREE == 2
-# define P00_ATOMIC_LOCK_FREE_TYPES3 int, unsigned int
-#endif
-#if ATOMIC_LONG_LOCK_FREE == 2
-# define P00_ATOMIC_LOCK_FREE_TYPES4 long, unsigned long
-#endif
-#if ATOMIC_LLONG_LOCK_FREE == 2
-# define P00_ATOMIC_LOCK_FREE_TYPES5 long long, unsigned long long
-#endif
-#if ATOMIC_POINTER_LOCK_FREE == 2
-# define P00_ATOMIC_LOCK_FREE_TYPES6 char*, signed char*, unsigned char*
-#endif
+#   if ATOMIC_BOOL_LOCK_FREE == 2
+#    define P00_ATOMIC_LOCK_FREE_TYPES0 _Bool
+#   endif
+#   if ATOMIC_CHAR_LOCK_FREE == 2
+#    define P00_ATOMIC_LOCK_FREE_TYPES1 char, signed char, unsigned char
+#   endif
+#   if ATOMIC_SHORT_LOCK_FREE == 2
+#    define P00_ATOMIC_LOCK_FREE_TYPES2 short, unsigned short
+#   endif
+#   if ATOMIC_INT_LOCK_FREE == 2
+#    define P00_ATOMIC_LOCK_FREE_TYPES3 int, unsigned int
+#   endif
+#   if ATOMIC_LONG_LOCK_FREE == 2
+#    define P00_ATOMIC_LOCK_FREE_TYPES4 long, unsigned long
+#   endif
+#   if ATOMIC_LLONG_LOCK_FREE == 2
+#    define P00_ATOMIC_LOCK_FREE_TYPES5 long long, unsigned long long
+#   endif
+#   if ATOMIC_POINTER_LOCK_FREE == 2
+#    define P00_ATOMIC_LOCK_FREE_TYPES6 char*, signed char*, unsigned char*
+#   endif
 
-#ifdef P00_ATOMIC_LOCK_FREE_TYPES0
-# ifdef P00_ATOMIC_LOCK_FREE_TYPES1
-#  define P00_ATOMIC_LOCK_FREE_TYPES1_ P00_ATOMIC_LOCK_FREE_TYPES0, P00_ATOMIC_LOCK_FREE_TYPES1
-# else
-#  define P00_ATOMIC_LOCK_FREE_TYPES1_ P00_ATOMIC_LOCK_FREE_TYPES0
-# endif
-#else
-# ifdef P00_ATOMIC_LOCK_FREE_TYPES1
-#  define P00_ATOMIC_LOCK_FREE_TYPES1_ P00_ATOMIC_LOCK_FREE_TYPES1
-# endif
-#endif
+#   ifdef P00_ATOMIC_LOCK_FREE_TYPES0
+#    ifdef P00_ATOMIC_LOCK_FREE_TYPES1
+#     define P00_ATOMIC_LOCK_FREE_TYPES1_ P00_ATOMIC_LOCK_FREE_TYPES0, P00_ATOMIC_LOCK_FREE_TYPES1
+#    else
+#     define P00_ATOMIC_LOCK_FREE_TYPES1_ P00_ATOMIC_LOCK_FREE_TYPES0
+#    endif
+#   else
+#    ifdef P00_ATOMIC_LOCK_FREE_TYPES1
+#     define P00_ATOMIC_LOCK_FREE_TYPES1_ P00_ATOMIC_LOCK_FREE_TYPES1
+#    endif
+#   endif
 
-#ifdef P00_ATOMIC_LOCK_FREE_TYPES1_
-# ifdef P00_ATOMIC_LOCK_FREE_TYPES2
-#  define P00_ATOMIC_LOCK_FREE_TYPES2_ P00_ATOMIC_LOCK_FREE_TYPES1_, P00_ATOMIC_LOCK_FREE_TYPES2
-# else
-#  define P00_ATOMIC_LOCK_FREE_TYPES2_ P00_ATOMIC_LOCK_FREE_TYPES1_
-# endif
-#else
-# ifdef P00_ATOMIC_LOCK_FREE_TYPES2
-#  define P00_ATOMIC_LOCK_FREE_TYPES2_ P00_ATOMIC_LOCK_FREE_TYPES2
-# endif
-#endif
+#   ifdef P00_ATOMIC_LOCK_FREE_TYPES1_
+#    ifdef P00_ATOMIC_LOCK_FREE_TYPES2
+#     define P00_ATOMIC_LOCK_FREE_TYPES2_ P00_ATOMIC_LOCK_FREE_TYPES1_, P00_ATOMIC_LOCK_FREE_TYPES2
+#    else
+#     define P00_ATOMIC_LOCK_FREE_TYPES2_ P00_ATOMIC_LOCK_FREE_TYPES1_
+#    endif
+#   else
+#    ifdef P00_ATOMIC_LOCK_FREE_TYPES2
+#     define P00_ATOMIC_LOCK_FREE_TYPES2_ P00_ATOMIC_LOCK_FREE_TYPES2
+#    endif
+#   endif
 
-#ifdef P00_ATOMIC_LOCK_FREE_TYPES2_
-# ifdef P00_ATOMIC_LOCK_FREE_TYPES3
-#  define P00_ATOMIC_LOCK_FREE_TYPES3_ P00_ATOMIC_LOCK_FREE_TYPES2_, P00_ATOMIC_LOCK_FREE_TYPES3
-# else
-#  define P00_ATOMIC_LOCK_FREE_TYPES3_ P00_ATOMIC_LOCK_FREE_TYPES2_
-# endif
-#else
-# ifdef P00_ATOMIC_LOCK_FREE_TYPES3
-#  define P00_ATOMIC_LOCK_FREE_TYPES3_ P00_ATOMIC_LOCK_FREE_TYPES3
-# endif
-#endif
+#   ifdef P00_ATOMIC_LOCK_FREE_TYPES2_
+#    ifdef P00_ATOMIC_LOCK_FREE_TYPES3
+#     define P00_ATOMIC_LOCK_FREE_TYPES3_ P00_ATOMIC_LOCK_FREE_TYPES2_, P00_ATOMIC_LOCK_FREE_TYPES3
+#    else
+#     define P00_ATOMIC_LOCK_FREE_TYPES3_ P00_ATOMIC_LOCK_FREE_TYPES2_
+#    endif
+#   else
+#    ifdef P00_ATOMIC_LOCK_FREE_TYPES3
+#     define P00_ATOMIC_LOCK_FREE_TYPES3_ P00_ATOMIC_LOCK_FREE_TYPES3
+#    endif
+#   endif
 
-#ifdef P00_ATOMIC_LOCK_FREE_TYPES3_
-# ifdef P00_ATOMIC_LOCK_FREE_TYPES4
-#  define P00_ATOMIC_LOCK_FREE_TYPES4_ P00_ATOMIC_LOCK_FREE_TYPES3_, P00_ATOMIC_LOCK_FREE_TYPES4
-# else
-#  define P00_ATOMIC_LOCK_FREE_TYPES4_ P00_ATOMIC_LOCK_FREE_TYPES3_
-# endif
-#else
-# ifdef P00_ATOMIC_LOCK_FREE_TYPES4
-#  define P00_ATOMIC_LOCK_FREE_TYPES4_ P00_ATOMIC_LOCK_FREE_TYPES4
-# endif
-#endif
+#   ifdef P00_ATOMIC_LOCK_FREE_TYPES3_
+#    ifdef P00_ATOMIC_LOCK_FREE_TYPES4
+#     define P00_ATOMIC_LOCK_FREE_TYPES4_ P00_ATOMIC_LOCK_FREE_TYPES3_, P00_ATOMIC_LOCK_FREE_TYPES4
+#    else
+#     define P00_ATOMIC_LOCK_FREE_TYPES4_ P00_ATOMIC_LOCK_FREE_TYPES3_
+#    endif
+#   else
+#    ifdef P00_ATOMIC_LOCK_FREE_TYPES4
+#     define P00_ATOMIC_LOCK_FREE_TYPES4_ P00_ATOMIC_LOCK_FREE_TYPES4
+#    endif
+#   endif
 
-#ifdef P00_ATOMIC_LOCK_FREE_TYPES4_
-# ifdef P00_ATOMIC_LOCK_FREE_TYPES5
-#  define P00_ATOMIC_LOCK_FREE_TYPES5_ P00_ATOMIC_LOCK_FREE_TYPES4_, P00_ATOMIC_LOCK_FREE_TYPES5
-# else
-#  define P00_ATOMIC_LOCK_FREE_TYPES5_ P00_ATOMIC_LOCK_FREE_TYPES4_
-# endif
-#else
-# ifdef P00_ATOMIC_LOCK_FREE_TYPES5
-#  define P00_ATOMIC_LOCK_FREE_TYPES5_ P00_ATOMIC_LOCK_FREE_TYPES5
-# endif
-#endif
+#   ifdef P00_ATOMIC_LOCK_FREE_TYPES4_
+#    ifdef P00_ATOMIC_LOCK_FREE_TYPES5
+#     define P00_ATOMIC_LOCK_FREE_TYPES5_ P00_ATOMIC_LOCK_FREE_TYPES4_, P00_ATOMIC_LOCK_FREE_TYPES5
+#    else
+#     define P00_ATOMIC_LOCK_FREE_TYPES5_ P00_ATOMIC_LOCK_FREE_TYPES4_
+#    endif
+#   else
+#    ifdef P00_ATOMIC_LOCK_FREE_TYPES5
+#     define P00_ATOMIC_LOCK_FREE_TYPES5_ P00_ATOMIC_LOCK_FREE_TYPES5
+#    endif
+#   endif
 
-#ifdef P00_ATOMIC_LOCK_FREE_TYPES5_
-# ifdef P00_ATOMIC_LOCK_FREE_TYPES6
-#  define P00_ATOMIC_LOCK_FREE_TYPES6_ P00_ATOMIC_LOCK_FREE_TYPES5_, P00_ATOMIC_LOCK_FREE_TYPES6
-# else
-#  define P00_ATOMIC_LOCK_FREE_TYPES6_ P00_ATOMIC_LOCK_FREE_TYPES5_
-# endif
-#else
-# ifdef P00_ATOMIC_LOCK_FREE_TYPES6
-#  define P00_ATOMIC_LOCK_FREE_TYPES6_ P00_ATOMIC_LOCK_FREE_TYPES6
-# endif
-#endif
-#endif
+#   ifdef P00_ATOMIC_LOCK_FREE_TYPES5_
+#    ifdef P00_ATOMIC_LOCK_FREE_TYPES6
+#     define P00_ATOMIC_LOCK_FREE_TYPES6_ P00_ATOMIC_LOCK_FREE_TYPES5_, P00_ATOMIC_LOCK_FREE_TYPES6
+#    else
+#     define P00_ATOMIC_LOCK_FREE_TYPES6_ P00_ATOMIC_LOCK_FREE_TYPES5_
+#    endif
+#   else
+#    ifdef P00_ATOMIC_LOCK_FREE_TYPES6
+#     define P00_ATOMIC_LOCK_FREE_TYPES6_ P00_ATOMIC_LOCK_FREE_TYPES6
+#    endif
+#   endif
+#  endif
 
-#ifndef P00_ATOMIC_LOCK_FREE_TYPES6_
-# define P00_ATOMIC_LOCK_FREE_TYPES6_
-#endif
+#  ifndef P00_ATOMIC_LOCK_FREE_TYPES6_
+#   define P00_ATOMIC_LOCK_FREE_TYPES6_
+#  endif
 
 /**
  ** @}
@@ -566,15 +566,15 @@ typedef uint32_t volatile p00_atomic_flag;
  **/
 P99_ENC_DECLARE(p00_atomic_flag, atomic_flag);
 
-#define P00_AX(OBJP) ((OBJP)->p00_xval)
-#define P00_AT(OBJP) (P00_AX(OBJP).p00_t)
-#define P00_AO(OBJP) (P00_AX(OBJP).p00_o)
-#define P00_AM(OBJP) (P00_AX(OBJP).p00_m)
+#  define P00_AX(OBJP) ((OBJP)->p00_xval)
+#  define P00_AT(OBJP) (P00_AX(OBJP).p00_t)
+#  define P00_AO(OBJP) (P00_AX(OBJP).p00_o)
+#  define P00_AM(OBJP) (P00_AX(OBJP).p00_m)
 
 P00_DOCUMENT_IDENTIFIER_ARGUMENT(P00_DECLARE_ATOMIC_TYPE, 0)
 P00_DOCUMENT_TYPE_ARGUMENT(P00_DECLARE_ATOMIC_TYPE, 1)
 P00_DOCUMENT_IDENTIFIER_ARGUMENT(P00_DECLARE_ATOMIC_TYPE, 2)
-#define P00_DECLARE_ATOMIC_TYPE(TAGGER, TI, T, NAME)                   \
+#  define P00_DECLARE_ATOMIC_TYPE(TAGGER, TI, T, NAME)                   \
 TAGGER P99_PASTE3(NAME, _, TAGGER) {                                   \
   atomic_flag p00_lock;                                                \
   union {                                                              \
@@ -595,19 +595,19 @@ typedef TAGGER P99_PASTE3(NAME, _, TAGGER) P99_PASTE3(NAME, _, TAGGER)
  **/
 P00_DOCUMENT_TYPE_ARGUMENT(P99_DECLARE_ATOMIC_LOCK_FREE, 0)
 P00_DOCUMENT_IDENTIFIER_ARGUMENT(P99_DECLARE_ATOMIC_LOCK_FREE, 1)
-#ifdef P00_DOXYGEN
-# define P99_DECLARE_ATOMIC_LOCK_FREE(T, NAME)                                                                         \
+#  ifdef P00_DOXYGEN
+#   define P99_DECLARE_ATOMIC_LOCK_FREE(T, NAME)                                                                         \
 /** @brief Atomic access to a value of type <code>T</code> @see atomic_int for the possible operations on this type */ \
 typedef P99_PASTE3(p99_, NAME, _union) NAME
-#else
-#define P99_DECLARE_ATOMIC_LOCK_FREE(T, NAME)                          \
+#  else
+#   define P99_DECLARE_ATOMIC_LOCK_FREE(T, NAME)                          \
 P00_DECLARE_ATOMIC_TYPE(union, T, T, P99_PASTE2(p99_, NAME));          \
 P00_DECLARE_ATOMIC_TYPE(struct, uintptr_t, T, P99_PASTE2(p99_, NAME)); \
 typedef P99_PASTE3(p99_, NAME, _union) NAME
-#endif
+#  endif
 
 
-#define P00_DECLARE_ATOMIC2(T, ...)                                                                                    \
+#  define P00_DECLARE_ATOMIC2(T, ...)                                                                                    \
 P00_DECLARE_ATOMIC_TYPE(union, T, T, P99_PASTE(p99_, __VA_ARGS__));                                                    \
 P00_DECLARE_ATOMIC_TYPE(struct, uintptr_t, T, P99_PASTE(p99_, __VA_ARGS__));                                           \
 /** @brief Atomic access to a value of type <code>T</code> @see atomic_int for the possible operations on this type */ \
@@ -634,21 +634,21 @@ typedef P99_PASTE(p99_, __VA_ARGS__, _struct) __VA_ARGS__
  **/
 P00_DOCUMENT_TYPE_ARGUMENT(P99_DECLARE_ATOMIC, 0)
 P00_DOCUMENT_IDENTIFIER_ARGUMENT(P99_DECLARE_ATOMIC, 1)
-#ifdef P00_DOXYGEN
-#define P99_DECLARE_ATOMIC(T, NAME)
-#else
-#define P99_DECLARE_ATOMIC(...)                                                                                        \
+#  ifdef P00_DOXYGEN
+#   define P99_DECLARE_ATOMIC(T, NAME)
+#  else
+#   define P99_DECLARE_ATOMIC(...)                                                                                        \
 /** @brief Atomic access to a value of type <code>T</code> @see atomic_int for the possible operations on this type */ \
 P99_IF_EQ_1(P99_NARG(__VA_ARGS__))                                                                                     \
 (P00_DECLARE_ATOMIC2(__VA_ARGS__, P99_PASTE2(atomic_, __VA_ARGS__)))                                                   \
 (P00_DECLARE_ATOMIC2(__VA_ARGS__))
-#endif
+#  endif
 
-#define P00_DECLARE_ATOMIC(T, ...)                                                                                     \
+#  define P00_DECLARE_ATOMIC(T, ...)                                                                                     \
 /** @brief Atomic access to a value of type <code>T</code> @see atomic_int for the possible operations on this type */ \
 typedef P00_ATOMIC_STRUCT(T, __VA_ARGS__) __VA_ARGS__
 
-#define P00_DECLARE_ATOMIC_CHOICE(MAC, T, NAME)                \
+#  define P00_DECLARE_ATOMIC_CHOICE(MAC, T, NAME)                \
 P99_IF_EQ_2(MAC)                                               \
 (P99_DECLARE_ATOMIC_LOCK_FREE(T, NAME))                        \
 (P99_DECLARE_ATOMIC(T, NAME))
@@ -694,11 +694,11 @@ P99_DECLARE_ATOMIC(float, atomic_float);
 P99_DECLARE_ATOMIC(double, atomic_double);
 P99_DECLARE_ATOMIC(long double, atomic_ldouble);
 
-#ifndef __STDC_NO_COMPLEX__
+#  ifndef __STDC_NO_COMPLEX__
 P99_DECLARE_ATOMIC(float _Complex, atomic_cfloat);
 P99_DECLARE_ATOMIC(double _Complex, atomic_cdouble);
 P99_DECLARE_ATOMIC(long double _Complex, atomic_cldouble);
-#define P00_ATOMIC_TYPES                                       \
+#   define P00_ATOMIC_TYPES                                       \
   (_Bool, atomic_bool*),                                       \
   (char, atomic_char*),                                        \
   (signed char, atomic_schar*),                                \
@@ -717,8 +717,8 @@ P99_DECLARE_ATOMIC(long double _Complex, atomic_cldouble);
   (float _Complex, atomic_cfloat*),                            \
   (double _Complex, atomic_cdouble*),                          \
   (long double _Complex, atomic_cldouble*)
-#else
-#define P00_ATOMIC_TYPES                                       \
+#  else
+#   define P00_ATOMIC_TYPES                                       \
   (_Bool, atomic_bool*),                                       \
   (char, atomic_char*),                                        \
   (signed char, atomic_schar*),                                \
@@ -734,11 +734,11 @@ P99_DECLARE_ATOMIC(long double _Complex, atomic_cldouble);
   (float, atomic_float*),                                      \
   (double, atomic_double*),                                    \
   (long double, atomic_ldouble*)
-#endif
+#  endif
 
 
 P00_DOCUMENT_TYPE_ARGUMENT(P99_ATOMIC_INHERIT, 0)
-#define P99_ATOMIC_INHERIT(T)                                                               \
+#  define P99_ATOMIC_INHERIT(T)                                                               \
 (*P99_GENERIC_LIT                                                                           \
  ((T){ 0 },                                                                                 \
   P99_GENERIC_SIZE_LIT                                                                      \
@@ -756,7 +756,7 @@ P00_DOCUMENT_TYPE_ARGUMENT(P99_ATOMIC_INHERIT, 0)
 p99_inline
 P99_CONST_FUNCTION uintptr_t p00_exchange_ignore(void* p00_x, ...) { P99_UNUSED(p00_x); return 0; }
 
-#define P00_EXCHANGE(X)                                                 \
+#  define P00_EXCHANGE(X)                                                 \
 P99_GENERIC_SIZE                                                        \
  (sizeof(X),                                                            \
   p00_exchange_ignore,                                                  \
@@ -857,11 +857,11 @@ P99_GENERIC_SIZE                                                        \
  **
  ** @ingroup C11_keywords
  **/
-#ifdef P00_DOXYGEN
-# define _Atomic(T) P99_PASTE2(atomic_, T)
-#else
-# define _Atomic(T) __typeof__(P99_ATOMIC_INHERIT(T))
-#endif
+#  ifdef P00_DOXYGEN
+#   define _Atomic(T) P99_PASTE2(atomic_, T)
+#  else
+#   define _Atomic(T) __typeof__(P99_ATOMIC_INHERIT(T))
+#  endif
 
 typedef _Atomic(char16_t) atomic_char16_t;
 typedef _Atomic(char32_t) atomic_char32_t;
@@ -902,13 +902,13 @@ typedef _Atomic(uintmax_t) atomic_uintmax_t;
  ** @{
  **/
 
-#define atomic_thread_fence p00_mfence
+#  define atomic_thread_fence p00_mfence
 
 /**
  ** @remark In the current implementation a signal fence and a thread
  ** fence are the same full memory barrier.
  **/
-#define atomic_signal_fence atomic_thread_fence
+#  define atomic_signal_fence atomic_thread_fence
 
 /**
  ** @}
@@ -926,7 +926,7 @@ typedef _Atomic(uintmax_t) atomic_uintmax_t;
  ** if the platform supports it. Otherwise the memory order is the
  ** most restrictive, namely ::memory_order_seq_cst.
  **/
-#define atomic_flag_test_and_set_explicit(OBJ, ORD) p00_sync_lock_test_and_set(&P99_ENCP(OBJ), (ORD))
+#  define atomic_flag_test_and_set_explicit(OBJ, ORD) p00_sync_lock_test_and_set(&P99_ENCP(OBJ), (ORD))
 
 /**
  ** @brief Unconditionally set @a OBJ to @c true and return the
@@ -938,7 +938,7 @@ typedef _Atomic(uintmax_t) atomic_uintmax_t;
  ** optional argument can be given. The call is then equivalent to one
  ** to ::atomic_flag_test_and_set_explicit.
  **/
-#define atomic_flag_test_and_set(OBJ) p00_sync_lock_test_and_set(&P99_ENCP(OBJ))
+#  define atomic_flag_test_and_set(OBJ) p00_sync_lock_test_and_set(&P99_ENCP(OBJ))
 
 /**
  ** @brief Unconditionally set @a *p00_objp to @c false
@@ -951,16 +951,16 @@ typedef _Atomic(uintmax_t) atomic_uintmax_t;
  ** order. The current implementation only uses this to enforce a
  ** complete memory barrier where necessary.
  **/
-#define atomic_flag_clear_explicit(OBJ, ORD) p00_sync_lock_release(&P99_ENCP(OBJ), (ORD))
+#  define atomic_flag_clear_explicit(OBJ, ORD) p00_sync_lock_release(&P99_ENCP(OBJ), (ORD))
 
 /**
  ** @brief Unconditionally set @a *p00_objp to @c false
  **
  ** @related atomic_flag
  **/
-#define atomic_flag_clear(OBJ)  p00_sync_lock_release(&P99_ENCP(OBJ))
+#  define atomic_flag_clear(OBJ)  p00_sync_lock_release(&P99_ENCP(OBJ))
 
-#include "p99_atomic_flag.h"
+#  include "p99_atomic_flag.h"
 
 /**
  ** @brief return true if @a OBJP points to a lock-free object
@@ -976,9 +976,9 @@ typedef _Atomic(uintmax_t) atomic_uintmax_t;
  **
  ** @see atomic_int
  **/
-#define atomic_is_lock_free(OBJP) (!offsetof(__typeof__(*OBJP), p00_xval))
+#  define atomic_is_lock_free(OBJP) (!offsetof(__typeof__(*OBJP), p00_xval))
 
-#define P00_ATOMIC_TERN(OBJP, VAL, ALT) P99_TYPED_TERN(atomic_is_lock_free(OBJP), (VAL), (ALT))
+#  define P00_ATOMIC_TERN(OBJP, VAL, ALT) P99_TYPED_TERN(atomic_is_lock_free(OBJP), (VAL), (ALT))
 
 /**
  ** @brief Initialize the object behind @a OBJP with value @a VAL
@@ -990,7 +990,7 @@ typedef _Atomic(uintmax_t) atomic_uintmax_t;
  **
  ** @see atomic_int
  **/
-#define atomic_init(OBJP, VAL)                                 \
+#  define atomic_init(OBJP, VAL)                                 \
 p99_extension                                                  \
 (void)({                                                       \
     P99_MAC_ARGS((p00_objp, OBJP), (p00_val, VAL));            \
@@ -999,7 +999,7 @@ p99_extension                                                  \
     P00_AT(p00_objp) = p00_val;                                \
   })
 
-#ifdef P00_DOXYGEN
+#  ifdef P00_DOXYGEN
 /**
  ** @brief Store @a DESIRED into the object behind @a OBJP and return its previous value.
  **
@@ -1013,9 +1013,9 @@ p99_extension                                                  \
  **
  ** @see atomic_int
  **/
-#define atomic_exchange_explicit(OBJP, DESIRED, ORD)
-#else
-#define atomic_exchange_explicit(OBJP, DESIRED, ORD)                                     \
+#   define atomic_exchange_explicit(OBJP, DESIRED, ORD)
+#  else
+#   define atomic_exchange_explicit(OBJP, DESIRED, ORD)                                     \
 p99_extension                                                                            \
 ({                                                                                       \
   P99_MACRO_PVAR(p00_objp, (OBJP), volatile);                                            \
@@ -1036,7 +1036,7 @@ p99_extension                                                                   
   }                                                                                      \
   p00_ret.p00_t;                                                                         \
  })
-#endif
+#  endif
 
 /**
  ** @brief Store @a DESIRED into the object behind @a OBJP and return its previous value.
@@ -1049,7 +1049,7 @@ p99_extension                                                                   
  ** @see atomic_int
  ** @see atomic_exchange_explicit
  **/
-#define atomic_exchange(OBJP, DESIRED)                            \
+#  define atomic_exchange(OBJP, DESIRED)                            \
 atomic_exchange_explicit((OBJP), (DESIRED), memory_order_seq_cst)
 
 
@@ -1064,7 +1064,7 @@ atomic_exchange_explicit((OBJP), (DESIRED), memory_order_seq_cst)
  **
  ** @see atomic_int
  **/
-#define atomic_load_explicit(OBJP, ORD)                              \
+#  define atomic_load_explicit(OBJP, ORD)                              \
 p99_extension                                                        \
 ({                                                                   \
   P99_MACRO_PVAR(p00_objp, (OBJP), volatile);                        \
@@ -1084,10 +1084,10 @@ p99_extension                                                        \
 /**
  ** @see atomic_load_explicit
  **/
-#define atomic_load(OBJP) atomic_load_explicit((OBJP), memory_order_seq_cst)
+#  define atomic_load(OBJP) atomic_load_explicit((OBJP), memory_order_seq_cst)
 
 
-#define P00_CVT(EXP) ((void const*)(((struct { void const volatile* a; }){ .a = (EXP) }).a))
+#  define P00_CVT(EXP) ((void const*)(((struct { void const volatile* a; }){ .a = (EXP) }).a))
 
 /**
  ** @brief Atomically compare @a *OBJP to @a *EXPECTED and set it to
@@ -1108,19 +1108,19 @@ p99_extension                                                        \
  **
  ** @see atomic_int
  **/
-#define atomic_compare_exchange_weak_explicit(OBJP, EXPECTED, DESIRED, SUCC, FAIL) \
+#  define atomic_compare_exchange_weak_explicit(OBJP, EXPECTED, DESIRED, SUCC, FAIL) \
   p00_atomic_compare_exchange(true, OBJP, EXPECTED, DESIRED, SUCC, FAIL,)
 
-#define atomic_compare_exchange_weak(OBJP, EXPECTED, DESIRED)                                              \
+#  define atomic_compare_exchange_weak(OBJP, EXPECTED, DESIRED)                                              \
 atomic_compare_exchange_weak_explicit(OBJP, EXPECTED, DESIRED, memory_order_seq_cst, memory_order_seq_cst)
 
-#define atomic_compare_exchange_strong_explicit(OBJP, EXPECTED, DESIRED, SUCC, FAIL) \
+#  define atomic_compare_exchange_strong_explicit(OBJP, EXPECTED, DESIRED, SUCC, FAIL) \
   p00_atomic_compare_exchange(false, OBJP, EXPECTED, DESIRED, SUCC, FAIL,)
 
-#define atomic_compare_exchange_strong(OBJP, EXPECTED, DESIRED)                                              \
+#  define atomic_compare_exchange_strong(OBJP, EXPECTED, DESIRED)                                              \
 atomic_compare_exchange_strong_explicit(OBJP, EXPECTED, DESIRED, memory_order_seq_cst, memory_order_seq_cst)
 
-#define p00_atomic_compare_exchange(WEAK, OBJP, EXPECTED, DESIRED, SUCC, FAIL, ...)                          \
+#  define p00_atomic_compare_exchange(WEAK, OBJP, EXPECTED, DESIRED, SUCC, FAIL, ...)                          \
 p99_extension                                                                                                \
 ({                                                                                                           \
   P99_MACRO_PVAR(p00_objp, (OBJP), volatile);                                                                \
@@ -1146,7 +1146,7 @@ p99_extension                                                                   
     p00_ret;                                                                                                 \
  })
 
-#ifdef P00_DOXYGEN
+#  ifdef P00_DOXYGEN
 /**
  ** @brief Store @a DESIRED into the object behind @a OBJP.
  **
@@ -1160,9 +1160,9 @@ p99_extension                                                                   
  **
  ** @see atomic_int
  **/
-#define atomic_store_explicit(OBJP, DES, ORD)
-#else
-#define atomic_store_explicit(OBJP, DES, ORD)                        \
+#   define atomic_store_explicit(OBJP, DES, ORD)
+#  else
+#   define atomic_store_explicit(OBJP, DES, ORD)                        \
 p99_extension                                                        \
 ({                                                                   \
   P99_MACRO_PVAR(p00_objp, (OBJP), volatile);                        \
@@ -1178,15 +1178,15 @@ p99_extension                                                        \
       (p00_atomic_store_n(&P00_AM(p00_objp), p00_des.p00_m, (ORD))); \
   }                                                                  \
  })
-#endif
+#  endif
 
 /**
  ** @see atomic_store_explicit
  **/
-#define atomic_store(OBJP, DES) atomic_store_explicit(OBJP, DES, memory_order_seq_cst)
+#  define atomic_store(OBJP, DES) atomic_store_explicit(OBJP, DES, memory_order_seq_cst)
 
 
-#define P00_FETCH_OP(OBJP, OPERAND, BUILTIN, OPERATOR, ORD)          \
+#  define P00_FETCH_OP(OBJP, OPERAND, BUILTIN, OPERATOR, ORD)          \
 p99_extension                                                        \
 ({                                                                   \
   P99_MACRO_PVAR(p00_objp, (OBJP), volatile);                        \
@@ -1226,10 +1226,10 @@ p99_extension                                                        \
  ** @see atomic_fetch_add for a simpler version without @a ORD parameter
  ** @see atomic_int
  **/
-#define atomic_fetch_add_explicit(OBJP, OPERAND, ORD)            \
+#  define atomic_fetch_add_explicit(OBJP, OPERAND, ORD)            \
 P00_FETCH_OP((OBJP), (OPERAND), p00_atomic_fetch_add, +=, (ORD))
 
-#define atomic_fetch_add(OBJP, OPERAND) atomic_fetch_add_explicit((OBJP), (OPERAND), memory_order_seq_cst)
+#  define atomic_fetch_add(OBJP, OPERAND) atomic_fetch_add_explicit((OBJP), (OPERAND), memory_order_seq_cst)
 
 /**
  ** @brief Atomically subtract @a OPERAND from @a *OBJP.
@@ -1248,10 +1248,10 @@ P00_FETCH_OP((OBJP), (OPERAND), p00_atomic_fetch_add, +=, (ORD))
  ** @see atomic_fetch_sub for a simpler version without @a ORD parameter
  ** @see atomic_int
  **/
-#define atomic_fetch_sub_explicit(OBJP, OPERAND, ORD)          \
+#  define atomic_fetch_sub_explicit(OBJP, OPERAND, ORD)          \
 P00_FETCH_OP((OBJP), (OPERAND), p00_atomic_fetch_sub, -=, ORD)
 
-#define atomic_fetch_sub(OBJP, OPERAND) atomic_fetch_sub_explicit((OBJP), (OPERAND), memory_order_seq_cst)
+#  define atomic_fetch_sub(OBJP, OPERAND) atomic_fetch_sub_explicit((OBJP), (OPERAND), memory_order_seq_cst)
 
 /**
  ** @brief Atomically do a bitwise OR operation between @a OPERAND and
@@ -1271,10 +1271,10 @@ P00_FETCH_OP((OBJP), (OPERAND), p00_atomic_fetch_sub, -=, ORD)
  ** @see atomic_fetch_or for a simpler version without @a ORD parameter
  ** @see atomic_int
  **/
-#define atomic_fetch_or_explicit(OBJP, OPERAND, ORD)            \
+#  define atomic_fetch_or_explicit(OBJP, OPERAND, ORD)            \
 P00_FETCH_OP((OBJP), (OPERAND), p00_atomic_fetch_or, |=, (ORD))
 
-#define atomic_fetch_or(OBJP, OPERAND) atomic_fetch_or_explicit((OBJP), (OPERAND), memory_order_seq_cst)
+#  define atomic_fetch_or(OBJP, OPERAND) atomic_fetch_or_explicit((OBJP), (OPERAND), memory_order_seq_cst)
 
 /**
  ** @brief Atomically do a bitwise AND operation between @a OPERAND
@@ -1294,10 +1294,10 @@ P00_FETCH_OP((OBJP), (OPERAND), p00_atomic_fetch_or, |=, (ORD))
  ** @see atomic_fetch_and for a simpler version without @a ORD parameter
  ** @see atomic_int
  **/
-#define atomic_fetch_and_explicit(OBJP, OPERAND, ORD)            \
+#  define atomic_fetch_and_explicit(OBJP, OPERAND, ORD)            \
 P00_FETCH_OP((OBJP), (OPERAND), p00_atomic_fetch_and, &=, (ORD))
 
-#define atomic_fetch_and(OBJP, OPERAND) atomic_fetch_and_explicit((OBJP), (OPERAND), memory_order_seq_cst)
+#  define atomic_fetch_and(OBJP, OPERAND) atomic_fetch_and_explicit((OBJP), (OPERAND), memory_order_seq_cst)
 
 /**
  ** @brief Atomically do a bitwise XOR operation between @a OPERAND
@@ -1318,12 +1318,12 @@ P00_FETCH_OP((OBJP), (OPERAND), p00_atomic_fetch_and, &=, (ORD))
  ** @see atomic_int
  ** @see _Atomic
  **/
-#define atomic_fetch_xor_explicit(OBJP, OPERAND, ORD)            \
+#  define atomic_fetch_xor_explicit(OBJP, OPERAND, ORD)            \
 P00_FETCH_OP((OBJP), (OPERAND), p00_atomic_fetch_xor, ^=, (ORD))
 
-#define atomic_fetch_xor(OBJP, OPERAND) atomic_fetch_xor_explicit((OBJP), (OPERAND), memory_order_seq_cst)
+#  define atomic_fetch_xor(OBJP, OPERAND) atomic_fetch_xor_explicit((OBJP), (OPERAND), memory_order_seq_cst)
 
-#define atomic_fetch_add_conditional(OBJP, OPERAND)                       \
+#  define atomic_fetch_add_conditional(OBJP, OPERAND)                       \
 p99_extension                                                             \
 ({                                                                        \
   P99_MACRO_VAR(p00_objp, (OBJP));                                        \
@@ -1346,9 +1346,11 @@ p99_extension                                                             \
 
 
 # endif /* P00_NO_ATOMICS */
-#undef P00_NO_ATOMICS
+# undef P00_NO_ATOMICS
 
 #endif /* no stdatomic.h*/
+
+/****************************************************************************************/
 
 /**
  ** @addtogroup atomic_types

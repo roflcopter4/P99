@@ -53,6 +53,7 @@ automatically generated, do not change manually.
     _141, _142, _143, _144, _145, _146, _147, _148, _149, _150, _151, _152,    \
     _153, _154, _155, _156, _157, _158, _159, ...)                             \
         _159
+
 #define P00_NARG_1(...)                                                          \
         P00_ARG(__VA_ARGS__, 158, 157, 156, 155, 154, 153, 152, 151, 150, 149,   \
                 148, 147, 146, 145, 144, 143, 142, 141, 140, 139, 138, 137,      \
@@ -65,6 +66,7 @@ automatically generated, do not change manually.
                 49, 48, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34,  \
                 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18,  \
                 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, )
+
 #define P00_NARG_2(...)                                                         \
         P00_ARG(__VA_ARGS__, 79, P00_INV(2), 78, P00_INV(2), 77, P00_INV(2),    \
                 76, P00_INV(2), 75, P00_INV(2), 74, P00_INV(2), 73, P00_INV(2), \
@@ -86,6 +88,7 @@ automatically generated, do not change manually.
                 12, P00_INV(2), 11, P00_INV(2), 10, P00_INV(2), 9, P00_INV(2),  \
                 8, P00_INV(2), 7, P00_INV(2), 6, P00_INV(2), 5, P00_INV(2), 4,  \
                 P00_INV(2), 3, P00_INV(2), 2, P00_INV(2), 1, P00_INV(2), 0, )
+
 #define P00_NARG_3(...)                                                         \
         P00_ARG(                                                                \
             __VA_ARGS__, P00_INV(3), P00_INV(3), 52, P00_INV(3), P00_INV(3),    \
@@ -111,6 +114,7 @@ automatically generated, do not change manually.
             P00_INV(3), P00_INV(3), 6, P00_INV(3), P00_INV(3), 5, P00_INV(3),   \
             P00_INV(3), 4, P00_INV(3), P00_INV(3), 3, P00_INV(3), P00_INV(3),   \
             2, P00_INV(3), P00_INV(3), 1, P00_INV(3), P00_INV(3), 0, )
+
 #define P00_NARG_4(...)                                                         \
         P00_ARG(                                                                \
             __VA_ARGS__, P00_INV(4), P00_INV(4), 39, P00_INV(4), P00_INV(4),    \

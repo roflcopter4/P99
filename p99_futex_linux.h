@@ -276,14 +276,19 @@ p99_inline void
 p99_futex_wait(p99_futex volatile *p00_cntp)
 {
         unsigned volatile *const p00_cnt = (unsigned *)p00_cntp;
+
         static_assert(sizeof *p00_cntp == sizeof *p00_cnt,
                       "linux futex supposes that there is no hidden lock field");
+
         for (;;) {
-                unsigned     p00_act = *p00_cnt;
+                unsigned     p00_act = atomic_load(p00_cntp);
                 register int p00_ret = p00_futex_wait_once((int *)p00_cnt, p00_act);
+
                 switch (p00_ret) {
-                default: assert(!p00_ret);
-                case 0: return;
+                default:
+                        assert(!p00_ret);
+                case 0:
+                        return;
                 // Allow for different val or spurious wake ups
                 case EWOULDBLOCK:;
                 case EINTR:;
@@ -293,14 +298,14 @@ p99_futex_wait(p99_futex volatile *p00_cntp)
 
 
 p99_inline unsigned
-p99_futex_add(p99_futex volatile *futex,
-              unsigned            p00_hmuch,
-              unsigned            p00_cstart,
-              unsigned            p00_clen,
-              unsigned            p00_wmin,
-              unsigned            p00_wmax)
+(p99_futex_add)(p99_futex volatile *futex,
+                unsigned            p00_hmuch,
+                unsigned            p00_cstart,
+                unsigned            p00_clen,
+                unsigned            p00_wmin,
+                unsigned            p00_wmax)
 {
-        unsigned                p00_act = atomic_fetch_add(futex, p00_hmuch);
+        unsigned const          p00_act = atomic_fetch_add(futex, p00_hmuch);
         register unsigned const ret     = p00_act + p00_hmuch;
         if (p00_clen && P99_IN_RANGE(ret, p00_cstart, p00_clen))
                 p99_futex_wakeup(futex, p00_wmin, p00_wmax);
@@ -308,12 +313,12 @@ p99_futex_add(p99_futex volatile *futex,
 }
 
 p99_inline unsigned
-p99_futex_exchange(p99_futex volatile *futex,
-                   unsigned            p00_desired,
-                   unsigned            p00_cstart,
-                   unsigned            p00_clen,
-                   unsigned            p00_wmin,
-                   unsigned            p00_wmax)
+(p99_futex_exchange)(p99_futex volatile *futex,
+                     unsigned            p00_desired,
+                     unsigned            p00_cstart,
+                     unsigned            p00_clen,
+                     unsigned            p00_wmin,
+                     unsigned            p00_wmax)
 {
         unsigned p00_act = atomic_exchange(futex, p00_desired);
         if (p00_clen && P99_IN_RANGE(p00_desired, p00_cstart, p00_clen))
@@ -323,68 +328,48 @@ p99_futex_exchange(p99_futex volatile *futex,
 
 #ifndef P99_FUTEX_COMPARE_EXCHANGE
 P00_DOCUMENT_IDENTIFIER_ARGUMENT(P99_FUTEX_COMPARE_EXCHANGE, 1)
-#if 0
-#define P99_FUTEX_COMPARE_EXCHANGE(FUTEX, VAR, CONDITION, NEW_VAL, WAKEMIN, WAKEMAX)                    \
-        do {                                                                                           \
-                _Atomic(unsigned) volatile *const p00Mcntp = (FUTEX);                                  \
-                unsigned p00Mact = atomic_load(p00Mcntp);                                              \
-                for (;;) {                                                                             \
-                        register unsigned const VAR = p00Mact;                                         \
-                        if (CONDITION) {                                                                \
-                                register unsigned const p00Mdes = (NEW_VAL);                           \
-                                if (VAR == p00Mdes)                                                    \
-                                        break;                                                         \
-                                if (atomic_compare_exchange_weak(p00Mcntp, &p00Mact, p00Mdes)) {       \
-                                        register unsigned p00Mwmin = (WAKEMIN);                        \
-                                        register unsigned p00Mwmax = (WAKEMAX);                        \
-                                        p99_futex_wakeup(p00Mcntp, p00Mwmin, p00Mwmax);                \
-                                        break;                                                         \
-                                }                                                                      \
-                        } else {                                                                       \
-                                register int p00Mret = p00_futex_wait_once((int *)p00Mcntp, (int)VAR); \
-                                switch (p00Mret) {                                                     \
-                                default: assert(!p00Mret);                                             \
-                                case 0:;                                                               \
-                                case EWOULDBLOCK:;                                                     \
-                                case EINTR:;                                                           \
-                                }                                                                      \
-                                p00Mact = atomic_load(p00Mcntp);                                       \
-                        }                                                                              \
-                }                                                                                      \
-        } while (false)
-#endif
-#define P99_FUTEX_COMPARE_EXCHANGE(FUTEX, VAR, CONDITION, NEW_VAL, WAKEMIN, WAKEMAX)               \
-        do {                                                                                       \
-                P01_GCC_IGNORE_UNKNOWN_PRAGMAS()                                                   \
-                P01_CLANG_IGNORE_DISCARDED_QUALS();                                                \
-                volatile atomic_uint *const p00Mcntp = (FUTEX);                                    \
-                volatile unsigned           p00Mact  = atomic_load(p00Mcntp);                      \
-                for (;;) {                                                                         \
-                        register unsigned const VAR = p00Mact;                                     \
-                        if (CONDITION) {                                                           \
-                                register unsigned const p00Mdes = (NEW_VAL);                       \
-                                if ((VAR) == p00Mdes)                                              \
-                                        break;                                                     \
-                                if (atomic_compare_exchange_strong(p00Mcntp, &p00Mact, p00Mdes)) { \
-                                        register unsigned p00Mwmin = (WAKEMIN);                    \
-                                        register unsigned p00Mwmax = (WAKEMAX);                    \
-                                        p99_futex_wakeup(p00Mcntp, p00Mwmin, p00Mwmax);            \
-                                        break;                                                     \
-                                }                                                                  \
-                        } else {                                                                   \
-                                register int p00Mret = p00_futex_wait_once(                        \
-                                    (int *)p00Mcntp, (int)(VAR));                                  \
-                                switch (p00Mret) {                                                 \
-                                default: assert(!p00Mret);                                         \
-                                case 0:;                                                           \
-                                case EWOULDBLOCK:;                                                 \
-                                case EINTR:;                                                       \
-                                }                                                                  \
-                                p00Mact = atomic_load(p00Mcntp);                                   \
-                        }                                                                          \
-                }                                                                                  \
-                P01_POP_BOTH()                                                                     \
+
+#define P99_FUTEX_COMPARE_EXCHANGE(FUTEX, VAR, CONDITION, NEW_VAL, WAKEMIN, WAKEMAX)                 \
+        do {                                                                                         \
+                P01_GCC_IGNORE_UNKNOWN_PRAGMAS();                                                    \
+                P01_CLANG_IGNORE_DISCARDED_QUALS();                                                  \
+                                                                                                     \
+                _Atomic(unsigned) volatile *const p00M_fut  = (FUTEX);                               \
+                unsigned                          p00M_val  = atomic_load(p00M_fut);                 \
+                                                                                                     \
+                for (;;) {                                                                           \
+                        register unsigned const VAR = p00M_val;                                      \
+                        if (P99_LIKELY(CONDITION)) {                                                 \
+                                register unsigned const p00M_new = (NEW_VAL);                        \
+                                                                                                     \
+                                /* This will only fail if there is contention on                     \
+                                 * the futex, so we then try again, immediately. */                  \
+                                if ((VAR) == p00M_new)                                               \
+                                        break;                                                       \
+                                if (atomic_compare_exchange_weak(p00M_fut, &p00M_val, p00M_new)) {   \
+                                        register unsigned const p00M_wmin = (WAKEMIN);               \
+                                        register unsigned const p00M_wmax = (WAKEMAX);               \
+                                        p99_futex_wakeup(p00M_fut, p00M_wmin, p00M_wmax);            \
+                                        break;                                                       \
+                                }                                                                    \
+                        } else {                                                                     \
+                                register int const p00M_ret = p00_futex_wait_once((int *)p00M_fut,   \
+                                                                                  (int)(VAR));       \
+                                switch (p00M_ret) {                                                  \
+                                default:                                                             \
+                                        assert(!p00M_ret);                                           \
+                                case 0:                                                              \
+                                case EWOULDBLOCK:                                                    \
+                                case EINTR:                                                          \
+                                        break;                                                       \
+                                }                                                                    \
+                                p00M_val = atomic_load(p00M_fut);                                    \
+                        }                                                                            \
+                }                                                                                    \
+                                                                                                     \
+                P01_POP_BOTH()                                                                       \
         } while (0)
+
 #if 0
 #define P99_FUTEX_COMPARE_EXCHANGE(FUTEX, ACT, EXPECTED, DESIRED, WAKEMIN, WAKEMAX)                   \
         do {                                                                                          \
@@ -418,40 +403,6 @@ P00_DOCUMENT_IDENTIFIER_ARGUMENT(P99_FUTEX_COMPARE_EXCHANGE, 1)
                                 p00Mact = *p00Mcnt;                                                   \
                         }                                                                             \
                 }                                                                                     \
-        } while (false)
-#endif
-#if 0
-#define P99_FUTEX_COMPARE_EXCHANGE(FUTEX, ACT, EXPECTED, DESIRED, WAKEMIN, WAKEMAX)                    \
-        do {                                                                                           \
-                _Atomic(unsigned) volatile *const p00Mcntp = (FUTEX);                                  \
-                static_assert(sizeof *p00Mcntp == sizeof(unsigned),                                    \
-                              "linux futex stuff supposes that there is no hidden lock field");        \
-                unsigned p00Mact = *p00Mcntp;                                                          \
-                for (;;) {                                                                             \
-                        register unsigned const ACT = p00Mact;                                         \
-                        if (P99_LIKELY(EXPECTED)) {                                                    \
-                                register unsigned const p00Mdes = (DESIRED);                           \
-                                /* This will only fail if there is contention on the futex,
-                                 * so we then try again, immediately. */                               \
-                                if (ACT == p00Mdes)                                                    \
-                                        break;                                                         \
-                                if (atomic_compare_exchange_weak(p00Mcntp, &p00Mact, p00Mdes)) {       \
-                                        register unsigned p00Mwmin = (WAKEMIN);                        \
-                                        register unsigned p00Mwmax = (WAKEMAX);                        \
-                                        p99_futex_wakeup(p00Mcntp, p00Mwmin, p00Mwmax);                \
-                                        break;                                                         \
-                                }                                                                      \
-                        } else {                                                                       \
-                                register int p00Mret = p00_futex_wait_once((int *)p00Mcntp, (int)ACT); \
-                                switch (p00Mret) {                                                     \
-                                default: assert(!p00Mret);                                             \
-                                case 0:; /* Allow for different val or spurious wake ups */            \
-                                case EWOULDBLOCK:;                                                     \
-                                case EINTR:;                                                           \
-                                }                                                                      \
-                                p00Mact = *p00Mcntp;                                                   \
-                        }                                                                              \
-                }                                                                                      \
         } while (false)
 #endif
 #endif

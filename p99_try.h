@@ -62,21 +62,24 @@ p00_jmp_push(p00_jmp_buf0 *p00_des)
  ** be lost in the second :P99_CATCH.
  **/
 p99_inline void
-p99_jmp_report(errno_t p00_cond)
+p99_jmp_report(errno_t p00_cond, bool caught)
 {
-        p00_constraint_report(p00_cond, 0, 0, 0);
+        p00_constraint_report(p00_cond, caught, 0, 0, 0);
 }
+
+#define p99_jmp_report(...)       P99_CALL_DEFARG(p99_jmp_report, 2, __VA_ARGS__)
+#define p99_jmp_report_defarg_1() (true)
 
 p99_inline noreturn void
 p00_jmp_abort(errno_t p00_cond, char const *p00_file, char const *p00_context, char const *p00_info)
 {
-        p00_constraint_report(p00_cond, p00_file, p00_context, p00_info);
+        p00_constraint_report(p00_cond, false, p00_file, p00_context, p00_info);
         constraint_handler_t p00_func = atomic_load(&p00_constraint_handler);
         if (p00_func == exit_handler_s) {
                 /* Avoid looping in exit handlers. */
                 set_constraint_handler_s(abort_handler_s);
                 /* Give the application a chance to clean up. */
-                exit(EXIT_FAILURE);
+                exit(p00_cond);
         }
         abort();
 }
@@ -132,7 +135,7 @@ p00_jmp_throw(errno_t       p00_cond,
  **/
 P00_UNWIND_DOCUMENT
 #define P99_THROW(X) \
-        p00_jmp_throw((X), p00_unwind_top, P99_STRINGIFY(__LINE__), __func__, "throw")
+        p00_jmp_throw((X), p00_unwind_top, P99_STRINGIFY(__LINE__), __func__, NULL)
 
 p99_inline noreturn void
 p00_throw_errno(p00_jmp_buf0 *p00_top,
