@@ -474,6 +474,7 @@ signed p00_trailing_comma_in_initializer__(void) {
 #   define p00_instantiate extern __inline__
 #  endif
 #  define p99_inline __attribute__((__always_inline__)) __inline__
+/* #  define p99_inline __attribute__((__always_inline__,__gnu_inline__)) __inline__ */
 # endif
 #endif
 
@@ -986,8 +987,8 @@ extern void P99_PASTE(p00_harmless_declaration_, __VA_ARGS__)(void)
  **
  ** Use with care, as humans are particularly bad at branch
  ** prediction. If unsure, first test your conditional for some time
- **
  ** to see that the case is really as unlikely as you think.
+ **
  ** @see P99_EXPECT
  ** @see P99_LIKELY
  **/

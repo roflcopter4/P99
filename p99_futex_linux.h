@@ -252,7 +252,7 @@ p99_futex_load(p99_futex volatile *p00_fut)
 }
 
 p99_inline void
-p99_futex_wakeup(p99_futex volatile *p00_cntp, unsigned p00_wmin, unsigned p00_wmax)
+(p99_futex_wakeup)(p99_futex volatile *p00_cntp, unsigned p00_wmin, unsigned p00_wmax)
 {
         if (p00_wmax < p00_wmin)
                 p00_wmax = p00_wmin;
@@ -326,6 +326,10 @@ p99_inline unsigned
         return p00_act;
 }
 
+#define p99_futex_wakeup(...)       P99_CALL_DEFARG(p99_futex_wakeup, 3, __VA_ARGS__)
+#define p99_futex_wakeup_defarg_1() (0)
+#define p99_futex_wakeup_defarg_2() (P99_FUTEX_MAX_WAITERS)
+
 #ifndef P99_FUTEX_COMPARE_EXCHANGE
 P00_DOCUMENT_IDENTIFIER_ARGUMENT(P99_FUTEX_COMPARE_EXCHANGE, 1)
 
@@ -335,7 +339,9 @@ P00_DOCUMENT_IDENTIFIER_ARGUMENT(P99_FUTEX_COMPARE_EXCHANGE, 1)
                 P01_CLANG_IGNORE_DISCARDED_QUALS();                                                  \
                                                                                                      \
                 _Atomic(unsigned) volatile *const p00M_fut  = (FUTEX);                               \
-                unsigned                          p00M_val  = atomic_load(p00M_fut);                 \
+                unsigned volatile                 p00M_val  = atomic_load(p00M_fut);                 \
+                static_assert(sizeof *p00M_fut == sizeof p00M_val,                                   \
+                              "linux futex stuff supposes that there is no hidden lock field");      \
                                                                                                      \
                 for (;;) {                                                                           \
                         register unsigned const VAR = p00M_val;                                      \

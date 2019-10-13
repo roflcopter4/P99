@@ -162,6 +162,43 @@ P00_DOCUMENT_PERMITTED_ARGUMENT(P99_FIFO_POP, 0)
                 p00_r;                                                                                                     \
         })
 
+/* orig */
+#if 0
+#define P99_FIFO_POP(L)                                                                                                    \
+        p99_extension({                                                                                                    \
+                /* first evaluate the macro argument such that there can't be a name conflict */                           \
+                register const P99_MACRO_VAR(p00_l, (L));                                                                  \
+                register const P99_MACRO_VAR(p00_h, &p00_l->p00_head);                                                     \
+                register const P99_MACRO_VAR(p00_t, &p00_l->p00_tail);                                                     \
+                P99_MACRO_VAR(p00_head, atomic_load_explicit(p00_h, memory_order_relaxed));                                \
+                for (;;) {                                                                                                 \
+                        if (p00_head) {                                                                                    \
+                                /* spin lock the whole fifo */                                                             \
+                                if (atomic_compare_exchange_weak_explicit(                                                 \
+                                    p00_h, &p00_head, 0, memory_order_acq_rel, memory_order_consume))                      \
+                                {                                                                                          \
+                                        if (p00_head->p99_fifo)                                                            \
+                                                /* there is still another element to come in the fifo, make it the head */ \
+                                                atomic_store_explicit(p00_h, p00_head->p99_fifo, memory_order_release);    \
+                                        else                                                                               \
+                                                /* this was the last element in the fifo, set the tail to 0, too */        \
+                                                atomic_store_explicit(p00_t, 0, memory_order_release);                     \
+                                        p00_head->p99_fifo = 0;                                                            \
+                                        break;                                                                             \
+                                }                                                                                          \
+                        } else {                                                                                           \
+                                register P99_MACRO_VAR(p00_tail, atomic_load_explicit(p00_t, memory_order_consume));       \
+                                if (!p00_tail)                                                                             \
+                                        break;                                                                             \
+                                p00_head = atomic_load_explicit(p00_h, memory_order_relaxed);                              \
+                        }                                                                                                  \
+                }                                                                                                          \
+                /* make sure that the result can not be used as an lvalue */                                               \
+                register const __typeof__(p00_head = p00_head) p00_r = p00_head;                                           \
+                p00_r;                                                                                                     \
+        })
+#endif
+
 /**
  ** @brief Atomically clear an atomic FIFO @a L and return a pointer
  ** to the start of the list that it previously contained
