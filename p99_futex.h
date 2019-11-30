@@ -276,6 +276,12 @@ P00_FUTEX_INLINE(p99_futex_wakeup)
 void p99_futex_wakeup(p99_futex volatile* p00_fut,
                       unsigned p00_wmin, unsigned p00_wmax);
 
+#ifndef DOXYGEN
+#  define p99_futex_wakeup(...)       P99_CALL_DEFARG(p99_futex_wakeup, 3, __VA_ARGS__)
+#  define p99_futex_wakeup_defarg_1() 0U
+#  define p99_futex_wakeup_defarg_2() P99_FUTEX_MAX_WAITERS
+#endif
+
 
 /**
  ** @brief Unconditionally wait for futex @a p00_fut
