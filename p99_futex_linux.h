@@ -326,10 +326,6 @@ p99_inline unsigned
         return p00_act;
 }
 
-#define p99_futex_wakeup(...)       P99_CALL_DEFARG(p99_futex_wakeup, 3, __VA_ARGS__)
-#define p99_futex_wakeup_defarg_1() (0)
-#define p99_futex_wakeup_defarg_2() (P99_FUTEX_MAX_WAITERS)
-
 #ifndef P99_FUTEX_COMPARE_EXCHANGE
 P00_DOCUMENT_IDENTIFIER_ARGUMENT(P99_FUTEX_COMPARE_EXCHANGE, 1)
 
