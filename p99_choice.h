@@ -83,6 +83,8 @@ TYPE P99_PASTE2(NAME, BITS)(P99_PASTE3(uint, WIDTH, _t) p00_x) {                
 P99_MACRO_END(_unique_bit)
 #endif
 
+#ifdef P99_WANT_CHOICE_INLINES
+
 P00_UNIQUE_BIT_FUNCTION(unsigned, p00_unique_bit_hash_, -1, 3, 8);
 P00_UNIQUE_BIT_FUNCTION(unsigned, p00_unique_bit_hash_, -1, 4, 16);
 P00_UNIQUE_BIT_FUNCTION(unsigned, p00_unique_bit_hash_, -1, 5, 32);
@@ -122,6 +124,8 @@ P00_UNIQUE_BIT(3, 8);
 P00_UNIQUE_BIT(4, 16);
 P00_UNIQUE_BIT(5, 32);
 P00_UNIQUE_BIT(6, 64);
+
+#endif /* P99_WANT_CHOICE_INLINES */
 
 
 #endif      /* !P99_CHOICE_H_ */

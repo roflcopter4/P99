@@ -17,6 +17,8 @@
 #include "p99_c99.h"
 #include "p99_int.h"
 
+#ifdef P99_WANT_NEW
+
 /**
  ** @file
  **
@@ -513,5 +515,7 @@ P00_DOCUMENT_PERMITTED_ARGUMENT(P99_FCALLOC, 1)
 /**
  ** @}
  **/
+
+#endif
 
 #endif /* !P99_NEW_H_ */

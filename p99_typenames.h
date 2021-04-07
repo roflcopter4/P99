@@ -58,6 +58,8 @@ P00_ONE_TOK(long double _Complex, cldouble);
  **/
 
 
+#ifdef P99_WANT_TYPENAME_INLINES
+
 
 P99_POINTER_TYPE(void);
 P99_POINTER_TYPE(float);
@@ -179,5 +181,7 @@ P99_DERIVED_TYPES(_Bool);
 /**
  ** @}
  **/
+
+#endif /* P99_WANT_TYPENAME_INLINES */
 
 #endif      /* !P99_TYPENAMES_H_ */

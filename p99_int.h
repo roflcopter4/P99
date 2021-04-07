@@ -37,6 +37,8 @@
 #include "p99_id.h"
 #include "p99_type.h"
 
+#ifdef P99_WANT_INT_INLINES
+
 #if P99_COMPILER & (P99_COMPILER_GNU | P99_COMPILER_OPEN64)
 # if P99_GCC_VERSION >= 40200UL
 #   pragma GCC diagnostic ignored "-Wmissing-braces"
@@ -1513,5 +1515,7 @@ P00_DOCUMENT_NUMBER_ARGUMENT(P99_NTOHL, 0)
  ** @}
  **/
 
+
+#endif /* P99_WANT_INT_INLINES */
 
 #endif      /* !P99_INT_H_ */

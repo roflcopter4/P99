@@ -17,6 +17,8 @@
 #include "p99_try.h"
 #include "p99_tss.h"
 
+#ifdef P99_WANT_THREADS
+
 #if p99_has_feature(threads_h)
 # include <threads.h>
 #elif defined(_XOPEN_SOURCE) || defined(_POSIX_C_SOURCE) || defined(__MINGW__)
@@ -348,5 +350,7 @@ char const* thrd2str(char *p00_buf, thrd_t p00_id) {
 
 #define THRD2STR(ID) thrd2str((char[1 + sizeof(thrd_t) * 2]){0}, (ID))
 
+
+#endif /* P99_WANT_THREADS */
 
 #endif

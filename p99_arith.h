@@ -34,6 +34,8 @@
    result. */
 #define P00_ARITH_INTMAX_SHIFT(X) (-((intmax_t)+P00_UINTMAX_HIGHBIT(X)))
 
+#ifdef P99_WANT_ARITH_INLINES
+
 P99_CONST_FUNCTION
 p99_inline uintmax_t p00_arith_abs(uintmax_t p00_a) {
 #if UINTMAX_MAX > INTMAX_MAX
@@ -115,5 +117,8 @@ p99_inline uintmax_t p99_arith_log2(uintmax_t p00_a) {
   }
   return p00_l;
 }
+
+
+#endif // P99_WANT_ARITH_INLINES
 
 #endif      /* !P99_ARITH_H_ */

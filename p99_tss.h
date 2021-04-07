@@ -21,6 +21,8 @@
 #include "p99_defarg.h"
 #include "p99_atomic.h"
 
+#if P99_WANT_TSS
+
 #if !p99_has_feature(threads_h)
 
 /**
@@ -443,6 +445,8 @@ void* p99_tss_get_alloc(p99_tss * p00_key, size_t p00_size) {
     }
   return p00_ret;
 }
+
+#endif /* P99_WANT_TSS */
 
 #if defined(thread_local) && !defined(P99_EMULATE_THREAD_LOCAL) && !defined(P00_DOXYGEN)
 
