@@ -18,6 +18,7 @@
 #include "p99_errno.h"
 #include "p99_int.h"
 
+#ifdef P99_WANT_BITSET_INLINES
 
 #if defined(UINT128_MAX)
 typedef uint128_t p99_bitset;
@@ -175,5 +176,7 @@ p99_inline
 p99_bitset p99_is_alnum(uint8_t p00_c) {
   return P00_ISIN(p00_c, sizeof P00_ALNUM, (uint8_t const*)P00_ALNUM);
 }
+
+#endif // P99_WANT_BITSET_INLINES
 
 #endif

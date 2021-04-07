@@ -517,8 +517,8 @@ signed p00_trailing_comma_in_initializer__(void) {
 #  endif
 # endif
 
-#if defined (__MINGW__)
-# define P00_WEAK1(ID) _Pragma(P99_STRINGIFY(weak ID))
+#if  0  // defined (__MINGW__) || defined (__MINGW32__) || defined (__MINGW64__)
+# define P00_WEAK1(ID) __declspec(selectany)
 #elif p99_has_attribute(weak)
 # define P00_WEAK1(ID) __attribute__((__weak__))
 #elif P99_COMPILER & P99_COMPILER_MICROSOFT

@@ -14,22 +14,24 @@
 #define P99_CONSTRAINT_H
 #include "p99_bitset.h"
 
+#ifdef P99_WANT_CONSTRAINT_INLINES
+
 /**
  ** @addtogroup C11_library
  **
  ** @{
  **/
 
-#if defined _WIN64
+# if defined _WIN64
 #  define P00_MKTIME   _mktime64
 #  define P00_DIFFTIME _difftime64
-#elif defined _WIN32
+# elif defined _WIN32
 #  define P00_MKTIME   _mktime32
 #  define P00_DIFFTIME _difftime32
-#else
+# else
 #  define P00_MKTIME   mktime
 #  define P00_DIFFTIME difftime
-#endif
+# endif
 
 /**
  ** @brief calculates the length of the (untruncated) locale-specific
@@ -42,12 +44,6 @@ p99_inline size_t strerrorlen_s(errno_t p00_errnum);
  **/
 p99_inline size_t strnlen_s(const char *p00_s, size_t p00_maxsize);
 
-
-/**
- ** @brief maps the number in errnum to a locale-specific message
- ** string.
- **/
-p99_inline errno_t strerror_s(char *p00_s, rsize_t p00_maxsize, errno_t p00_errnum);
 
 P99_WEAK(exit_handler_s)
 void exit_handler_s(const char *restrict p00_msg, void *restrict p00_ptr, errno_t p00_err);
@@ -89,21 +85,21 @@ P99_DECLARE_THREAD_LOCAL(char_cptr, p00_jmp_buf_file);
 P99_DECLARE_THREAD_LOCAL(char_cptr, p00_jmp_buf_context);
 P99_DECLARE_THREAD_LOCAL(char_cptr, p00_jmp_buf_info);
 
-#define P00_JMP_BUF_FILE P99_THREAD_LOCAL(p00_jmp_buf_file)
-#define P00_JMP_BUF_CONTEXT P99_THREAD_LOCAL(p00_jmp_buf_context)
-#define P00_JMP_BUF_INFO P99_THREAD_LOCAL(p00_jmp_buf_info)
+# define P00_JMP_BUF_FILE P99_THREAD_LOCAL(p00_jmp_buf_file)
+# define P00_JMP_BUF_CONTEXT P99_THREAD_LOCAL(p00_jmp_buf_context)
+# define P00_JMP_BUF_INFO P99_THREAD_LOCAL(p00_jmp_buf_info)
 
 P99_CONSTANT(int, p00_ilen10, 256);
 
-#if __STDC_WANT_LIB_EXT1__ && !defined(__STDC_LIB_EXT1__)
+# if __STDC_WANT_LIB_EXT1__ && !defined(__STDC_LIB_EXT1__)
 p99_inline size_t
            strerrorlen_s(errno_t p00_errnum)
 {
         return strlen(strerror(p00_errnum));
 }
-#endif
+# endif
 
-#if (_XOPEN_SOURCE >= 600) && !defined(__CYGWIN__)
+# if (_XOPEN_SOURCE >= 600) && !defined(__CYGWIN__)
 p99_inline int
 p00_strerror(int p00_errname, size_t p00_maxsize, char p00_s[p00_maxsize])
 {
@@ -114,8 +110,8 @@ p00_strerror(int p00_errname, size_t p00_maxsize, char p00_s[p00_maxsize])
            try to get away with it by re-interpreting the return value as
            integer. If it is small we suppose that we had an ABI breakage,
            and return that small integer value. */
-#ifdef _GNU_SOURCE
-#  ifdef  __GLIBC__
+#  ifdef _GNU_SOURCE
+#   ifdef  __GLIBC__
         char *p00_ret = strerror_r(p00_errname, p00_s, p00_maxsize);
         if ((uintptr_t)p00_ret < 2048)
                 return (intptr_t)p00_ret;
@@ -128,20 +124,20 @@ p00_strerror(int p00_errname, size_t p00_maxsize, char p00_s[p00_maxsize])
                 }
         }
         return 0;
+#   else
+        return strerror_r(p00_errname, p00_s, p00_maxsize);
+#   endif
 #  else
         return strerror_r(p00_errname, p00_s, p00_maxsize);
 #  endif
-#else
-        return strerror_r(p00_errname, p00_s, p00_maxsize);
-#endif
 }
-#elif __STDC_WANT_LIB_EXT1__ && defined(__STDC_LIB_EXT1__)
+# elif __STDC_WANT_LIB_EXT1__ && (defined(__STDC_LIB_EXT1__) || defined(__STDC_SECURE_LIB__))
 p99_inline int
 p00_strerror(int p00_errname, size_t p00_maxsize, char p00_s[p00_maxsize])
 {
         return strerror_s(p00_s, p00_maxsize, p00_errname);
 }
-#else
+# else
 p99_inline int
 p00_strerror(int p00_errname, size_t p00_maxsize, char p00_s[p00_maxsize])
 {
@@ -155,7 +151,7 @@ p00_strerror(int p00_errname, size_t p00_maxsize, char p00_s[p00_maxsize])
         p00_s[p00_len] = 0;
         return p00_ret;
 }
-#endif
+# endif
 
 p99_inline char const *
 p00_strerror_r(int p00_errname, size_t p00_maxsize, char p00_s[p00_maxsize])
@@ -164,16 +160,16 @@ p00_strerror_r(int p00_errname, size_t p00_maxsize, char p00_s[p00_maxsize])
         return p00_s;
 }
 
-#define P00_STRERROR2(E, STR) p00_strerror(E, sizeof(STR), STR)
+# define P00_STRERROR2(E, STR) p00_strerror(E, sizeof(STR), STR)
 
-#define P99_STRERROR_MAX 256
+# define P99_STRERROR_MAX 256
 
-#define p00_strerror(...)                                                        \
+# define p00_strerror(...)                                                        \
         P99_IF_LT(P99_NARG(__VA_ARGS__), 2)                                      \
         (p00_strerror(__VA_ARGS__, P99_STRERROR_MAX, (char[P99_STRERROR_MAX])))( \
             P99_IF_LT(P99_NARG(__VA_ARGS__), 3)(P00_STRERROR2(__VA_ARGS__))(p00_strerror(__VA_ARGS__)))
 
-#if __STDC_WANT_LIB_EXT1__ && !defined(__STDC_LIB_EXT1__)
+# if __STDC_WANT_LIB_EXT1__ && !defined(__STDC_LIB_EXT1__)
 P99_WEAK(p99_constraint_handler)
 void p99_constraint_handler(const char *restrict p00_msg, void *restrict p00_ptr, errno_t p00_err);
 
@@ -190,6 +186,8 @@ strnlen_s(const char *p00_s, size_t p00_maxsize)
         }
         return p00_ret;
 }
+
+#  ifndef __STDC_SECURE_LIB__
 
 p99_inline errno_t
 strerror_s(char *p00_s, rsize_t p00_maxsize, errno_t p00_errnum)
@@ -225,7 +223,8 @@ strerror_s(char *p00_s, rsize_t p00_maxsize, errno_t p00_errnum)
         errno = p00_back;
         return p00_ret;
 }
-#endif
+#  endif
+# endif
 
 p99_inline char const *
 p00_strerror_s(char *p00_s, rsize_t p00_maxsize, errno_t p00_errnum)
@@ -234,23 +233,24 @@ p00_strerror_s(char *p00_s, rsize_t p00_maxsize, errno_t p00_errnum)
         return p00_s;
 }
 
-#define P00_STRERROR(E, S, STR) p00_strerror_s(STR, S, E)
-#else
-#define P00_STRERROR(...) p00_strerror_r(__VA_ARGS__)
-#endif
+# if 1
+#  define P00_STRERROR(E, S, STR) p00_strerror_s(STR, S, E)
+# else
+#  define P00_STRERROR(...) p00_strerror_r(__VA_ARGS__)
+# endif
 
-#define P00_STRERROR02(E, STR) P00_STRERROR(E, sizeof(STR), STR)
+# define P00_STRERROR02(E, STR) P00_STRERROR(E, sizeof(STR), STR)
 
-#define P99_STRERROR(...)                                                           \
+# define P99_STRERROR(...)                                                           \
         P99_IF_LT(P99_NARG(__VA_ARGS__), 2)                                         \
         (P00_STRERROR(__VA_ARGS__, P99_STRERROR_MAX, (char[P99_STRERROR_MAX]){0}))( \
             P99_IF_LT(P99_NARG(__VA_ARGS__), 3)(P00_STRERROR02(__VA_ARGS__))(P00_STRERROR(__VA_ARGS__)))
 
-#ifdef P44_EXCEPTION_ID
+# ifdef P44_EXCEPTION_ID
 #  define P00_EXCEPTION_ID ", " P44_EXCEPTION_ID ": "
-#else
+# else
 #  define P00_EXCEPTION_ID ": "
-#endif
+# endif
 
 p99_inline void
 p00_constraint_report(errno_t p00_cond, const bool caught, char const *p00_file, char const *p00_context, char const *p00_info)
@@ -334,11 +334,11 @@ p99_exit_handler(const char *restrict p00_msg, void *restrict p00_ptr, errno_t p
         exit(EXIT_FAILURE);
 }
 
-#ifndef P99_CONSTRAINT_HANDLER
-#define P99_CONSTRAINT_HANDLER exit_handler_s
-#endif
+# ifndef P99_CONSTRAINT_HANDLER
+#  define P99_CONSTRAINT_HANDLER exit_handler_s
+# endif
 
-#if __STDC_WANT_LIB_EXT1__
+# if __STDC_WANT_LIB_EXT1__
 
 P99_DECLARE_ATOMIC(constraint_handler_t);
 
@@ -375,7 +375,7 @@ p99_constraint_handler(const char *restrict p00_msg, void *restrict p00_ptr, err
 }
 
 
-#ifndef __STDC_LIB_EXT1__
+#  ifndef __STDC_LIB_EXT1__
 
 P99_WEAK(ignore_handler_s)
 /* P99_CONST_FUNCTION */
@@ -400,7 +400,7 @@ set_constraint_handler_s(constraint_handler_t p00_hand)
         return atomic_exchange_explicit(&p00_constraint_handler, p00_hand, memory_order_acq_rel);
 }
 
-#endif
+#  endif
 
 p99_inline errno_t
 p00_constraint_call(errno_t p00_cond, char const *p00_file, char const *p00_context, char const *p00_info)
@@ -417,23 +417,23 @@ p00_constraint_call(errno_t p00_cond, char const *p00_file, char const *p00_cont
         return p00_cond;
 }
 
-#define P00_CONSTRAINT_INFO(F) ", call to " #F ", dynamic constraint violation"
+#  define P00_CONSTRAINT_INFO(F) ", call to " #F ", dynamic constraint violation"
 
 
-#define P99_CONSTRAINT_TRIGGER(E, I) p00_constraint_call((E), P99_STRINGIFY(__LINE__), __func__, I)
+#  define P99_CONSTRAINT_TRIGGER(E, I) p00_constraint_call((E), P99_STRINGIFY(__LINE__), __func__, I)
 
-#define P00_CONSTRAINT_CALL3(F, I, C) P99_CONSTRAINT_TRIGGER(F C, I)
+#  define P00_CONSTRAINT_CALL3(F, I, C) P99_CONSTRAINT_TRIGGER(F C, I)
 
-#define P00_CONSTRAINT_CALL1(F) P00_CONSTRAINT_CALL3(F, P00_CONSTRAINT_INFO(F), ())
+#  define P00_CONSTRAINT_CALL1(F) P00_CONSTRAINT_CALL3(F, P00_CONSTRAINT_INFO(F), ())
 
-#define P00_CONSTRAINT_CALL0(F, ...) P00_CONSTRAINT_CALL3(F, P00_CONSTRAINT_INFO(F), (__VA_ARGS__))
+#  define P00_CONSTRAINT_CALL0(F, ...) P00_CONSTRAINT_CALL3(F, P00_CONSTRAINT_INFO(F), (__VA_ARGS__))
 
-#define P99_CONSTRAINT_CALL(...)            \
+#  define P99_CONSTRAINT_CALL(...)            \
         P99_IF_LT(P99_NARG(__VA_ARGS__), 2) \
         (P00_CONSTRAINT_CALL1(__VA_ARGS__))(P00_CONSTRAINT_CALL0(__VA_ARGS__))
 
 
-#if !defined(__STDC_LIB_EXT1__) || defined(P00_DOXYGEN)
+#  if !defined(__STDC_LIB_EXT1__) || defined(P00_DOXYGEN)
 
 p99_inline errno_t
 p00_memcpy_s(_Bool p00_overlap, void *restrict p00_s1, rsize_t p00_s1max, const void *restrict p00_s2, rsize_t p00_n)
@@ -478,11 +478,11 @@ P00_SEVERE:
 }
 
 /** @ingroup C11_library **/
-#define memcpy_s(S1, S1MAX, S2, N)                                            \
+#   define memcpy_s(S1, S1MAX, S2, N)                                            \
         P99_CONSTRAINT_TRIGGER(p00_memcpy_s(false, (S1), (S1MAX), (S2), (N)), \
                                "memcpy_s runtime constraint violation")
 /** @ingroup C11_library **/
-#define memmove_s(S1, S1MAX, S2, N)                                          \
+#   define memmove_s(S1, S1MAX, S2, N)                                          \
         P99_CONSTRAINT_TRIGGER(p00_memcpy_s(true, (S1), (S1MAX), (S2), (N)), \
                                "memmove_s runtime constraint violation")
 
@@ -494,7 +494,7 @@ p00_strcpy_s(void *restrict p00_s1, rsize_t p00_s1max, const void *restrict p00_
 }
 
 /** @ingroup C11_library **/
-#define strcpy_s(S1, S1MAX, S2)                                   \
+#   define strcpy_s(S1, S1MAX, S2)                                   \
         P99_CONSTRAINT_TRIGGER(p00_strcpy_s((S1), (S1MAX), (S2)), \
                                "strcpy_s runtime constraint violation")
 
@@ -517,7 +517,7 @@ p00_strncpy_s(char *restrict p00_s1, rsize_t p00_s1max, const char *restrict p00
         return p00_ret;
 }
 
-#define strncpy_s(S1, S1MAX, S2, N)                                     \
+#   define strncpy_s(S1, S1MAX, S2, N)                                     \
         P99_CONSTRAINT_TRIGGER(p00_strncpy_s((S1), (S1MAX), (S2), (N)), \
                                "strncpy_s runtime constraint violation")
 
@@ -546,7 +546,7 @@ p00_strcat_s(char *restrict p00_s1, rsize_t p00_s1max, const char *restrict p00_
 }
 
 /** @ingroup C11_library **/
-#define strcat_s(S1, S1MAX, S2)                                   \
+#   define strcat_s(S1, S1MAX, S2)                                   \
         P99_CONSTRAINT_TRIGGER(p00_strcat_s((S1), (S1MAX), (S2)), \
                                "strcat_s runtime constraint violation")
 
@@ -575,7 +575,7 @@ p00_strncat_s(char *restrict p00_s1, rsize_t p00_s1max, const char *restrict p00
 }
 
 /** @ingroup C11_library **/
-#define strncat_s(S1, S1MAX, S2, N)                                     \
+#   define strncat_s(S1, S1MAX, S2, N)                                     \
         P99_CONSTRAINT_TRIGGER(p00_strncat_s((S1), (S1MAX), (S2), (N)), \
                                "strncat_s runtime constraint violation")
 
@@ -622,7 +622,7 @@ p00_bsearch_s(char const *p00_file,
 }
 
 /** @ingroup C11_library **/
-#define bsearch_s(...) p00_bsearch_s(P99_STRINGIFY(__LINE__), __func__, __VA_ARGS__)
+#   define bsearch_s(...) p00_bsearch_s(P99_STRINGIFY(__LINE__), __func__, __VA_ARGS__)
 
 p99_inline errno_t
 p00_getenv_s(char const *p00_file,
@@ -657,7 +657,7 @@ p00_getenv_s(char const *p00_file,
 }
 
 /** @ingroup C11_library **/
-#define getenv_s(...) p00_getenv_s(P99_STRINGIFY(__LINE__), __func__, __VA_ARGS__)
+#   define getenv_s(...) p00_getenv_s(P99_STRINGIFY(__LINE__), __func__, __VA_ARGS__)
 
 p99_inline errno_t
 p00_tmpfile_s(char const *p00_file, char const *p00_context, FILE *restrict *restrict p00_streamptr)
@@ -678,7 +678,7 @@ p00_tmpfile_s(char const *p00_file, char const *p00_context, FILE *restrict *res
 }
 
 /** @ingroup C11_library **/
-#define tmpfile_s(...) p00_tmpfile_s(P99_STRINGIFY(__LINE__), __func__, __VA_ARGS__)
+#   define tmpfile_s(...) p00_tmpfile_s(P99_STRINGIFY(__LINE__), __func__, __VA_ARGS__)
 
 p99_inline errno_t
 p00_tmpnam_s(char const *p00_file, char const *p00_context, char *p00_s, rsize_t p00_maxsize)
@@ -708,7 +708,7 @@ p00_tmpnam_s(char const *p00_file, char const *p00_context, char *p00_s, rsize_t
 }
 
 /** @ingroup C11_library **/
-#define tmpnam_s(...) p00_tmpnam_s(P99_STRINGIFY(__LINE__), __func__, __VA_ARGS__)
+#   define tmpnam_s(...) p00_tmpnam_s(P99_STRINGIFY(__LINE__), __func__, __VA_ARGS__)
 
 p99_inline char *
 p00_gets_s(char const *p00_file, char const *p00_context, char *p00_s, rsize_t p00_n)
@@ -752,7 +752,7 @@ p00_gets_s(char const *p00_file, char const *p00_context, char *p00_s, rsize_t p
 }
 
 /** @ingroup C11_library **/
-#define gets_s(...) p00_gets_s(P99_STRINGIFY(__LINE__), __func__, __VA_ARGS__)
+#   define gets_s(...) p00_gets_s(P99_STRINGIFY(__LINE__), __func__, __VA_ARGS__)
 
 P99_PURE_FUNCTION
 p99_inline bool
@@ -850,7 +850,7 @@ p00_strtok_s(char const *p00_file,
         return (char *)p00_ret;
 }
 
-#define P00_STRSIZE(S)                                                                        \
+#   define P00_STRSIZE(S)                                                                        \
         P99_GENERIC(S, sizeof(S), (char *, strlen(S) + 1), (char const *, strlen(S) + 1),     \
                     (char volatile *, strlen(S) + 1), (char volatile const *, strlen(S) + 1), \
                     (char *restrict, strlen(S) + 1), (char const *restrict, strlen(S) + 1),   \
@@ -859,11 +859,11 @@ p00_strtok_s(char const *p00_file,
 
 
 /** @ingroup C11_library **/
-#define strtok_s(S1, S1MAX, S2, PTR)                                                     \
+#   define strtok_s(S1, S1MAX, S2, PTR)                                                     \
         p00_strtok_s(P99_STRINGIFY(__LINE__), __func__, S1MAX, (uint8_t * restrict)(S1), \
                      P00_STRSIZE(S2), (uint8_t const *restrict)(S2), (uint8_t **)PTR)
 
-#define P00_SPAN_DECLARE(NAME, SET)                                                                             \
+#   define P00_SPAN_DECLARE(NAME, SET)                                                                             \
         P99_PURE_FUNCTION                                                                                       \
         p99_inline rsize_t P99_PASTE2(p99_span_, NAME)(rsize_t p00_s1l, uint8_t p00_s1[const restrict p00_s1l]) \
         {                                                                                                       \
@@ -935,7 +935,7 @@ p99_inline errno_t
 }
 
 /** @ingroup C11_library **/
-#define asctime_s(...) p00_asctime_s(P99_STRINGIFY(__LINE__), __func__, __VA_ARGS__)
+#   define asctime_s(...) p00_asctime_s(P99_STRINGIFY(__LINE__), __func__, __VA_ARGS__)
 
 p99_inline struct tm *
 p00_localtime_s(char const *p00_file, char const *p00_context, time_t const *restrict p00_t, struct tm *p00_tptr)
@@ -981,7 +981,7 @@ p00_localtime_s(char const *p00_file, char const *p00_context, time_t const *res
 }
 
 /** @ingroup C11_library **/
-#define localtime_s(...) p00_localtime_s(P99_STRINGIFY(__LINE__), __func__, __VA_ARGS__)
+#   define localtime_s(...) p00_localtime_s(P99_STRINGIFY(__LINE__), __func__, __VA_ARGS__)
 
 p99_inline struct tm *
 p00_gmtime_s(char const *p00_file, char const *p00_context, time_t const *restrict p00_t, struct tm *p00_tptr)
@@ -1019,16 +1019,18 @@ p00_gmtime_s(char const *p00_file, char const *p00_context, time_t const *restri
 }
 
 /** @ingroup C11_library **/
-#define gmtime_s(...) p00_gmtime_s(P99_STRINGIFY(__LINE__), __func__, __VA_ARGS__)
+#   define gmtime_s(...) p00_gmtime_s(P99_STRINGIFY(__LINE__), __func__, __VA_ARGS__)
 
 /** @ingroup C11_library **/
-#define ctime_s(S, M, T) asctime_s((S), (M), localtime_s((T), &(struct tm){0}))
+#   define ctime_s(S, M, T) asctime_s((S), (M), localtime_s((T), &(struct tm){0}))
 
-#endif
+#  endif
+# endif
 
 /**
  ** @}
  **/
 
+#endif // P99_WANT_CONSTRAINT_INLINES
 
 #endif

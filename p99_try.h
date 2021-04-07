@@ -17,6 +17,8 @@
 #include "p99_constraint.h"
 #include "p99_lifo.h"
 
+#ifdef P99_WANT_TRY_INLINES
+
 P99_POINTER_TYPE(p00_jmp_buf0);
 P99_LIFO_DECLARE(p00_jmp_buf0_ptr);
 
@@ -724,5 +726,6 @@ P00_UNWIND_DOCUMENT
  ** @}
  **/
 
+#endif // P99_WANT_TRY_INLINES
 
 #endif
