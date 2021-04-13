@@ -15,7 +15,7 @@
 #define P99_THREADS_H 1
 
 #ifndef P99_FUTEX_H
-# error "AAA"
+# error "Don't include p99_threads.h directly. For now."
 #endif
 
 #include "p99_try.h"
@@ -23,9 +23,7 @@
 
 #include "p99_int.h"
 
-#ifndef P99_WANT_THREADS
-# error "AAAAAAAA"
-#else
+#ifdef P99_WANT_THREADS
 /* #ifdef P99_WANT_THREADS */
 /**
  ** @addtogroup thread_enum
