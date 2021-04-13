@@ -13,7 +13,7 @@
 /* particular purpose.                                                        */
 /*                                                                            */
 #ifndef     P99_INT_H_
-# define    P99_INT_H_
+#define    P99_INT_H_
 
 /**
  ** @file
@@ -39,12 +39,12 @@
 
 #ifdef P99_WANT_INT_INLINES
 
-#if P99_COMPILER & (P99_COMPILER_GNU | P99_COMPILER_OPEN64)
-# if P99_GCC_VERSION >= 40200UL
+# if P99_COMPILER & (P99_COMPILER_GNU | P99_COMPILER_OPEN64)
+#  if P99_GCC_VERSION >= 40200UL
 #   pragma GCC diagnostic ignored "-Wmissing-braces"
 #   pragma GCC diagnostic ignored "-Wsign-compare"
+#  endif
 # endif
-#endif
 
 /**
  ** @addtogroup integers Macros to handle integer type expressions
@@ -56,46 +56,46 @@
  ** @{
  */
 
-#define P00_DOCUMENT_C2(WIDTH) /*! @brief Combine two integer expressions of half the width into one of width WIDTH*/
+# define P00_DOCUMENT_C2(WIDTH) /*! @brief Combine two integer expressions of half the width into one of width WIDTH*/
 
-#ifdef UINT16_MAX
+# ifdef UINT16_MAX
 P00_DOCUMENT_C2(16)
-#define P99X_UINT16_C2(H, L) ((((uint16_t)(uint8_t)H) << 8u) | (uint16_t)(uint8_t)L)
-#endif
-#ifdef INT16_MAX
+#  define P99X_UINT16_C2(H, L) ((((uint16_t)(uint8_t)H) << 8u) | (uint16_t)(uint8_t)L)
+# endif
+# ifdef INT16_MAX
 P00_DOCUMENT_C2(16)
-#define P99X_INT16_C2(H, L) ((((int16_t)(int8_t)H) << 8u) | (int16_t)(int8_t)L)
-#endif
-#ifdef UINT32_MAX
+#  define P99X_INT16_C2(H, L) ((((int16_t)(int8_t)H) << 8u) | (int16_t)(int8_t)L)
+# endif
+# ifdef UINT32_MAX
 P00_DOCUMENT_C2(32)
-#define P99X_UINT32_C2(H, L) ((((uint32_t)(uint16_t)H) << 16u) | (uint32_t)(uint16_t)L)
-#endif
-#ifdef INT32_MAX
+#  define P99X_UINT32_C2(H, L) ((((uint32_t)(uint16_t)H) << 16u) | (uint32_t)(uint16_t)L)
+# endif
+# ifdef INT32_MAX
 P00_DOCUMENT_C2(32)
-#define P99X_INT32_C2(H, L) ((((int32_t)(int16_t)H) << 16u) | (int32_t)(int16_t)L)
-#endif
-#ifdef UINT64_MAX
+#  define P99X_INT32_C2(H, L) ((((int32_t)(int16_t)H) << 16u) | (int32_t)(int16_t)L)
+# endif
+# ifdef UINT64_MAX
 P00_DOCUMENT_C2(64)
-#define P99X_UINT64_C2(H, L) ((((uint64_t)(uint32_t)H) << 32u) | (uint64_t)(uint32_t)L)
-#endif
-#ifdef INT64_MAX
+#  define P99X_UINT64_C2(H, L) ((((uint64_t)(uint32_t)H) << 32u) | (uint64_t)(uint32_t)L)
+# endif
+# ifdef INT64_MAX
 P00_DOCUMENT_C2(64)
-#define P99X_INT64_C2(H, L) ((((int64_t)(int32_t)H) << 32u) | (int64_t)(int32_t)L)
-#endif
+#  define P99X_INT64_C2(H, L) ((((int64_t)(int32_t)H) << 32u) | (int64_t)(int32_t)L)
+# endif
 
-#ifdef p99x_uint128
+# ifdef p99x_uint128
 P00_DOCUMENT_C2(128)
-#define P99X_UINT128_C2(H, L) ((((p99x_uint128)H) << 64u) | (p99x_uint128)L)
-#define P99X_UINT128_0 P99X_UINT128_C2(0x0000000000000000, 0x0000000000000000)
-#define P99X_UINT128_MAX P99X_UINT128_C2(0xFFFFFFFFFFFFFFFF, 0xFFFFFFFFFFFFFFFF)
-#endif
+#  define P99X_UINT128_C2(H, L) ((((p99x_uint128)H) << 64u) | (p99x_uint128)L)
+#  define P99X_UINT128_0 P99X_UINT128_C2(0x0000000000000000, 0x0000000000000000)
+#  define P99X_UINT128_MAX P99X_UINT128_C2(0xFFFFFFFFFFFFFFFF, 0xFFFFFFFFFFFFFFFF)
+# endif
 
-#ifdef p99x_int128
+# ifdef p99x_int128
 P00_DOCUMENT_C2(128)
-#define P99X_INT128_C2(H, L) ((((p99x_int128)H) << 64u) | (p99x_int128)L)
-#define P99X_INT128_MAX P99X_INT128_C2(0x7FFFFFFFFFFFFFFF, 0xFFFFFFFFFFFFFFFF)
-#define P99X_INT128_MIN P99X_INT128_C2(0x8000000000000000, 0x0000000000000000)
-#endif
+#  define P99X_INT128_C2(H, L) ((((p99x_int128)H) << 64u) | (p99x_int128)L)
+#  define P99X_INT128_MAX P99X_INT128_C2(0x7FFFFFFFFFFFFFFF, 0xFFFFFFFFFFFFFFFF)
+#  define P99X_INT128_MIN P99X_INT128_C2(0x8000000000000000, 0x0000000000000000)
+# endif
 
 /**
  ** @brief An unsigned integer type of maximal width that exceeds the
@@ -109,9 +109,9 @@ P00_DOCUMENT_C2(128)
  ** checked with a macro of the same name.
  ** @see p99x_uint128
  **/
-#ifndef p99x_uint128
+# ifndef p99x_uint128
 typedef uintmax_t p99x_uintmax;
-#endif
+# endif
 
 /**
  ** @brief A signed integer type of maximal width that exceeds the
@@ -125,11 +125,11 @@ typedef uintmax_t p99x_uintmax;
  ** checked for with a macro of the same name.
  ** @see p99x_int128
  **/
-#ifndef p99x_int128
+# ifndef p99x_int128
 typedef intmax_t p99x_intmax;
-#endif
+# endif
 
-#ifdef P00_DOXYGEN
+# ifdef P00_DOXYGEN
 /**
  ** @brief An unsigned integer type of width 128 that exceeds the
  ** C99 specifications.
@@ -155,33 +155,33 @@ typedef extendedInt p99x_uint128;
  ** @see p99x_intmax
  **/
 typedef extendedInt p99x_int128;
-#endif
+# endif
 
-#ifdef p99x_uintmax
+# ifdef p99x_uintmax
 
-#define P99X__SIGN_PROMOTE(EXPR)                                                \
+#  define P99X__SIGN_PROMOTE(EXPR)                                                \
 ((p99x_uintmax)+P99_SIGN_PROMOTE(P99_UE_MAX(EXPR), (p99x_uintmax)+UINTMAX_MAX))
 
-#define P99X__SHIFT(EXPR)                                                       \
+#  define P99X__SHIFT(EXPR)                                                       \
 ((P99_SIGN_PROMOTE(P99_UE_MAX(EXPR), UINTMAX_MAX) > (p99x_uintmax)+UINTMAX_MAX) \
  ? 64u                                                                          \
  : 0u)
-#endif
+# endif
 
-#ifndef P99_HIGH2
-# if P99_UINTMAX_WIDTH == 64
-#  define P99_HIGH2(X)                                         \
+# ifndef P99_HIGH2
+#  if P99_UINTMAX_WIDTH == 64
+#   define P99_HIGH2(X)                                         \
 ((((X) & P00_B0) ? P00_S0 : 0u)                                \
  | (((X) & P00_B1) ? P00_S1 : 0u)                              \
  | (((X) & P00_B2) ? P00_S2 : 0u)                              \
  | (((X) & P00_B3) ? P00_S3 : 0u)                              \
  | (((X) & P00_B4) ? P00_S4 : 0u)                              \
  | (((X) & P00_B5) ? P00_S5 : 0u))
+#  endif
 # endif
-#endif
-#ifndef P99_HIGH2
-# if P99_UINTMAX_WIDTH <= 128
-#  define P99_HIGH2(X)                                         \
+# ifndef P99_HIGH2
+#  if P99_UINTMAX_WIDTH <= 128
+#   define P99_HIGH2(X)                                         \
 ((((X) & P00_B0) ? P00_S0 : 0u)                                \
  | (((X) & P00_B1) ? P00_S1 : 0u)                              \
  | (((X) & P00_B2) ? P00_S2 : 0u)                              \
@@ -189,18 +189,18 @@ typedef extendedInt p99x_int128;
  | (((X) & P00_B4) ? P00_S4 : 0u)                              \
  | (((X) & P00_B5) ? P00_S5 : 0u)                              \
  | (((X) & P00_B6) ? P00_S6 : 0u))
+#  endif
 # endif
-#endif
 
-#ifndef P99X__SHIFT
-#define P99X__SHIFT(EXPR) 0
-#endif
+# ifndef P99X__SHIFT
+#  define P99X__SHIFT(EXPR) 0
+# endif
 
-#ifndef P99X__SIGN_PROMOTE
-#define P99X__SIGN_PROMOTE(EXPR) 0
-#endif
+# ifndef P99X__SIGN_PROMOTE
+#  define P99X__SIGN_PROMOTE(EXPR) 0
+# endif
 
-#define P99_HIGH2_1(X) ((X) == P99_UINTMAX_MAX ? P99_UINTMAX_WIDTH : (P99_HIGH2((X) + UINTMAX_C(1))))
+# define P99_HIGH2_1(X) ((X) == P99_UINTMAX_MAX ? P99_UINTMAX_WIDTH : (P99_HIGH2((X) + UINTMAX_C(1))))
 
 /**
  ** @brief Apply the type macro @a MACRO to an unsigned type that is
@@ -210,7 +210,7 @@ typedef extendedInt p99x_int128;
  **/
 P00_DOCUMENT_TYPE_ARGUMENT(P99_TO_UNSIGNED, 0)
 P00_DOCUMENT_MACRO_ARGUMENT(P99_TO_UNSIGNED, 1)
-#define P99_TO_UNSIGNED(T, MACRO)                              \
+# define P99_TO_UNSIGNED(T, MACRO)                              \
 ((uintmax_t)                                                   \
  (sizeof(T) < sizeof(signed)                                   \
   ? (sizeof(T) == 1u                                           \
@@ -224,7 +224,7 @@ P00_DOCUMENT_MACRO_ARGUMENT(P99_TO_UNSIGNED, 1)
 
 P00_DOCUMENT_TYPE_ARGUMENT(P99_TO_UNSIGN, 0)
 P00_DOCUMENT_MACRO_ARGUMENT(P99_TO_UNSIGN, 1)
-#define P99_TO_UNSIGN(T, VAL)                                  \
+# define P99_TO_UNSIGN(T, VAL)                                  \
 ((uintmax_t)                                                   \
  (sizeof(T) < sizeof(signed)                                   \
   ? (sizeof(T) == 1u                                           \
@@ -251,17 +251,17 @@ P00_DOCUMENT_MACRO_ARGUMENT(P99_TO_UNSIGN, 1)
  ** always defined to be modulo 2^N where N is the precision of the
  ** target type.
  **/
-#define P99_M1(T) ((T)-1)
+# define P99_M1(T) ((T)-1)
 
 /**
  ** @brief Return an unsigned version of P99_M1.
  **
  ** The returned expression is of type @c uintmax_t
  **/
-#define P99_M1U(T) (P99_ISSIGNED(T) ? P99_TO_UNSIGN(T, -1) : P99_C(uintmax_t, P99_M1(T)))
+# define P99_M1U(T) (P99_ISSIGNED(T) ? P99_TO_UNSIGN(T, -1) : P99_C(uintmax_t, P99_M1(T)))
 
-#define P00_DOCUMENT_SIGNED(X) /*! @brief Cast the @c int value @c X to type @a T */
-#define P00_DOCUMENT_UNSIGNED(X) /*! @brief Cast the @c int value @c X to the unsigned type corresponding to @a T */
+# define P00_DOCUMENT_SIGNED(X) /*! @brief Cast the @c int value @c X to type @a T */
+# define P00_DOCUMENT_UNSIGNED(X) /*! @brief Cast the @c int value @c X to the unsigned type corresponding to @a T */
 
 
 /**
@@ -294,75 +294,75 @@ P00_DOCUMENT_MACRO_ARGUMENT(P99_TO_UNSIGN, 1)
  ** expression. This results in an error when an attempt is made to
  ** use this with a pointer value.
  **/
-#define P99_C(T, X) ((T)+(X))
+# define P99_C(T, X) ((T)+(X))
 
-#define P00_DOCUMENT_CONSTANT(T) /*! @brief Cast the integer value @c X to type @a T, compatible with the preprocessor @see P99_C */
+# define P00_DOCUMENT_CONSTANT(T) /*! @brief Cast the integer value @c X to type @a T, compatible with the preprocessor @see P99_C */
 
 /* Constants macros for the required typedefs */
 
-#if !defined(SIZE_C)
+# if !defined(SIZE_C)
 P00_DOCUMENT_CONSTANT(size_t)
-# define SIZE_C(X) P99_C(size_t, X)
-#endif
+#  define SIZE_C(X) P99_C(size_t, X)
+# endif
 
-#if !defined(PTRDIFF_C)
+# if !defined(PTRDIFF_C)
 P00_DOCUMENT_CONSTANT(ptrdiff_t)
-# define PTRDIFF_C(X) P99_C(ptrdiff_t, X)
-#endif
+#  define PTRDIFF_C(X) P99_C(ptrdiff_t, X)
+# endif
 
-#if !defined(WCHAR_C)
+# if !defined(WCHAR_C)
 P00_DOCUMENT_CONSTANT(wchar_t)
-# define WCHAR_C(X) P99_C(wchar_t, X)
-#endif
+#  define WCHAR_C(X) P99_C(wchar_t, X)
+# endif
 
-#if !defined(WINT_C)
+# if !defined(WINT_C)
 P00_DOCUMENT_CONSTANT(wint_t)
-# define WINT_C(X) P99_C(wint_t, X)
-#endif
+#  define WINT_C(X) P99_C(wint_t, X)
+# endif
 
 /* Constants macros for the optional typedefs */
 
-#if defined(SIG_ATOMIC_MAX) && !defined(SIG_ATOMIC_C)
+# if defined(SIG_ATOMIC_MAX) && !defined(SIG_ATOMIC_C)
 P00_DOCUMENT_CONSTANT(sig_atomic_t)
-# define SIG_ATOMIC_C(X) P99_C(sig_atomic_t, X)
-#endif
+#  define SIG_ATOMIC_C(X) P99_C(sig_atomic_t, X)
+# endif
 
-#if defined(UINTPTR_MAX) && !defined(UINTPTR_C)
+# if defined(UINTPTR_MAX) && !defined(UINTPTR_C)
 P00_DOCUMENT_CONSTANT(uintptr_t)
-# define UINTPTR_C(X) P99_C(uintptr_t, X)
-#endif
+#  define UINTPTR_C(X) P99_C(uintptr_t, X)
+# endif
 
-#if defined(UINTPTR_MAX) && !defined(INTPTR_C)
+# if defined(UINTPTR_MAX) && !defined(INTPTR_C)
 P00_DOCUMENT_CONSTANT(intptr_t)
-# define INTPTR_C(X) P99_C(intptr_t, X)
-#endif
+#  define INTPTR_C(X) P99_C(intptr_t, X)
+# endif
 
 
 
 
 P00_DOCUMENT_SIGNED(0)
-#define P99_0(T) P99_C(T, 0)
+# define P99_0(T) P99_C(T, 0)
 
 P00_DOCUMENT_UNSIGNED(0)
-#define P99_0U(T) P99_TO_UNSIGN(T, 0)
+# define P99_0U(T) P99_TO_UNSIGN(T, 0)
 
 P00_DOCUMENT_SIGNED(1)
-#define P99_1(T) P99_C(T, 1)
+# define P99_1(T) P99_C(T, 1)
 
 P00_DOCUMENT_UNSIGNED(1)
-#define P99_1U(T)  P99_TO_UNSIGN(T, 1)
+# define P99_1U(T)  P99_TO_UNSIGN(T, 1)
 
 P00_DOCUMENT_SIGNED(2)
-#define P99_2(T) P99_C(T, 2)
+# define P99_2(T) P99_C(T, 2)
 
 P00_DOCUMENT_UNSIGNED(2)
-#define P99_2U(T)  P99_TO_UNSIGN(T, 2)
+# define P99_2U(T)  P99_TO_UNSIGN(T, 2)
 
 P00_DOCUMENT_SIGNED(3)
-#define P99_3(T) P99_C(T, 3)
+# define P99_3(T) P99_C(T, 3)
 
 P00_DOCUMENT_UNSIGNED(3)
-#define P99_3U(T)  P99_TO_UNSIGN(T, 3)
+# define P99_3U(T)  P99_TO_UNSIGN(T, 3)
 
 /**
  ** @brief The maximum representable value of the unsigned type
@@ -371,7 +371,7 @@ P00_DOCUMENT_UNSIGNED(3)
  ** The returned expression is of type @c uintmax_t
  **/
 P00_DOCUMENT_TYPE_ARGUMENT(P99_UT_MAX, 0)
-#define P99_UT_MAX(T) (P99_M1U(T))
+# define P99_UT_MAX(T) (P99_M1U(T))
 
 /**
  ** @brief Half of the maximum representable value of the unsigned type
@@ -384,7 +384,7 @@ P00_DOCUMENT_TYPE_ARGUMENT(P99_UT_MAX, 0)
  **
  ** @see P99_TMAX
  **/
-#define P99_UT_MAX1(T) (P99_UT_MAX(T)/2u)
+# define P99_UT_MAX1(T) (P99_UT_MAX(T)/2u)
 
 /**
  ** @brief The negative of half the maximum representable value
@@ -397,7 +397,7 @@ P00_DOCUMENT_TYPE_ARGUMENT(P99_UT_MAX, 0)
  **
  ** @see P99_TMIN
  **/
-#define P00_ST_MIN1(T) (-(T)P99_UT_MAX1(T))
+# define P00_ST_MIN1(T) (-(T)P99_UT_MAX1(T))
 
 /**
  ** @brief Determine if @a T is an unsigned or signed integral type
@@ -415,7 +415,7 @@ P00_DOCUMENT_TYPE_ARGUMENT(P99_UT_MAX, 0)
  ** argument
  **/
 P00_DOCUMENT_TYPE_ARGUMENT(P99_ISSIGNED, 0)
-#define P99_ISSIGNED(T) (P99_M1(T) < P99_1(T))
+# define P99_ISSIGNED(T) (P99_M1(T) < P99_1(T))
 
 /**
  ** @brief Compute expression @a A and apply integer promotion rules
@@ -433,52 +433,52 @@ P00_DOCUMENT_TYPE_ARGUMENT(P99_ISSIGNED, 0)
  ** expression has a width that is at least that of @c int, even if @a
  ** A and @a B have smaller width than that.
  **/
-#define P99_SIGN_PROMOTE(A, B) (1 ? (A) : (B))
+# define P99_SIGN_PROMOTE(A, B) (1 ? (A) : (B))
 
 
-#define P00_SEE_PROMOTE /*! @see P99_SIGN_PROMOTE for rules about integer sign promotion */
+# define P00_SEE_PROMOTE /*! @see P99_SIGN_PROMOTE for rules about integer sign promotion */
 
-#define P00_DOCUMENT_PROMOTE(X) /*! @brief Promote the integer value @c X under the constraint of expression @a EXPR */
+# define P00_DOCUMENT_PROMOTE(X) /*! @brief Promote the integer value @c X under the constraint of expression @a EXPR */
 
 P00_DOCUMENT_PROMOTE(0)
 P00_SEE_PROMOTE
-#define P99_PROMOTE_0(EXPR) P99_SIGN_PROMOTE(0, (EXPR))
+# define P99_PROMOTE_0(EXPR) P99_SIGN_PROMOTE(0, (EXPR))
 
 P00_DOCUMENT_PROMOTE(1)
 P00_SEE_PROMOTE
-#define P99_PROMOTE_1(EXPR) P99_SIGN_PROMOTE(1, (EXPR))
+# define P99_PROMOTE_1(EXPR) P99_SIGN_PROMOTE(1, (EXPR))
 
 P00_DOCUMENT_PROMOTE(2)
 P00_SEE_PROMOTE
-#define P99_PROMOTE_2(EXPR) P99_SIGN_PROMOTE(2, (EXPR))
+# define P99_PROMOTE_2(EXPR) P99_SIGN_PROMOTE(2, (EXPR))
 
 P00_DOCUMENT_PROMOTE(3)
 P00_SEE_PROMOTE
-#define P99_PROMOTE_3(EXPR) P99_SIGN_PROMOTE(3, (EXPR))
+# define P99_PROMOTE_3(EXPR) P99_SIGN_PROMOTE(3, (EXPR))
 
 P00_DOCUMENT_PROMOTE(0U)
 P00_SEE_PROMOTE
-#define P99_PROMOTE_0U(EXPR) P99_SIGN_PROMOTE(0U, (EXPR))
+# define P99_PROMOTE_0U(EXPR) P99_SIGN_PROMOTE(0U, (EXPR))
 
 P00_DOCUMENT_PROMOTE(1u)
 P00_SEE_PROMOTE
-#define P99_PROMOTE_1U(EXPR) P99_SIGN_PROMOTE(1U, (EXPR))
+# define P99_PROMOTE_1U(EXPR) P99_SIGN_PROMOTE(1U, (EXPR))
 
 P00_DOCUMENT_PROMOTE(2u)
 P00_SEE_PROMOTE
-#define P99_PROMOTE_2U(EXPR) P99_SIGN_PROMOTE(2U, (EXPR))
+# define P99_PROMOTE_2U(EXPR) P99_SIGN_PROMOTE(2U, (EXPR))
 
 
 P00_DOCUMENT_PROMOTE(-1)
 P00_SEE_PROMOTE
-#define P99_PROMOTE_M1(EXPR) P99_SIGN_PROMOTE(-1, (EXPR))
+# define P99_PROMOTE_M1(EXPR) P99_SIGN_PROMOTE(-1, (EXPR))
 
 /**
  ** @brief Promote the integer value @c -1 under the constraint of the
  ** unsigned promoted expression @a EXPR
  ** */
 P00_SEE_PROMOTE
-#define P99_PROMOTE_M1U(EXPR) P99_SIGN_PROMOTE(P99_PROMOTE_M1(EXPR), P99_PROMOTE_0U(EXPR))
+# define P99_PROMOTE_M1U(EXPR) P99_SIGN_PROMOTE(P99_PROMOTE_M1(EXPR), P99_PROMOTE_0U(EXPR))
 
 /**
  ** @brief The maximum representable value of the unsigned type
@@ -487,7 +487,7 @@ P00_SEE_PROMOTE
  ** The returned expression is of unsigned integer type.
  **/
 P00_SEE_PROMOTE
-#define P99_UE_MAX(EXPR) (P99_PROMOTE_M1U(EXPR))
+# define P99_UE_MAX(EXPR) (P99_PROMOTE_M1U(EXPR))
 
 /**
  ** @brief Half of the maximum representable value of the unsigned type
@@ -501,10 +501,10 @@ P00_SEE_PROMOTE
  ** @see P99_TMAX
  **/
 P00_SEE_PROMOTE
-#define P99_UE_MAX1(EXPR) (P99_UE_MAX(EXPR)/P99_PROMOTE_2U(EXPR))
+# define P99_UE_MAX1(EXPR) (P99_UE_MAX(EXPR)/P99_PROMOTE_2U(EXPR))
 
 
-#ifdef DOXYGEN
+# ifdef DOXYGEN
 /**
  ** @brief The width of the integral type of expression @a EXPR.
  **
@@ -520,31 +520,31 @@ P00_SEE_PROMOTE
  ** @see P99_EPADDING
  **/
 P00_SEE_PROMOTE
-#define P99_EWIDTH(EXPR)
+#  define P99_EWIDTH(EXPR)
 
 /**
  ** @brief Give the maximum representable value of type @a T
  **/
 P00_DOCUMENT_TYPE_ARGUMENT(P99_TMAX, 0)
-#define P99_TMAX(T)
+#  define P99_TMAX(T)
 
 /**
  ** @brief Give the minimum representable value of type @a T
  **/
 P00_DOCUMENT_TYPE_ARGUMENT(P99_TMIN, 0)
-#define P99_TMIN(T)
+#  define P99_TMIN(T)
 
-#endif
+# endif
 
-#ifdef p99x_uintmax
-#define P99_EWIDTH(EXPR)                                                                \
+# ifdef p99x_uintmax
+#  define P99_EWIDTH(EXPR)                                                                \
   (P99X__SHIFT(EXPR)                                                                    \
  ? (P99_HIGH2_1((uintmax_t)+(P99_UE_MAX(EXPR)>>P99X__SHIFT(EXPR))) + P99X__SHIFT(EXPR)) \
  : P99_HIGH2_1(P99_UE_MAX(EXPR))                                                        \
  )
-#else
-#define P99_EWIDTH(EXPR) P99_HIGH2_1(P99_UE_MAX(EXPR))
-#endif
+# else
+#  define P99_EWIDTH(EXPR) P99_HIGH2_1(P99_UE_MAX(EXPR))
+# endif
 
 /**
  ** @brief The precision, i.e the number of significant bits in the
@@ -558,7 +558,7 @@ P00_DOCUMENT_TYPE_ARGUMENT(P99_TMIN, 0)
  ** @see P99_EPADDING
  **/
 P00_SEE_PROMOTE
-#define P99_EPREC(EXPR) (P99_EWIDTH(EXPR) - P99_SIGNED(EXPR))
+# define P99_EPREC(EXPR) (P99_EWIDTH(EXPR) - P99_SIGNED(EXPR))
 
 /**
  ** @brief The padding bits of the integral type of expression @a EXPR.
@@ -575,9 +575,9 @@ P00_SEE_PROMOTE
  ** @see P99_EPREC
  **/
 P00_SEE_PROMOTE
-#define P99_EPADDING(EXPR) (sizeof(P99_PROMOTE_0(EXPR))*CHAR_BIT - P99_EWIDTH(EXPR))
+# define P99_EPADDING(EXPR) (sizeof(P99_PROMOTE_0(EXPR))*CHAR_BIT - P99_EWIDTH(EXPR))
 
-#define P99_SE_MAX(EXPR)                                       \
+# define P99_SE_MAX(EXPR)                                       \
 ((((P99_PROMOTE_1(EXPR)                                        \
     << (P99_EWIDTH(EXPR) - 2U))                                \
    - P99_PROMOTE_1(EXPR))                                      \
@@ -596,7 +596,7 @@ P00_SEE_PROMOTE
  **
  ** @see P99_TMIN
  **/
-#define P00_SE_MIN1(EXPR) (-P99_SE_MAX(EXPR))
+# define P00_SE_MIN1(EXPR) (-P99_SE_MAX(EXPR))
 
 /**
  ** @brief Determine if @a EXPR has an unsigned or signed integral type
@@ -614,7 +614,7 @@ P00_SEE_PROMOTE
  ** @see P99_ISSIGNED for a similar macro that takes a type as an argument
  **/
 P00_SEE_PROMOTE
-#define P99_SIGNED(EXPR) (P99_PROMOTE_M1(EXPR) < P99_PROMOTE_1(EXPR))
+# define P99_SIGNED(EXPR) (P99_PROMOTE_M1(EXPR) < P99_PROMOTE_1(EXPR))
 
 
 P99_CONST_FUNCTION
@@ -640,9 +640,9 @@ uintmax_t p00_abs_signed(intmax_t p00_a) {
  ** function forcibly returns a value of type @c intmax_t, and might
  ** thus fail for @c INTMAX_MIN.
  **/
-#define P99_ABS(EXPR) (P99_SIGNED(EXPR) ? p00_abs_signed(EXPR) : P99_C(uintmax_t, EXPR))
+# define P99_ABS(EXPR) (P99_SIGNED(EXPR) ? p00_abs_signed(EXPR) : P99_C(uintmax_t, EXPR))
 
-#if defined(p99x_uintmax) && defined(p99x_intmax)
+# if defined(p99x_uintmax) && defined(p99x_intmax)
 P99_CONST_FUNCTION
 p99_inline
 p99x_uintmax p99x__abs_signed(p99x_intmax p00_a) {
@@ -652,10 +652,10 @@ p99x_uintmax p99x__abs_signed(p99x_intmax p00_a) {
      not be representable for two's complement representation. */
   return (p00_a < (p99x_intmax)0) ? -p00_aa : p00_a;
 }
-#define P99X_ABS(EXPR) (P99_SIGNED(EXPR) ? p99x__abs_signed(EXPR) : (EXPR))
-#endif
+#  define P99X_ABS(EXPR) (P99_SIGNED(EXPR) ? p99x__abs_signed(EXPR) : (EXPR))
+# endif
 
-#ifndef P99X_ABS
+# ifndef P99X_ABS
 /**
  ** @brief Compute the absolute value of an integral expression, using
  ** integers with extended width.
@@ -666,8 +666,8 @@ p99x_uintmax p99x__abs_signed(p99x_intmax p00_a) {
  **
  ** @a EXPR is guaranteed to be evaluated exactly once.
  **/
-# define P99X_ABS P00_ABS
-#endif
+#  define P99X_ABS P00_ABS
+# endif
 
 /**
  ** @brief C99 allows exactly three different possibilities for the
@@ -691,7 +691,7 @@ typedef enum {
  ** @see ::p99_signed_representation
  **/
 P00_DOCUMENT_TYPE_ARGUMENT(P99_SIGNED_REPRESENTATION, 0)
-#define P99_SIGNED_REPRESENTATION(T) P99_C(p99_signed_representation, (P99_M1(T) & P99_3(T)))
+# define P99_SIGNED_REPRESENTATION(T) P99_C(p99_signed_representation, (P99_M1(T) & P99_3(T)))
 
 
 /**
@@ -699,28 +699,28 @@ P00_DOCUMENT_TYPE_ARGUMENT(P99_SIGNED_REPRESENTATION, 0)
  ** the type has no @em negative zero and can thus represent one more
  ** value.
  **/
-#define P99_2COMPLEMENT(T) (P99_SIGNED_REPRESENTATION(T) == p99_signed_representation_twos)
+# define P99_2COMPLEMENT(T) (P99_SIGNED_REPRESENTATION(T) == p99_signed_representation_twos)
 
-#ifdef p99x_uintmax
+# ifdef p99x_uintmax
 P00_DOCUMENT_TYPE_ARGUMENT(P99_TMAX, 0)
-#define P99_TMAX(T)                                                     \
+#  define P99_TMAX(T)                                                     \
 ((T)                                                                    \
  (P99X__SHIFT((T)0)                                                     \
   ? (P99_ISSIGNED(T) ? P99X__SIGN_PROMOTE((T)-1)/2u : P99_UE_MAX((T)0)) \
   : (P99_ISSIGNED(T) ? P99_UT_MAX1(T) : P99_UT_MAX(T))))
 
 P00_DOCUMENT_TYPE_ARGUMENT(P99_TMIN, 0)
-#define P99_TMIN(T)                                                                   \
+#  define P99_TMIN(T)                                                                   \
 ((T)                                                                                  \
  (P99X__SHIFT((T)0)                                                                   \
   ? (P99_ISSIGNED(T) ? (-(P99X__SIGN_PROMOTE((T)-1)/2u)) - P99_2COMPLEMENT(T) : (T)0) \
   : (P99_ISSIGNED(T) ? (P00_ST_MIN1(T) - P99_2COMPLEMENT(T)) : P99_0(T))))
-#else
+# else
 P00_DOCUMENT_TYPE_ARGUMENT(P99_TMAX, 0)
-#define P99_TMAX(T) P99_C(T, P99_ISSIGNED(T) ? P99_UT_MAX1(T) : P99_UT_MAX(T))
+#  define P99_TMAX(T) P99_C(T, P99_ISSIGNED(T) ? P99_UT_MAX1(T) : P99_UT_MAX(T))
 P00_DOCUMENT_TYPE_ARGUMENT(P99_TMIN, 0)
-#define P99_TMIN(T) P99_C(T, P99_ISSIGNED(T) ? (P00_ST_MIN1(T) - P99_2COMPLEMENT(T)) : P99_0(T))
-#endif
+#  define P99_TMIN(T) P99_C(T, P99_ISSIGNED(T) ? (P00_ST_MIN1(T) - P99_2COMPLEMENT(T)) : P99_0(T))
+# endif
 
 
 /**
@@ -731,7 +731,7 @@ P00_DOCUMENT_TYPE_ARGUMENT(P99_TMIN, 0)
  ** significant bits of -1 represented in the type of the expression.
  ** @see ::p99_signed_representation
  **/
-#define P99_E_REPRESENTATION(EXPR) ((p99_signed_representation)(P99_PROMOTE_M1(EXPR) & P99_PROMOTE_3(EXPR)))
+# define P99_E_REPRESENTATION(EXPR) ((p99_signed_representation)(P99_PROMOTE_M1(EXPR) & P99_PROMOTE_3(EXPR)))
 
 
 /**
@@ -739,20 +739,20 @@ P00_DOCUMENT_TYPE_ARGUMENT(P99_TMIN, 0)
  ** the type has no @em negative zero and can thus represent one more
  ** value.
  **/
-#define P99_E_2COMPLEMENT(EXPR)                                                        \
+# define P99_E_2COMPLEMENT(EXPR)                                                        \
 P99_SIGN_PROMOTE(P99_E_REPRESENTATION(EXPR) == p99_signed_representation_twos, (EXPR))
 
 /**
  ** @brief Give the maximum representable value of the type of the
  ** expression @a EXPR
  **/
-#define P99_EMAX(EXPR) (P99_SIGNED(EXPR) ? P99_SE_MAX(EXPR) : P99_PROMOTE_M1(EXPR))
+# define P99_EMAX(EXPR) (P99_SIGNED(EXPR) ? P99_SE_MAX(EXPR) : P99_PROMOTE_M1(EXPR))
 
 /**
  ** @brief Give the minimum representable value of the type of the
  ** expression @a EXPR
  **/
-#define P99_EMIN(EXPR) (P99_SIGNED(EXPR) ? (P00_SE_MIN1(EXPR) - P99_E_2COMPLEMENT(EXPR)) : P99_PROMOTE_0(EXPR))
+# define P99_EMIN(EXPR) (P99_SIGNED(EXPR) ? (P00_SE_MIN1(EXPR) - P99_E_2COMPLEMENT(EXPR)) : P99_PROMOTE_0(EXPR))
 
 /**
  ** @brief The precision, i.e the number of significant bits of integral type
@@ -764,7 +764,7 @@ P99_SIGN_PROMOTE(P99_E_REPRESENTATION(EXPR) == p99_signed_representation_twos, (
  ** @see P99_TWIDTH
  ** @see P99_TPADDING
  **/
-#define P99_TPREC(T)                                           \
+# define P99_TPREC(T)                                           \
 (P99X__SHIFT((T)-1)                                            \
  ? P99_EPREC((T)-1)                                            \
  : P99_HIGH2_1(P99_TMAX(T)))
@@ -781,7 +781,7 @@ P99_SIGN_PROMOTE(P99_E_REPRESENTATION(EXPR) == p99_signed_representation_twos, (
  ** @see P99_TPREC
  ** @see P99_TPADDING
  **/
-#define P99_TWIDTH(T) (P99_TPREC(T) + P99_ISSIGNED(T))
+# define P99_TWIDTH(T) (P99_TPREC(T) + P99_ISSIGNED(T))
 
 /**
  ** @brief The padding bits of integral type @a T.
@@ -796,10 +796,10 @@ P99_SIGN_PROMOTE(P99_E_REPRESENTATION(EXPR) == p99_signed_representation_twos, (
  ** @see P99_TWIDTH
  ** @see P99_TPREC
  **/
-#define P99_TPADDING(T) ((sizeof(T)*CHAR_BIT) - P99_TWIDTH(T))
+# define P99_TPADDING(T) ((sizeof(T)*CHAR_BIT) - P99_TWIDTH(T))
 
-#ifdef P00_DOXYGEN
-#define P00_DECLARE_OVERFLOW(SUFF)                                                                                                            \
+# ifdef P00_DOXYGEN
+#  define P00_DECLARE_OVERFLOW(SUFF)                                                                                                            \
 /*! @brief Cast an unsigned type into a signed one as would do a two's complement representation of the signed type. */                       \
 /*! If the signed type is in usual two's complement this should be the identity. For other cases this is supposed to do the best possible. */ \
 /*! @warning For bizarrely encoded cases this might result in a negative zero or so. */                                                       \
@@ -809,8 +809,8 @@ P99_PASTE2(p99_twos, SUFF)(P99_BUILTIN_TYPE(u, SUFF) p00_a);                    
 p99_inline                                                                                                                                    \
 P99_BUILTIN_TYPE(SUFF,)                                                                                                                       \
 P99_PASTE2(p99_add, SUFF)(P99_BUILTIN_TYPE(SUFF,) p00_a, P99_BUILTIN_TYPE(SUFF,) p00_b, int* p00_err)
-#else
-#define P00_DECLARE_OVERFLOW(SUFF)                             \
+# else
+#  define P00_DECLARE_OVERFLOW(SUFF)                             \
   P00_DECLARE_TWOS(SUFF)                                       \
   P00_DECLARE_UNSIG(SUFF)                                      \
   P00_DECLARE_ADD0(SUFF)                                       \
@@ -824,7 +824,7 @@ P99_PASTE2(p99_add, SUFF)(P99_BUILTIN_TYPE(SUFF,) p00_a, P99_BUILTIN_TYPE(SUFF,)
 P99_MACRO_END(p99_overflow_, SUFF)
 
 
-#define P00_DECLARE_TWOS(SUFF)                                                                        \
+#  define P00_DECLARE_TWOS(SUFF)                                                                        \
 P99_CONST_FUNCTION                                                                                    \
 p99_inline                                                                                            \
 P99_BUILTIN_TYPE(SUFF)                                                                                \
@@ -849,7 +849,7 @@ P99_PASTE2(p99_twos, SUFF)(P99_BUILTIN_TYPE(u, SUFF) p00_a) {                   
        : (P99_BUILTIN_TYPE(SUFF))((-(P99_BUILTIN_TYPE(SUFF))(utype_max - (utype_max & p00_a))) - 1)); \
 }
 
-#define P00_DECLARE_UNSIG(SUFF)                                                                         \
+#  define P00_DECLARE_UNSIG(SUFF)                                                                         \
 P99_CONST_FUNCTION                                                                                      \
 p99_inline                                                                                              \
 P99_BUILTIN_TYPE(u, SUFF)                                                                               \
@@ -871,7 +871,7 @@ P99_PASTE2(p99_unsig, SUFF)(P99_BUILTIN_TYPE(SUFF) p00_a) {                     
        : (P99_BUILTIN_TYPE(u, SUFF))((utype_max - (P99_BUILTIN_TYPE(u, SUFF))-p00_a) + 1));             \
 }
 
-#define P00_DECLARE_ADD0(SUFF)                                                               \
+#  define P00_DECLARE_ADD0(SUFF)                                                               \
 P99_CONST_FUNCTION                                                                           \
 p99_inline                                                                                   \
 P99_BUILTIN_TYPE(u, SUFF)                                                                    \
@@ -882,7 +882,7 @@ P99_PASTE2(p00_add0, SUFF)(P99_BUILTIN_TYPE(SUFF) p00_a, P99_BUILTIN_TYPE(SUFF) 
   return p00_res;                                                                            \
 }
 
-#define P00_DECLARE_SUB0(SUFF)                                                               \
+#  define P00_DECLARE_SUB0(SUFF)                                                               \
 P99_CONST_FUNCTION                                                                           \
 p99_inline                                                                                   \
 P99_BUILTIN_TYPE(u, SUFF)                                                                    \
@@ -893,7 +893,7 @@ P99_PASTE2(p00_sub0, SUFF)(P99_BUILTIN_TYPE(SUFF) p00_a, P99_BUILTIN_TYPE(SUFF) 
   return p00_res;                                                                            \
 }
 
-#define P00_DECLARE_ADD2(SUFF)                                                                    \
+#  define P00_DECLARE_ADD2(SUFF)                                                                    \
 P99_CONST_FUNCTION                                                                                \
 p99_inline                                                                                        \
 P99_BUILTIN_TYPE(SUFF)                                                                            \
@@ -917,7 +917,7 @@ P99_BUILTIN_TYPE(SUFF)                                                          
   return p00_c;                                                                                   \
 }
 
-#define P00_DECLARE_SUB2(SUFF)                                                                    \
+#  define P00_DECLARE_SUB2(SUFF)                                                                    \
 P99_CONST_FUNCTION                                                                                \
 p99_inline                                                                                        \
 P99_BUILTIN_TYPE(SUFF)                                                                            \
@@ -941,7 +941,7 @@ P99_BUILTIN_TYPE(SUFF)                                                          
   return p00_c;                                                                                   \
 }
 
-#define P00_DECLARE_ADD1(SUFF)                                 \
+#  define P00_DECLARE_ADD1(SUFF)                                 \
 P99_CONST_FUNCTION                                             \
 p99_inline                                                     \
 P99_BUILTIN_TYPE(SUFF)                                         \
@@ -969,7 +969,7 @@ P99_BUILTIN_TYPE(SUFF)                                         \
   return p00_ret;                                              \
 }
 
-#define P00_DECLARE_SUB1(SUFF)                                 \
+#  define P00_DECLARE_SUB1(SUFF)                                 \
 P99_CONST_FUNCTION                                             \
 p99_inline                                                     \
 P99_BUILTIN_TYPE(SUFF)                                         \
@@ -997,7 +997,7 @@ P99_BUILTIN_TYPE(SUFF)                                         \
   return p00_ret;                                              \
 }
 
-#define P00_DECLARE_ADD(SUFF)                                  \
+#  define P00_DECLARE_ADD(SUFF)                                  \
 P99_CONST_FUNCTION                                             \
 p99_inline                                                     \
 P99_BUILTIN_TYPE(SUFF)                                         \
@@ -1010,7 +1010,7 @@ P99_BUILTIN_TYPE(SUFF)                                         \
     : P99_PASTE2(p00_add1, SUFF)(p00_a, p00_b, p00_err);       \
 }
 
-#define P00_DECLARE_SUB(SUFF)                                  \
+#  define P00_DECLARE_SUB(SUFF)                                  \
 P99_CONST_FUNCTION                                             \
 p99_inline                                                     \
 P99_BUILTIN_TYPE(SUFF)                                         \
@@ -1022,7 +1022,7 @@ P99_BUILTIN_TYPE(SUFF)                                         \
     ? P99_PASTE2(p00_sub2, SUFF)(p00_a, p00_b, p00_err)        \
     : P99_PASTE2(p00_sub1, SUFF)(p00_a, p00_b, p00_err);       \
 }
-#endif
+# endif
 
 P00_DECLARE_OVERFLOW(c);
 P00_DECLARE_OVERFLOW(hh);
@@ -1030,6 +1030,9 @@ P00_DECLARE_OVERFLOW(h);
 P00_DECLARE_OVERFLOW();
 P00_DECLARE_OVERFLOW(l);
 P00_DECLARE_OVERFLOW(ll);
+
+#endif /* P99_WANT_INT_INLINES */
+
 
 /**
  ** @brief A catch all 0-initializer
@@ -1240,6 +1243,10 @@ P99_CHOOSE5(xT,                                                \
  **/
 #define P99_LOW2(X) ((X) & -(X))
 
+
+#ifdef P99_WANT_INT_INLINES 
+
+
 /**
  ** @brief function equivalent to ::P99_LOW2
  **/
@@ -1253,7 +1260,7 @@ uintmax_t p99_low2(uintmax_t p00_x) { return P99_LOW2(p00_x); }
  **
  ** Example: 10011100 ->  00000011
  **/
-#define P99_LOW2MASK1(X) ((X) ^ ((X) - 1))
+# define P99_LOW2MASK1(X) ((X) ^ ((X) - 1))
 
 /**
  ** @brief function equivalent to ::P99_LOW2MASK1
@@ -1268,7 +1275,7 @@ uintmax_t p99_low2mask1(uintmax_t p00_x) { return P99_LOW2MASK1(p00_x); }
  **
  ** Example: 10011100 ->  00000111
  **/
-#define P99_LOW2MASK0(X) (~(X) & ((X) - 1))
+# define P99_LOW2MASK0(X) (~(X) & ((X) - 1))
 
 /**
  ** @brief function equivalent to ::P99_LOW2MASK0
@@ -1283,7 +1290,7 @@ uintmax_t p99_low2mask0(uintmax_t p00_x) { return P99_LOW2MASK0(p00_x); }
  **
  ** Example: 10011100 ->  11111100
  **/
-#define P99_MASK2LOW1(X) ((X) | -(X))
+# define P99_MASK2LOW1(X) ((X) | -(X))
 
 /**
  ** @brief function equivalent to ::P99_MASK2LOW1
@@ -1298,7 +1305,7 @@ uintmax_t p99_mask2low1(uintmax_t p00_x) { return P99_MASK2LOW1(p00_x); }
  **
  ** Example: 10011100 ->  11111000
  **/
-#define P99_MASK2LOW0(X) ((X) ^ -(X))
+# define P99_MASK2LOW0(X) ((X) ^ -(X))
 
 /**
  ** @brief function equivalent to ::P99_MASK2LOW0
@@ -1312,7 +1319,7 @@ uintmax_t p99_mask2low0(uintmax_t p00_x) { return P99_MASK2LOW0(p00_x); }
  **
  ** Example: 01001110 ->  01001100
  **/
-#define P99_LOW2CLEAR(X) ((X) & ((X) - 1))
+# define P99_LOW2CLEAR(X) ((X) & ((X) - 1))
 
 /**
  ** @brief function equivalent to ::P99_LOW2CLEAR
@@ -1326,7 +1333,7 @@ uintmax_t p99_low2clear(uintmax_t p00_x) { return P99_LOW2CLEAR(p00_x); }
  **
  ** Example: 01001100 ->  01001111
  **/
-#define P99_LOW2FILL(X) ((X) | ((X) - 1))
+# define P99_LOW2FILL(X) ((X) | ((X) - 1))
 
 /**
  ** @brief function equivalent to ::P99_LOW2FILL
@@ -1340,7 +1347,7 @@ uintmax_t p99_low2fill(uintmax_t p00_x) { return P99_LOW2FILL(p00_x); }
  **
  ** Example: 01001011 ->  01001111
  **/
-#define P99_LOW0SET(X) ((X) | ((X) + 1))
+# define P99_LOW0SET(X) ((X) | ((X) + 1))
 
 /**
  ** @brief function equivalent to ::P99_LOW0SET
@@ -1355,7 +1362,7 @@ uintmax_t p99_low0set(uintmax_t p00_x) { return P99_LOW0SET(p00_x); }
  **
  ** Example: 10011100 ->  00100111
  **/
-#define P99_LOW2SHIFT(X) (P99_LIKELY(!!(X)) ? ((X) / ((X) & -(X))) : 0u)
+# define P99_LOW2SHIFT(X) (P99_LIKELY(!!(X)) ? ((X) / ((X) & -(X))) : 0u)
 
 /**
  ** @brief function equivalent to ::P99_LOW2SHIFT
@@ -1425,23 +1432,26 @@ union p00_endian_8 {
 };
 
 
-#ifdef UINT128_MAX
+# ifdef UINT128_MAX
 typedef uint128_t p00_uint_byte_16;
 
 union p00_endian_16 {
   uint8_t p00_c[16];
   uint128_t p00_i;
 };
-#else
-# ifdef p99x_uint128
+# else
+#  ifdef p99x_uint128
 typedef p99x_uint128 p00_uint_byte_16;
 
 union p00_endian_16 {
   uint8_t p00_c[16];
   p99x_uint128 p00_i;
 };
+#  endif
 # endif
-#endif
+
+
+#endif /* P99_WANT_INT_INLINES */
 
 
 #define P00_HTON0(N, X, I) [I] = (0xFF & ((X)>>((N - (I + 1))*CHAR_BIT)))
@@ -1515,7 +1525,5 @@ P00_DOCUMENT_NUMBER_ARGUMENT(P99_NTOHL, 0)
  ** @}
  **/
 
-
-#endif /* P99_WANT_INT_INLINES */
 
 #endif      /* !P99_INT_H_ */

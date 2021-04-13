@@ -18,8 +18,11 @@
 #include <sys/time.h>
 #include <pthread.h>
 
+#include "p99_threads.h"
 #include "p99_defarg.h"
 #include "p99_atomic.h"
+
+#include "p99_int.h"
 
 #if P99_WANT_TSS
 
@@ -95,48 +98,7 @@ typedef void (*tss_dtor_t)(void*);
  ** @}
  **/
 
-/**
- ** @addtogroup thread_enum
- ** @{
- **/
 
-/**
- ** @brief C11 thread function return values
- **/
-enum thrd_status {
-  /**
-   ** @brief returned by a timed wait function to indicate that the time specified in the call was reached without acquiring the requested resource
-   **/
-  thrd_timedout = ETIMEDOUT,
-  /**
-   ** @brief returned by a function to indicate that the requested operation succeeded
-   **/
-  thrd_success = 0,
-  /**
-   ** @brief returned by a function to indicate that the requested
-   ** operation failed because a resource requested by a test and
-   ** return function is already in use
-   **/
-  thrd_busy = EBUSY,
-  /**
-   ** @brief returned by a function to indicate that the requested operation failed
-   **/
-  thrd_error = INT_MIN,
-  /**
-   ** @brief returned by a function to indicate that the requested
-   ** operation failed because it was unable to allocate memory
-   **/
-  thrd_nomem = ENOMEM,
-  /**
-   ** @brief (extension) returned by ::thrd_sleep to indicate that the
-   ** corresponding request has been interrupted by a signal
-   **/
-  thrd_intr = -1
-};
-
-/**
- ** @}
- **/
 
 /**
  ** @related tss_t

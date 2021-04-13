@@ -536,6 +536,8 @@ p00_longjmp(p00_jmp_buf0 *p00_buf, int p00_val)
 {
         p00_buf->p00_code = p00_val;
         longjmp(p00_buf->p00_buf, 1);
+        /* Not reached */
+        _Exit(1);
 }
 
 /**

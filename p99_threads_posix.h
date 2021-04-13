@@ -14,6 +14,9 @@
 #ifndef P99_THREADS_POSIX_H
 #define P99_THREADS_POSIX_H 1
 
+#include "p99_atomic.h"
+#include "p99_threads.h"
+
 /**
  ** @addtogroup threads C11 thread emulation on top of POSIX threads
  **

@@ -14,10 +14,62 @@
 #ifndef P99_THREADS_H
 #define P99_THREADS_H 1
 
+#ifndef P99_FUTEX_H
+# error "AAA"
+#endif
+
 #include "p99_try.h"
 #include "p99_tss.h"
 
-#ifdef P99_WANT_THREADS
+#include "p99_int.h"
+
+#ifndef P99_WANT_THREADS
+# error "AAAAAAAA"
+#else
+/* #ifdef P99_WANT_THREADS */
+/**
+ ** @addtogroup thread_enum
+ ** @{
+ **/
+
+/**
+ ** @brief C11 thread function return values
+ **/
+enum thrd_status {
+  /**
+   ** @brief returned by a timed wait function to indicate that the time specified in the call was reached without acquiring the requested resource
+   **/
+  thrd_timedout = ETIMEDOUT,
+  /**
+   ** @brief returned by a function to indicate that the requested operation succeeded
+   **/
+  thrd_success = 0,
+  /**
+   ** @brief returned by a function to indicate that the requested
+   ** operation failed because a resource requested by a test and
+   ** return function is already in use
+   **/
+  thrd_busy = EBUSY,
+  /**
+   ** @brief returned by a function to indicate that the requested operation failed
+   **/
+  thrd_error = INT_MIN,
+  /**
+   ** @brief returned by a function to indicate that the requested
+   ** operation failed because it was unable to allocate memory
+   **/
+  thrd_nomem = ENOMEM,
+  /**
+   ** @brief (extension) returned by ::thrd_sleep to indicate that the
+   ** corresponding request has been interrupted by a signal
+   **/
+  thrd_intr = -1
+};
+
+/**
+ ** @}
+ **/
+
 
 #if p99_has_feature(threads_h)
 # include <threads.h>
@@ -26,6 +78,7 @@
 #else
 # error "no suitable thread implementation found"
 #endif
+
 
 #ifndef ONCE_FLAG_INIT
 typedef struct p99_once_flag once_flag;

@@ -13,6 +13,10 @@
 #ifndef P99_FUTEX_H
 #define P99_FUTEX_H
 
+#if !((defined(__linux__) && !defined(NO_FUTEX)) || defined(DOXYGEN))
+#  define P99_WANT_THREADS 1
+#endif
+
 #include "p99_type.h"
 #include "p99_threads.h"
 #include "p99_posix_default.h"
