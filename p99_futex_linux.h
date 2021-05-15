@@ -175,12 +175,32 @@ p00_futex_wait_once(int *uaddr, int val)
                         register int NAME = *p;                                 \
                         if (P99_LIKELY(EXPECTED))                               \
                                 break;                                          \
-                        register int ret = p00_futex_wait_once((int *)p, NAME); \
-                        if (P99_UNLIKELY(ret)) {                                \
-                                assert(!ret);                                   \
-                        }                                                       \
+                        p99_futex_waitfor(p, NAME);\
+                        /*register int ret = p00_futex_wait_once((int *)p, NAME); */\
+                        /*if (P99_UNLIKELY(ret)) {*/                                \
+                                /*assert(!ret);*/                                   \
+                                /*errno = ret; err(1, "P00_FUTEX_WAIT");*/                                   \
+                        /*}*/                                                       \
                 }                                                               \
         } while (false)
+
+#define P44_FUTEX_WAIT(ADDR, NAME, EXPECTED)                                    \
+        do {                                                                    \
+                _Atomic(unsigned) volatile *const p00M_fut  = (ADDR);                               \
+                for (;;) {                                                      \
+                        register int NAME = *p00M_fut;                                 \
+                        if (P99_LIKELY(EXPECTED))                               \
+                                break;                                          \
+                        p99_futex_wait(p00M_fut); \
+                        /*register int ret = p00_futex_wait_once((int *)p, NAME); */\
+                        /*if (P99_UNLIKELY(ret)) {*/                                \
+                                /*assert(!ret);*/                                   \
+                                /*errno = ret; err(1, "P00_FUTEX_WAIT");*/                                   \
+                        /*}*/                                                       \
+                }                                                               \
+        } while (0)
+ 
+
 
 /**
  ** @brief Wakeup waiters for address @a uaddr.
@@ -273,7 +293,7 @@ p99_inline void
 }
 
 p99_inline void
-p99_futex_wait(p99_futex volatile *p00_cntp)
+p99_futex_wait(p99_futex volatile *p00_cntp/*, unsigned const val, bool use_val*/)
 {
         unsigned volatile *const p00_cnt = (unsigned *)p00_cntp;
 
@@ -281,7 +301,14 @@ p99_futex_wait(p99_futex volatile *p00_cntp)
                       "linux futex supposes that there is no hidden lock field");
 
         for (;;) {
-                unsigned     p00_act = atomic_load(p00_cntp);
+                unsigned p00_act;
+#if 0
+                if (use_val)
+                        p00_act = val;
+                else
+#endif
+                        p00_act = atomic_load(p00_cntp);
+
                 register int p00_ret = p00_futex_wait_once((int *)p00_cnt, p00_act);
 
                 switch (p00_ret) {
@@ -295,6 +322,20 @@ p99_futex_wait(p99_futex volatile *p00_cntp)
                 }
         }
 }
+
+#if 0
+p99_inline void
+p99_futex_waitfor(p99_futex volatile *p00_cntp, unsigned const val)
+{
+        p00_futex_waitfor(p00_cntp, val, true);
+}
+
+p99_inline void
+p99_futex_wait(p99_futex volatile *p00_cntp)
+{
+        p00_futex_waitfor(p00_cntp, 0, false);
+}
+#endif
 
 
 p99_inline unsigned

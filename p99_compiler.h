@@ -419,6 +419,7 @@ signed p00_trailing_comma_in_initializer__(void) {
    from clang. Adjust once we know more details. */
 # if p99_has_attribute(always_inline)
 #  define p99_inline __attribute__((__always_inline__)) inline
+#  define p99_static_inline static __attribute__((__always_inline__)) inline
 # endif
 /* clang can't nail a variable to a register, yet */
 # define P99_FIXED_REGISTER(REG)
@@ -428,6 +429,8 @@ signed p00_trailing_comma_in_initializer__(void) {
 #elif P99_COMPILER & P99_COMPILER_CLANG
 # if p99_has_attribute(always_inline)
 #  define p99_inline __attribute__((__always_inline__)) inline
+#  define p99_static_inline static __attribute__((__always_inline__)) inline
+//#  define p99_inline __attribute__((__always_inline__,__gnu_inline__,__weak__)) __inline__
 # endif
 /* clang can't nail a variable to a register, yet */
 # define P99_FIXED_REGISTER(REG)
@@ -456,9 +459,11 @@ signed p00_trailing_comma_in_initializer__(void) {
 #  if p99_has_attribute(gnu_inline)
 #   define inline __attribute__((__gnu_inline__,__weak__)) __inline__
 #   define p99_inline __attribute__((__always_inline__,__gnu_inline__,__weak__)) __inline__
+#   define p99_static_inline static __attribute__((__always_inline__)) __inline__
 #  else
 #   define inline __attribute__((__weak__)) __inline__
 #   define p99_inline __attribute__((__always_inline__,__weak__)) __inline__
+#   define p99_static_inline static __attribute__((__always_inline__)) __inline__
 #  endif
 #  define static_inline static __inline__
 #  if p99_has_attribute(externally_visible)

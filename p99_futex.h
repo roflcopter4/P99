@@ -219,10 +219,10 @@ P00_FUTEX_INLINE(p99_futex_add) unsigned p99_futex_add(p99_futex volatile* p00_f
 
 #ifndef DOXYGEN
 #define p99_futex_add(...) P99_CALL_DEFARG(p99_futex_add, 6, __VA_ARGS__)
-#define p99_futex_add_defarg_2() (0u)
-#define p99_futex_add_defarg_3() (1u)
-#define p99_futex_add_defarg_4() (0u)
-#define p99_futex_add_defarg_5() P99_FUTEX_MAX_WAITERS
+#define p99_futex_add_defarg_2() 0U
+#define p99_futex_add_defarg_3() 0U
+#define p99_futex_add_defarg_4() 0U
+#define p99_futex_add_defarg_5() 0U
 #endif
 
 
@@ -261,9 +261,10 @@ P00_FUTEX_INLINE(p99_futex_exchange) unsigned p99_futex_exchange(p99_futex volat
 
 #ifndef DOXYGEN
 #define p99_futex_exchange(...) P99_CALL_DEFARG(p99_futex_exchange, 6, __VA_ARGS__)
-#define p99_futex_exchange_defarg_3() 1u
-#define p99_futex_exchange_defarg_4() 0u
-#define p99_futex_exchange_defarg_5() P99_FUTEX_MAX_WAITERS
+#define p99_futex_exchange_defarg_2() 0U
+#define p99_futex_exchange_defarg_3() 0U
+#define p99_futex_exchange_defarg_4() 0U
+#define p99_futex_exchange_defarg_5() 0U
 #endif
 
 /**

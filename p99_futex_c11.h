@@ -62,12 +62,14 @@ void p99_futex_destroy(p99_futex* p00_fut) {
 }
 
 P99_WEAK(p99_futex_load)
-unsigned p99_futex_load(p99_futex volatile* p00_fut) {
-  unsigned p00_ret = 0;
-  P99_MUTUAL_EXCLUDE(*(mtx_t*)&p00_fut->p99_mut) {
-    p00_ret = p00_fut->p99_cnt;
-  }
-  return p00_ret;
+unsigned
+p99_futex_load(p99_futex volatile *p00_fut)
+{
+        unsigned p00_ret = 0;
+        P99_MUTUAL_EXCLUDE(*(mtx_t *)&p00_fut->p99_mut) {
+                p00_ret = p00_fut->p99_cnt;
+        }
+        return p00_ret;
 }
 
 /* Supposes that the lock on the mutex is already taken and that

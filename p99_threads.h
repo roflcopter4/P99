@@ -30,6 +30,11 @@
  ** @{
  **/
 
+
+#if p99_has_feature(threads_h)
+# include <threads.h>
+#elif defined(_XOPEN_SOURCE) || defined(_POSIX_C_SOURCE) || defined(__MINGW__)
+# include "p99_threads_posix.h"
 /**
  ** @brief C11 thread function return values
  **/
@@ -68,11 +73,6 @@ enum thrd_status {
  ** @}
  **/
 
-
-#if p99_has_feature(threads_h)
-# include <threads.h>
-#elif defined(_XOPEN_SOURCE) || defined(_POSIX_C_SOURCE) || defined(__MINGW__)
-# include "p99_threads_posix.h"
 #else
 # error "no suitable thread implementation found"
 #endif
@@ -174,7 +174,7 @@ do {                                                                         \
     } while (p00Mflag && p00Mflag->p00_done.p00_vdone != p00_once_finished); \
  } while (false)
 
-p99_inline
+p99_static_inline
 void p00_call_once_1(p99_once_flag *p00_flag) {
   p00_call_once_2(p00_flag, p00_flag->p00_init);
 }
@@ -337,6 +337,41 @@ extern p99_once_flag P99_PASTE3(p99_, T, _once)
 #define P99_INIT_CHAIN(T)                                                       \
 p99_call_once(&P99_PASTE3(p99_, T, _once), P99_PASTE3(p99_, T, _once).p00_init)
 
+
+
+/* #include "config.h" */
+#define SHUTUPGCC __attribute__((__unused__)) ssize_t n =
+
+#include <execinfo.h>
+p99_static_inline void
+p44_show_backtrace(void)
+{
+        void * arr[128];
+        size_t num = backtrace(arr, 128);
+        fflush(stderr); fsync(2);
+        SHUTUPGCC write(2, SLS("<<< FATAL ERROR >>>\nSTACKTRACE:\n"));
+        backtrace_symbols_fd(arr, num, 2);
+        fsync(2);
+}
+
+#if 0
+#ifdef HAVE_EXECINFO_H
+#  define SHOW_STACKTRACE()                                    \
+        __extension__({                                        \
+                void * arr[128];                               \
+                size_t num = backtrace(arr, 128);              \
+                fflush(stderr); fsync(2);                      \
+                SHUTUPGCC write(2, SLS("<<< FATAL ERROR >>>\n" \
+                                       "STACKTRACE:\n"));      \
+                backtrace_symbols_fd(arr, num, 2);             \
+                fsync(2);                                      \
+        })
+#else
+#  define SHOW_BACKTRACE() ((void)0)
+#endif
+#endif
+
+
 /**
  ** @brief Protect the following block or statement with @c
  ** mtx_t @a MUT.
@@ -353,6 +388,8 @@ P99_BLOCK_DOCUMENT
 P00_DOCUMENT_PERMITTED_ARGUMENT(P99_MUTUAL_EXCLUDE, 0)
 #define P99_MUTUAL_EXCLUDE(MUT) P00_MUTUAL_EXCLUDE(MUT, P99_UNIQ(mut))
 
+
+
 # if !P99_SIMPLE_BLOCKS
 #  define P00_MUTUAL_EXCLUDE(MUT, UNIQ)                                          \
 P00_BLK_START                                                                    \
@@ -360,12 +397,13 @@ P00_BLK_DECL(int, p00_errNo, 0)                                                 
 P99_GUARDED_BLOCK(mtx_t*,                                                        \
                   UNIQ,                                                          \
                   &(MUT),                                                        \
-                  (void)(P99_UNLIKELY(p00_errNo = mtx_lock(UNIQ))                \
+                  (void)(P99_UNLIKELY(p00_errNo = mtx_lock(UNIQ)) && p00_errNo != EINTR  \
                          && (fprintf(stderr,                                     \
                                      __FILE__ ":"                                \
                                      P99_STRINGIFY(__LINE__) ": lock error for " \
                                      P99_STRINGIFY(MUT) ", %s\n",                \
-                                     strerror(p00_errNo)), 1)                    \
+                                     strerror(p00_errNo)),                       \
+                             fflush(stderr), p44_show_backtrace(), 1)            \
                          && (UNIQ = 0, 1)                                        \
                          && (P99_UNWIND(-1), 1)                                  \
                          ),                                                      \

@@ -23,7 +23,7 @@
  **
  ** @related atomic_flag
  **/
-p99_inline
+p99_static_inline
 void atomic_flag_lock(volatile atomic_flag *p00_objp) {
   while (atomic_flag_test_and_set_explicit(p00_objp, memory_order_acquire));
 }
@@ -39,7 +39,7 @@ void atomic_flag_lock(volatile atomic_flag *p00_objp) {
  **
  ** @related atomic_flag
  **/
-p99_inline
+p99_static_inline
 _Bool atomic_flag_trylock(volatile atomic_flag *p00_objp) {
   return !atomic_flag_test_and_set_explicit(p00_objp, memory_order_acquire);
 }
@@ -51,7 +51,7 @@ _Bool atomic_flag_trylock(volatile atomic_flag *p00_objp) {
  **
  ** @related atomic_flag
  **/
-p99_inline
+p99_static_inline
 void atomic_flag_unlock(volatile atomic_flag *p00_objp) {
   atomic_flag_clear_explicit(p00_objp, memory_order_release);
 }
