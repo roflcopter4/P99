@@ -14,16 +14,19 @@
 #ifndef P99_THREADS_H
 #define P99_THREADS_H 1
 
-#ifndef P99_FUTEX_H
-# error "Don't include p99_threads.h directly. For now."
-#endif
+//#ifndef P99_FUTEX_H
+//# error "Don't include p99_threads.h directly. For now."
+//#endif
 
+#include "p99_int.h"
 #include "p99_try.h"
 #include "p99_tss.h"
 
-#include "p99_int.h"
+#if defined __MINGW32__ || defined __MINGW64__
+# define __MINGW__ 1
+#endif
 
-#ifdef P99_WANT_THREADS
+#if defined P99_WANT_THREADS || defined __MINGW__
 /* #ifdef P99_WANT_THREADS */
 /**
  ** @addtogroup thread_enum
@@ -31,10 +34,9 @@
  **/
 
 
-#if p99_has_feature(threads_h)
-# include <threads.h>
-#elif defined(_XOPEN_SOURCE) || defined(_POSIX_C_SOURCE) || defined(__MINGW__)
-# include "p99_threads_posix.h"
+# if p99_has_feature(threads_h)
+#  include <threads.h>
+# elif defined(_XOPEN_SOURCE) || defined(_POSIX_C_SOURCE) || defined(__MINGW__)
 /**
  ** @brief C11 thread function return values
  **/
@@ -73,16 +75,18 @@ enum thrd_status {
  ** @}
  **/
 
-#else
-# error "no suitable thread implementation found"
-#endif
+#  include "p99_threads_posix.h"
+
+# else
+#  error "no suitable thread implementation found"
+# endif
 
 
-#ifndef ONCE_FLAG_INIT
+# ifndef ONCE_FLAG_INIT
 typedef struct p99_once_flag once_flag;
-#define ONCE_FLAG_INIT P99_ONCE_FLAG_INIT
-#define call_once p99_call_once
-#endif
+#  define ONCE_FLAG_INIT P99_ONCE_FLAG_INIT
+#  define call_once p99_call_once
+# endif
 
 typedef struct p99_once_flag p99_once_flag;
 
@@ -118,7 +122,7 @@ struct p99_once_flag {
 P00_DOCUMENT_TYPE_ARGUMENT(P99_DECLARE_INIT_ONCE, 0)
 P00_DOCUMENT_IDENTIFIER_ARGUMENT(P99_DECLARE_INIT_ONCE, 1)
 P00_DOCUMENT_IDENTIFIER_ARGUMENT(P99_DECLARE_INIT_ONCE, 2)
-#define P99_DECLARE_INIT_ONCE(T, NAME, ARG)                     \
+# define P99_DECLARE_INIT_ONCE(T, NAME, ARG)                     \
 /** @remark wrapper type around a T that is initialized once */ \
 struct NAME {                                                   \
   p99_once_flag p00_once;                                       \
@@ -142,9 +146,9 @@ void P99_PASTE3(p00_, NAME, _init_once)(NAME* ARG) {            \
 p99_inline                                                      \
 void P99_PASTE3(p00_, NAME, _init_func)(T* ARG)
 
-#define P99_INIT_ONCE(NAME, VARP) P99_PASTE3(p00_, NAME, _init_once)(VARP)
+# define P99_INIT_ONCE(NAME, VARP) P99_PASTE3(p00_, NAME, _init_once)(VARP)
 
-#define p00_call_once_2(FLAG, FUNC)                                          \
+# define p00_call_once_2(FLAG, FUNC)                                          \
 do {                                                                         \
   p99_once_flag *p00Mflag = (FLAG);                                          \
   if (P99_UNLIKELY(p00Mflag->p00_done.p00_done != p00_once_finished))        \
@@ -179,7 +183,7 @@ void p00_call_once_1(p99_once_flag *p00_flag) {
   p00_call_once_2(p00_flag, p00_flag->p00_init);
 }
 
-#define p00_call_once_3(FLAG, FUNC, ...)                                     \
+# define p00_call_once_3(FLAG, FUNC, ...)                                     \
 do {                                                                         \
   p99_once_flag *p00Mflag = (FLAG);                                          \
   if (P99_UNLIKELY(p00Mflag->p00_done.p00_done != p00_once_finished))        \
@@ -209,7 +213,7 @@ do {                                                                         \
     } while (p00Mflag && p00Mflag->p00_done.p00_vdone != p00_once_finished); \
  } while (false)
 
-#define p00_call_once(N, ...)                                  \
+# define p00_call_once(N, ...)                                  \
 P99_IF_EQ_1(N)                                                 \
 (p00_call_once_1(__VA_ARGS__))                                 \
 (P99_IF_EQ_2(N)                                                \
@@ -244,13 +248,13 @@ P99_IF_EQ_1(N)                                                 \
  **
  ** @see p99_once_flag
  **/
-#ifdef P00_DOXYGEN
-#define p99_call_once(FLAG, FUNC, ARG)
-#else
-#define p99_call_once(...) p00_call_once(P99_NARG(__VA_ARGS__), __VA_ARGS__)
-#endif
+# ifdef P00_DOXYGEN
+#  define p99_call_once(FLAG, FUNC, ARG)
+# else
+#  define p99_call_once(...) p00_call_once(P99_NARG(__VA_ARGS__), __VA_ARGS__)
+# endif
 
-#ifdef P00_DOXYGEN
+# ifdef P00_DOXYGEN
 /**
  ** @brief Define a function that will be called exactly once by
  ** <code>P99_INIT_CHAIN(T)</code>.
@@ -280,26 +284,26 @@ P99_IF_EQ_1(N)                                                 \
  ** @see P99_DECLARE_ONCE_CHAIN
  ** @see P99_INIT_CHAIN
  **/
-#define P99_DEFINE_ONCE_CHAIN(T, ...)                          \
+#  define P99_DEFINE_ONCE_CHAIN(T, ...)                          \
 p99_once_flag p99_ ## T ## _once;                              \
 void p00_ ## T ## _once_init(void)
-#else
-#define P99_DEFINE_ONCE_CHAIN(...)                             \
+# else
+#  define P99_DEFINE_ONCE_CHAIN(...)                             \
 P99_IF_ELSE(P99_HAS_COMMA(__VA_ARGS__))                        \
  (P00_P99_DEFINE_ONCE_CHAIN_1(__VA_ARGS__))                    \
  (P00_P99_DEFINE_ONCE_CHAIN_0(__VA_ARGS__))
-#endif
+# endif
 
-#define P00_P99_DEFINE_ONCE_CHAIN_0(T)                         \
+# define P00_P99_DEFINE_ONCE_CHAIN_0(T)                         \
 static void P99_PASTE3(p00_, T, _once_init)(void);             \
 p99_once_flag P99_PASTE3(p99_, T, _once) = {                   \
   .p00_init = P99_PASTE3(p00_, T, _once_init),                 \
 };                                                             \
 static void P99_PASTE3(p00_, T, _once_init)(void)
 
-#define P00_ONCE_INIT(_0, T, _2) P99_INIT_CHAIN(T)
+# define P00_ONCE_INIT(_0, T, _2) P99_INIT_CHAIN(T)
 
-#define P00_P99_DEFINE_ONCE_CHAIN_1(T, ...)                              \
+# define P00_P99_DEFINE_ONCE_CHAIN_1(T, ...)                              \
 static void P99_PASTE3(p00_, T, _once_init0)(void);                      \
 static void P99_PASTE3(p00_, T, _once_init)(void) {                      \
   P99_FOR(, P99_NARG(__VA_ARGS__), P00_SEP, P00_ONCE_INIT, __VA_ARGS__); \
@@ -319,7 +323,7 @@ static void P99_PASTE3(p00_, T, _once_init0)(void)
  ** @see P99_INIT_CHAIN
  ** @see P99_DEFINE_ONCE_CHAIN
  **/
-#define P99_DECLARE_ONCE_CHAIN(T)                              \
+# define P99_DECLARE_ONCE_CHAIN(T)                              \
 extern p99_once_flag P99_PASTE3(p99_, T, _once)
 
 /**
@@ -334,15 +338,16 @@ extern p99_once_flag P99_PASTE3(p99_, T, _once)
  ** @see P99_DECLARE_ONCE_CHAIN
  ** @see P99_DEFINE_ONCE_CHAIN
  **/
-#define P99_INIT_CHAIN(T)                                                       \
+# define P99_INIT_CHAIN(T)                                                       \
 p99_call_once(&P99_PASTE3(p99_, T, _once), P99_PASTE3(p99_, T, _once).p00_init)
 
 
 
-/* #include "config.h" */
-#define SHUTUPGCC __attribute__((__unused__)) ssize_t n =
+#include "config.h"
+# define SHUTUPGCC __attribute__((__unused__)) ssize_t n =
 
-#include <execinfo.h>
+#ifdef HAVE_EXECINFO_H
+# include <execinfo.h>
 p99_static_inline void
 p44_show_backtrace(void)
 {
@@ -353,10 +358,13 @@ p44_show_backtrace(void)
         backtrace_symbols_fd(arr, num, 2);
         fsync(2);
 }
+#else
+# define p44_show_backtrace() P99_NOP
+#endif
 
-#if 0
-#ifdef HAVE_EXECINFO_H
-#  define SHOW_STACKTRACE()                                    \
+# if 0
+#  ifdef HAVE_EXECINFO_H
+#   define SHOW_STACKTRACE()                                    \
         __extension__({                                        \
                 void * arr[128];                               \
                 size_t num = backtrace(arr, 128);              \
@@ -366,10 +374,10 @@ p44_show_backtrace(void)
                 backtrace_symbols_fd(arr, num, 2);             \
                 fsync(2);                                      \
         })
-#else
-#  define SHOW_BACKTRACE() ((void)0)
-#endif
-#endif
+#  else
+#   define SHOW_BACKTRACE() ((void)0)
+#  endif
+# endif
 
 
 /**
@@ -386,7 +394,7 @@ p44_show_backtrace(void)
  **/
 P99_BLOCK_DOCUMENT
 P00_DOCUMENT_PERMITTED_ARGUMENT(P99_MUTUAL_EXCLUDE, 0)
-#define P99_MUTUAL_EXCLUDE(MUT) P00_MUTUAL_EXCLUDE(MUT, P99_UNIQ(mut))
+# define P99_MUTUAL_EXCLUDE(MUT) P00_MUTUAL_EXCLUDE(MUT, P99_UNIQ(mut))
 
 
 
@@ -437,7 +445,7 @@ char const* thrd2str(char *p00_buf, thrd_t p00_id) {
   return p00_buf;
 }
 
-#define THRD2STR(ID) thrd2str((char[1 + sizeof(thrd_t) * 2]){0}, (ID))
+# define THRD2STR(ID) thrd2str((char[1 + sizeof(thrd_t) * 2]){0}, (ID))
 
 
 #endif /* P99_WANT_THREADS */
