@@ -24,7 +24,7 @@
 
 #include "p99_int.h"
 
-#if P99_WANT_TSS
+#ifdef P99_WANT_TSS
 
 #if !p99_has_feature(threads_h)
 

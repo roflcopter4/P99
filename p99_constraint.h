@@ -12,9 +12,12 @@
 /*                                                                            */
 #ifndef P99_CONSTRAINT_H
 #define P99_CONSTRAINT_H
-#include "p99_bitset.h"
 
 #ifdef P99_WANT_CONSTRAINT_INLINES
+# include "p99_bitset.h"
+# include "p99_threads.h"
+
+typedef const char *char_cptr;
 
 /**
  ** @addtogroup C11_library

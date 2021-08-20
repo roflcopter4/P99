@@ -32,6 +32,9 @@
  **/
 
 #include "p99_classification.h"
+#include "p99_defarg.h"
+
+#include "p99_c99_default.h"
 
 #define P00_DEFINE_STR3(CODE)                                                                             \
 p99_inline                                                                                                \
@@ -48,6 +51,7 @@ P99_MACRO_END(P00_DEFINE_STR3, CODE)
 
 #ifndef P00_DOXYGEN
 P00_STR3_1(l, ll, ul, ull, uz, t, j, uj);
+// P00_STR3_1(l, ll, ul, ull);
 #endif
 
 P00_C99_DEFARG_DOCU(str2l, long, char const *p00_nptr, size_t *p00_pos, unsigned p00_base)

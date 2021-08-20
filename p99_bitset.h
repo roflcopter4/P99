@@ -13,8 +13,8 @@
 #ifndef P99_BITSET_H_
 #define P99_BITSET_H_
 
-#include "p99_tss.h"
 #include "p99_c99.h"
+#include "p99_enum.h"
 #include "p99_errno.h"
 #include "p99_int.h"
 

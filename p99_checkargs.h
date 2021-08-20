@@ -20,9 +20,11 @@
  **/
 
 #include "p99_constraint.h"
-#include "p99_map.h"
 #include "p99_enum.h"
+#include "p99_map.h"
+#include "p99_threads.h"
 #include "p99_type.h"
+
 #include P99_ADVANCE_ID
 
 #define P00_CA_ASIZE(X) size_t const P99_PASTE2(p00_ca_asize_, X)

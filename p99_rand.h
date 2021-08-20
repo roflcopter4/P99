@@ -12,9 +12,12 @@
 /*                                                                            */
 #ifndef P99_RAND_H
 #define P99_RAND_H
-#include "p99_threads.h"
-#include "p99_new.h"
-#include "p99_clib.h"
+
+#ifdef P99_WANT_RAND
+
+# include "p99_threads.h"
+# include "p99_new.h"
+# include "p99_clib.h"
 
 /** @file
  **
@@ -381,5 +384,6 @@ double p99_drand(register p99_seed * p00_seed) {
 /**
  ** @}
  **/
+#endif /* P99_WANT_RAND */
 
 #endif

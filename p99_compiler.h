@@ -599,7 +599,7 @@ P00_TENTATIVE_DEF(NAME) T NAME
  ** @brief On architectures that support this, warn if the result of a
  ** function is not used.
  **/
-#if p99_has_attribute(warn_unused_result) && defined(P99_WARN_UNUSED_RESULT)
+#if p99_has_attribute(warn_unused_result) //&& defined(P99_WARN_UNUSED_RESULT)
 #  undef P99_WARN_UNUSED_RESULT
 #  define P99_WARN_UNUSED_RESULT __attribute__((__warn_unused_result__))
 #else
@@ -655,7 +655,7 @@ P00_TENTATIVE_DEF(NAME) T NAME
 /* Now that feature test macros are set up we may check for the
    library support. */
 #include "p99_libc.h"
-
+/* #define static_assert  */
 
 /**
  ** @addtogroup C11 Emulating features of C11
@@ -675,7 +675,6 @@ P00_TENTATIVE_DEF(NAME) T NAME
  **
  ** @{
  **/
-
 
 #ifndef static_assert
 /**
@@ -854,7 +853,7 @@ static_assert(1);
 #endif
 
 #ifdef P00_DOXYGEN
-#  elif !p99_has_feature(c_noreturn)
+#elif !p99_has_feature(c_noreturn)
 #  if p99_has_attribute(__noreturn__)
 #    ifndef _Noreturn
 #      define _Noreturn __attribute__((__noreturn__))
@@ -890,7 +889,7 @@ static_assert(1);
  ** @see _Thread_local
  **/
 #  define thread_local
-#  elif !defined(thread_local)
+#elif !defined(thread_local)
 #  define thread_local _Thread_local
 #  if p99_has_feature(c_thread_local)
 #    elif p99_has_feature(gnu_thread_local)

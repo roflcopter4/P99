@@ -22,6 +22,7 @@
 /*! @see P99_CALL_DEFARG */
 P99_MACRO_END(C99_DEFARG_DOCU);
 
+#ifdef p99_WANT_C99_DEFAULT
 P00_C99_DEFARG_DOCU(strerror, char*, int errnum)
 /*! @param errnum defaults to errno */
 #define strerror(...) P99_CALL_DEFARG(strerror, 1, __VA_ARGS__)
@@ -232,6 +233,8 @@ P00_C99_DEFARG_DOCU(strtold, long double, char const *p00_nptr, char **p00_eptr)
 /*! @param p00_eptr defaults to 0, meaning that the successfully parsed string is not kept track */
 #define strtold(...) P99_CALL_DEFARG(strtold, 2, __VA_ARGS__)
 #define strtold_defarg_1() 0
+
+#endif /* P99_WANT_C99_DEFAULT */
 
 #define P00_DECLARE_STRTO(SUFF)                                                    \
 /*! @brief A type safe wrapper for string to RET conversion */                     \

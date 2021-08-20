@@ -14,10 +14,17 @@
 /*                                                                            */
 #ifndef P99_TRY_H
 #define P99_TRY_H
-#include "p99_constraint.h"
-#include "p99_lifo.h"
 
 #ifdef P99_WANT_TRY_INLINES
+# ifndef P99_WANT_CONSTRAINT_INLINES
+#  define P99_WANT_CONSTRAINT_INLINES 1
+# endif
+# ifndef P99_WANT_BITSET_INLINES
+#  define P99_WANT_BITSET_INLINES 1
+# endif
+# include "p99_constraint.h"
+# include "p99_lifo.h"
+# include "p99_threads.h"
 
 P99_POINTER_TYPE(p00_jmp_buf0);
 P99_LIFO_DECLARE(p00_jmp_buf0_ptr);
