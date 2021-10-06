@@ -148,7 +148,20 @@ P00_DOCUMENT_IDENTIFIER_ARGUMENT(P99_DECLARE_ENUM, 0)
 P00_DOCUMENT_DECLARATION_ARGUMENT(P99_DECLARE_ENUM, 1)
 P00_DOCUMENT_DECLARATION_ARGUMENT(P99_DECLARE_ENUM, 2)
 P00_DOCUMENT_DECLARATION_ARGUMENT(P99_DECLARE_ENUM, 3)
-#define P99_DECLARE_ENUM(T, ...)                                              \
+# ifdef __clang__
+#  define P99_DECLARE_ENUM(T, ENT, ...)                                       \
+typedef enum T : ENT { __VA_ARGS__ ,                                          \
+               /*! upper bound of the @ref T constants */                     \
+               P99_PASTE2(T, _amount),                                        \
+               /*! the largest @ref T constant */                             \
+               P99_PASTE2(T, _max) = ((size_t)(P99_PASTE2(T, _amount)) - 1u), \
+               /*! the smallest @ref T constant */                            \
+               P99_PASTE2(T, _min) = 0                                        \
+} T;                                                                          \
+P99_DECLARE_ENUM_GETNAME(T, __VA_ARGS__);                                     \
+P99_DECLARE_ENUM_PARSE(T, __VA_ARGS__)
+# else
+#  define P99_DECLARE_ENUM(T, ENT, ...)                                       \
 typedef enum T { __VA_ARGS__ ,                                                \
                /*! upper bound of the @ref T constants */                     \
                P99_PASTE2(T, _amount),                                        \
@@ -159,6 +172,7 @@ typedef enum T { __VA_ARGS__ ,                                                \
 } T;                                                                          \
 P99_DECLARE_ENUM_GETNAME(T, __VA_ARGS__);                                     \
 P99_DECLARE_ENUM_PARSE(T, __VA_ARGS__)
+# endif
 #endif
 
 /**
