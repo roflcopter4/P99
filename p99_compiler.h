@@ -693,7 +693,7 @@ P00_TENTATIVE_DEF(NAME) T NAME
  ** the macro ::static_assert must be provided by assert.h, which we
  ** include.
  **/
-#  if p99_has_feature(c_static_assert)
+#  if p99_has_feature(c_static_assert) || defined __cplusplus
 #    define static_assert _Static_assert
 #  else
 #    define static_assert(EXPR, DIAGSTR)                            \
