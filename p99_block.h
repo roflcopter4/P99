@@ -13,6 +13,7 @@
 /*                                                                            */
 #ifndef P99_BLOCK_H_
 #define P99_BLOCK_H_
+#pragma once
 
 #include "p99_int.h"
 

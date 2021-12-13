@@ -15,6 +15,7 @@
 /*                                                                            */
 #ifndef P99_COMPILER_H
 #define P99_COMPILER_H
+#pragma once
 
 #if (defined(__MINGW32__) || defined(__MINGW64__)) && !defined(__MINGW__)
 #  define __MINGW__
