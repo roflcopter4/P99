@@ -496,7 +496,7 @@ signed p00_trailing_comma_in_initializer__(void) {
  ** with this.
  **/
 #  define p99_inline static inline
-#  warning "p99_inline defaulted to 'static inline'. This will cause problems!"
+P99_PRAGMA(warning, "p99_inline defaulted to 'static inline'. This will cause problems!")
 #endif
 
 #ifdef P00_FORCE_NOINLINE
@@ -729,9 +729,9 @@ typedef __int128_t p99x_int128;
  ** macro is used. For the later, @a T is restricted to simple type names.
  ** Arrays or function pointers can only be used through @c typedef.
  **/
-#ifndef __alignof_is_defined
+#if !defined __alignof_is_defined && !defined alignof
 #  define alignof _Alignof
-#  if !p99_has_feature(c_alignof)
+#  if !p99_has_feature(c_alignof) && !(P99_COMPILER & P99_COMPILER_MICROSOFT)
 #    if p99_has_feature(gnu_alignof)
 #      ifndef _Alignof
 #        define _Alignof(T) __alignof__(T)
@@ -749,9 +749,9 @@ typedef __int128_t p99x_int128;
  ** a gcc extension is used. Other than required by C11, this
  ** extension only accepts numerical values for @a X.
  **/
-#ifndef __alignas_is_defined
+#if !defined __alignas_is_defined && !defined alignas
 #  define alignas _Alignas
-#  if !p99_has_feature(c_alignas)
+#  if !p99_has_feature(c_alignas) && !(P99_COMPILER & P99_COMPILER_MICROSOFT)
 #    if p99_has_attribute(aligned)
 #      ifndef _Alignas
 #        define _Alignas(X) __attribute__((__aligned__(X)))

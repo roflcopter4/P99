@@ -15,6 +15,7 @@
 #define P99_BLOCK_H_
 
 #include "p99_int.h"
+#include <setjmp.h>
 
 /**
  ** @file

@@ -14,8 +14,10 @@
 #ifndef P99_TSS_H
 #define P99_TSS_H 1
 
-#include <unistd.h>
-#include <sys/time.h>
+#if __has_include("unistd.h")
+#  include <unistd.h>
+#endif
+#include <time.h>
 #include <pthread.h>
 
 #include "p99_threads.h"

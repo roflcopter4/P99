@@ -40,7 +40,7 @@
  ** @{
  **/
 
-#if p99_has_feature(stdatomic_h)
+#if __has_include("stdatomic.h")
 # include <stdatomic.h>
 # include "p99_atomic_flag.h"
 
@@ -120,7 +120,7 @@ typedef enum memory_order memory_order;
 #  elif defined(__x86_64__) || defined(__i386__)
 #  include "p99_atomic_x86.h"
 # else
-#  warning "no support for atomic operations detected for this platform"
+#  error "no support for atomic operations detected for this platform"
 #  define P00_NO_ATOMICS
 # endif
 

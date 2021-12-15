@@ -123,7 +123,7 @@
 #endif
 
 
-#if p99_has_feature(float_h)
+#if __has_include("float.h")
 # include <float.h>
 #endif
 /* For a conforming compiler, this should now have been defined. Set
@@ -131,22 +131,22 @@
 #ifndef FLT_EVAL_METHOD
 # define FLT_EVAL_METHOD (-1)
 #endif
-#if p99_has_feature(iso646_h)
+#if __has_include("iso646.h")
 # include <iso646.h>
 #endif
-#if p99_has_feature(limits_h)
+#if __has_include("limits.h")
 # include <limits.h>
 #endif
-#if p99_has_feature(stdarg_h)
+#if __has_include("stdarg.h")
 # include <stdarg.h>
 #endif
-#if p99_has_feature(stdbool_h)
+#if __has_include("stdbool.h")
 # include <stdbool.h>
 #endif
-#if p99_has_feature(stddef_h)
+#if __has_include("stddef.h")
 # include <stddef.h>
 #endif
-#if p99_has_feature(stdint_h)
+#if __has_include("stdint.h")
 # include <stdint.h>
 #endif
 
@@ -161,13 +161,13 @@ typedef size_t rsize_t;
 # define RSIZE_MAX (SIZE_MAX >> 1)
 #endif
 
-#if p99_has_feature(assert_h)
+#if __has_include("assert.h")
 # include <assert.h>
 #endif
-#if p99_has_feature(wchar_h)
+#if __has_include("wchar.h")
 # include <wchar.h>
 #endif
-#if p99_has_feature(wctype_h)
+#if __has_include("wctype.h")
 # include <wctype.h>
 #endif
 
@@ -184,6 +184,12 @@ typedef size_t rsize_t;
 # endif
 #endif
 
+#ifdef USE_JEMALLOC
+# include <jemalloc/jemalloc.h>
+# define p00_has_feature_aligned_alloc 1
+# define p00_has_extension_aligned_alloc 1
+#endif
+
 #if __STDC_VERSION__ > 201100L
 # define p00_has_feature_stdalign_h 1
 # define p00_has_feature_stdnoreturn_h 1
@@ -197,15 +203,16 @@ typedef size_t rsize_t;
 
 
 /* implement emulation of some C11 features */
-#if p99_has_feature(stdalign_h)
+#if __has_include("stdalign.h")
 # include <stdalign.h>
 #endif
-#if p99_has_feature(stdnoreturn_h)
+//#if p99_has_feature(stdnoreturn_h)
+#if __has_include("stdnoreturn.h")
 # include <stdnoreturn.h>
 #endif
 /* end C11 emulation support */
 
-#if p99_has_feature(uchar_h)
+#if __has_include("uchar.h")
 # include <uchar.h>
 #else
 /* Define the unicode character types directly. */

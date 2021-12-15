@@ -37,7 +37,10 @@
 # if p99_has_feature(threads_h)
 #  include <threads.h>
 typedef once_flag p99_once_flag;
-#  elif defined(_XOPEN_SOURCE) || defined(_POSIX_C_SOURCE) || defined(__MINGW__)
+# elif __has_include("tinycthread.h")
+# include <tinycthread.h>
+typedef once_flag p99_once_flag;
+# elif defined(_XOPEN_SOURCE) || defined(_POSIX_C_SOURCE) || defined(__MINGW__)
 /**
  ** @brief C11 thread function return values
  **/
