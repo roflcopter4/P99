@@ -13,6 +13,7 @@
 /*                                                                            */
 #ifndef P99_ATOMIC_H
 #define P99_ATOMIC_H 1
+#pragma once
 
 #include "p99_enum.h"
 #include "p99_generic.h"
@@ -40,7 +41,8 @@
  ** @{
  **/
 
-#if __has_include("stdatomic.h")
+
+#if p99_has_feature(stdatomic_h) || __has_include("stdatomic.h")
 # include <stdatomic.h>
 # include "p99_atomic_flag.h"
 

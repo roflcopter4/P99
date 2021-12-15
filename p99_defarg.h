@@ -11,8 +11,9 @@
 /* without even the implied warranty of merchantability or fitness for a      */
 /* particular purpose.                                                        */
 /*                                                                            */
-#ifndef     P99_DEFARG_H_
-# define    P99_DEFARG_H_
+#ifndef P99_DEFARG_H_
+#define P99_DEFARG_H_
+#pragma once
 
 /**
  ** @file
@@ -301,7 +302,9 @@ P99_MACRO_END(NAME, _declare_defarg)
 
 #define P00_DARG(NAME, X, N) P99_IF_EMPTY(X)(P99_PASTE3(NAME, _defarg_, N)())(X)
 #define P00__DEFARGS(NAME, N, ...) P99_FOR(NAME, N, P00_SEQ, P00_DARG, __VA_ARGS__)
-#define P00_DEFARGS(NAME, N, ...) P00__DEFARGS(NAME, N, P99_IF_LT(P99_NARG(__VA_ARGS__),N) (__VA_ARGS__, P99_DUPL(P99_MINUS(N,P99_NARG(__VA_ARGS__)),)) (__VA_ARGS__))
+#define P00_DEFARGS(NAME, N, ...) P00__DEFARGS(NAME, N, P99_IF_LT(P99_NARG(__VA_ARGS__),N) \
+                                                                 (__VA_ARGS__, P99_DUPL(P99_MINUS(N,P99_NARG(__VA_ARGS__)),)) \
+                                                                 (__VA_ARGS__))
 
 
 /**

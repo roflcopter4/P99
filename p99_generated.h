@@ -6,6 +6,7 @@ automatically generated, do not change manually.
 
 #ifndef P99_GENERATED_H
 #define P99_GENERATED_H
+#pragma once
 
 /** @file
  ** @brief automatically generated macros to handle variadic macros.

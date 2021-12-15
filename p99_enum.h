@@ -150,7 +150,9 @@ P00_DOCUMENT_DECLARATION_ARGUMENT(P99_DECLARE_ENUM, 2)
 P00_DOCUMENT_DECLARATION_ARGUMENT(P99_DECLARE_ENUM, 3)
 # ifdef __clang__
 #  define P99_DECLARE_ENUM(T, ENT, ...)                                       \
-typedef enum T : ENT { __VA_ARGS__ ,                                          \
+typedef enum T                                                                \
+      P99_IF_EMPTY(P99_CHS(0, ENT))()(: ENT)                                  \
+{              __VA_ARGS__ ,                                                  \
                /*! upper bound of the @ref T constants */                     \
                P99_PASTE2(T, _amount),                                        \
                /*! the largest @ref T constant */                             \

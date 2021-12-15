@@ -12,8 +12,9 @@
 /* without even the implied warranty of merchantability or fitness for a      */
 /* particular purpose.                                                        */
 /*                                                                            */
-#ifndef     P99_H_
-# define    P99_H_
+#ifndef    P99_H_
+#define    P99_H_
+#pragma once
 
 /**
  ** @file
