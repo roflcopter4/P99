@@ -62,7 +62,7 @@
 #define P99_ONCE_FLAG_INIT {{0}}
 
 #ifndef PTHREAD_DESTRUCTOR_ITERATIONS
-# warning "definition of PTHREAD_DESTRUCTOR_ITERATIONS is missing"
+# pragma message "definition of PTHREAD_DESTRUCTOR_ITERATIONS is missing"
 /**
  ** @brief expands to an integer constant expression representing the
  ** maximum number of times that destructors will be called when a

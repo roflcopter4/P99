@@ -34,13 +34,17 @@
  **/
 
 
-# if p99_has_feature(threads_h)
+# if p99_has_feature(threads_h) || __has_include("threads.h")
 #  include <threads.h>
 typedef once_flag p99_once_flag;
 # elif __has_include("tinycthread.h")
-# include <tinycthread.h>
+#  include <tinycthread.h>
 typedef once_flag p99_once_flag;
+//# elif 1
+//#  include <D:/vcpkg/installed/x64-windows/include/tinycthread.h>
+//typedef once_flag p99_once_flag;
 # elif defined(_XOPEN_SOURCE) || defined(_POSIX_C_SOURCE) || defined(__MINGW__)
+
 /**
  ** @brief C11 thread function return values
  **/
@@ -82,6 +86,8 @@ enum thrd_status {
 #  include "p99_threads_posix.h"
 
 
+
+
 #  ifndef ONCE_FLAG_INIT
 #   define ONCE_FLAG_INIT P99_ONCE_FLAG_INIT
 #   define call_once p99_call_once
@@ -117,6 +123,10 @@ struct p99_once_flag {
   void (*const p00_init)(void);
   atomic_flag p00_flg;
 };
+
+//# else
+//#  error "no suitable thread implementation found"
+//# endif
 
 P00_DOCUMENT_TYPE_ARGUMENT(P99_DECLARE_INIT_ONCE, 0)
 P00_DOCUMENT_IDENTIFIER_ARGUMENT(P99_DECLARE_INIT_ONCE, 1)
@@ -451,5 +461,27 @@ char const* thrd2str(char *p00_buf, thrd_t p00_id) {
 # endif
 
 #endif /* P99_WANT_THREADS */
+
+# ifndef P99_MUTUAL_EXCLUDE
+#  define P99_MUTUAL_EXCLUDE(MUT) P00_MUTUAL_EXCLUDE(MUT, P99_UNIQ(mut))
+#  define P00_MUTUAL_EXCLUDE(MUT, UNIQ)                                          \
+P00_BLK_START                                                                    \
+P00_BLK_DECL(int, p00_errNo, 0)                                                  \
+P99_GUARDED_BLOCK(mtx_t*,                                                        \
+                  UNIQ,                                                          \
+                  &(MUT),                                                        \
+                  (void)(P99_UNLIKELY(p00_errNo = mtx_lock(UNIQ)) && p00_errNo != EINTR  \
+                         && (fprintf(stderr,                                     \
+                                     __FILE__ ":"                                \
+                                     P99_STRINGIFY(__LINE__) ": lock error for " \
+                                     P99_STRINGIFY(MUT) ", %s\n",                \
+                                     strerror(p00_errNo)),                       \
+                             fflush(stderr), 1)            \
+                         && (UNIQ = 0, 1)                                        \
+                         && (P99_UNWIND(-1), 1)                                  \
+                         ),                                                      \
+                  (void)(UNIQ                                                    \
+                         && mtx_unlock(UNIQ)))
+# endif
 
 #endif /* p99_threads.h */

@@ -272,7 +272,7 @@ void p00_init_func_p99_init_main(int * p00_argc, char***p00_argv) {
 
 # else
 
-#  warning "no native load time launcher found, trying to intercept main"
+#  pragma message "no native load time launcher found, trying to intercept main"
 
 P99_MAIN_INTERCEPT(p99_init_main) {
   P99_FOR(, P99_MAX_NUMBER, P00_SEP, P00_INIT_TRIGGER_FUNCTION_1, P99_REP(P99_MAX_NUMBER,));

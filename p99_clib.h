@@ -322,7 +322,7 @@ timespec_get(struct timespec *p00_ts, int p00_base)
         return p00_base;
 }
 #  else
-#    warning only low resolution gettimeofday found
+#    pragma message "only low resolution gettimeofday found"
 #    define timespec_get p00_timespec_get
 #  endif
 #endif

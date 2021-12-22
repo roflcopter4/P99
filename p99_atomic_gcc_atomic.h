@@ -14,7 +14,7 @@
 #define P99_ATOMIC_GCC_ATOMIC_H 1
 
 #ifndef P99_ATOMIC_H
-# warning "never include this file directly, use p99_atomic.h, instead"
+# pragma message "never include this file directly, use p99_atomic.h, instead"
 #endif
 
 #include "p99_args.h"

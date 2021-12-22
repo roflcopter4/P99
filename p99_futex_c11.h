@@ -46,8 +46,8 @@ p99_inline
 p99_futex* p99_futex_init(p99_futex* p00_fut, unsigned p00_ini) {
   if (p00_fut) {
     *p00_fut = (p99_futex)P99_FUTEX_INITIALIZER(p00_ini);
-    mtx_init(&p00_fut->p99_mut, mtx_plain);
-    cnd_init(&p00_fut->p99_cnd);
+    (void)mtx_init(&p00_fut->p99_mut, mtx_plain);
+    (void)cnd_init(&p00_fut->p99_cnd);
   }
   return p00_fut;
 }
@@ -80,9 +80,12 @@ unsigned p00_futex_wakeup(p99_futex volatile* p00_fut,
                           unsigned p00_wmin, unsigned p00_wmax) {
   assert(p00_wmin <= p00_wmax);
   if (p00_wmax && p00_fut->p99_waiting) {
-    if (p00_wmax > p00_fut->p99_waiting) p00_wmax = p00_fut->p99_waiting;
-    if (p00_wmax > 1u) cnd_broadcast((cnd_t*)&p00_fut->p99_cnd);
-    else cnd_signal((cnd_t*)&p00_fut->p99_cnd);
+    if (p00_wmax > p00_fut->p99_waiting) 
+        p00_wmax = p00_fut->p99_waiting;
+    if (p00_wmax > 1u)
+        (void)cnd_broadcast((cnd_t*)&p00_fut->p99_cnd);
+    else
+        (void)cnd_signal((cnd_t*)&p00_fut->p99_cnd);
     p00_fut->p99_waiting -= p00_wmax;
     p00_fut->p99_awaking += p00_wmax;
     return p00_wmin;
@@ -118,7 +121,7 @@ void p00_futex_wait(p99_futex volatile* p00_fut) {
   /* This loop captures spurious wakeups as they may happen for
      cnd_wait. */
   do {
-    cnd_wait((cnd_t*)&p00_fut->p99_cnd, (mtx_t*)&p00_fut->p99_mut);
+    (void)cnd_wait((cnd_t*)&p00_fut->p99_cnd, (mtx_t*)&p00_fut->p99_mut);
   } while (!p00_fut->p99_awaking);
   --p00_fut->p99_awaking;
 }

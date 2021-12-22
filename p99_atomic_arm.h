@@ -15,7 +15,7 @@
 #define P99_ATOMIC_ARM_H 1
 
 #ifndef P99_ATOMIC_H
-# warning "never include this file directly, use p99_atomic.h, instead"
+# pragma message "never include this file directly, use p99_atomic.h, instead"
 #endif
 
 #if !defined(__thumb__) && !defined(__thumb2__)
