@@ -472,11 +472,14 @@ P00_DOCUMENT_MULTIPLE_ARGUMENT(P99_IS_SUP, 0)
 P00_DOCUMENT_MULTIPLE_ARGUMENT(P99_ARE_ORDERED, 0)
 P00_DOCUMENT_MULTIPLE_ARGUMENT(P99_ARE_ORDERED, 1)
 P00_DOCUMENT_MULTIPLE_ARGUMENT(P99_ARE_ORDERED, 2)
-#define P99_ARE_ORDERED(OP, ...) P00_ARE_ORDERED(OP, P99_NARG(__VA_ARGS__), __VA_ARGS__)
+#define P99_ARE_ORDERED(OP, ...)                                               \
+            (P01_CLANG_DIAGNOSTIC_IGNORED(-Wgnu-zero-variadic-macro-arguments) \
+             P00_ARE_ORDERED(OP, P99_NARG(__VA_ARGS__), __VA_ARGS__)           \
+             P01_CLANG_POP())
 
 #define P00_ARE_ORDERED(OP, N, ...)                            \
 P99_IF_LT(N, 3)                                                \
-(P00_ARE_ORDERED2(OP,__VA_ARGS__))                             \
+(P00_ARE_ORDERED2(OP, __VA_ARGS__))                            \
 (P00_ARE_ORDERED3(OP, P99_PRED(N), __VA_ARGS__))
 
 #define P00_ARE_ORDERED2(OP, X, Y) (X) OP (Y)
