@@ -10,8 +10,11 @@
 /* without even the implied warranty of merchantability or fitness for a      */
 /* particular purpose.                                                        */
 /*                                                                            */
+#pragma once
 #ifndef P99_ATOMIC_FLAG_H_
 #define P99_ATOMIC_FLAG_H_ 1
+
+#include "p99_compiler.h"
 
 /**
  ** @brief extension: spin on @a p00_objp setting the flag until the state before was "clear"

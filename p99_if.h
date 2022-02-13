@@ -190,5 +190,4 @@
 # define p99_has_extension(X) (P99_IF_EQ_1(__has_extension(X))(1)(0) || P99_IF_EQ_1(p00_has_extension_ ## X)(1)(0)) // Compatibility with non-clang compilers.
 # define p99_has_attribute(X) (P99_IF_EQ_1(__has_attribute(X))(1)(0) || P99_IF_EQ_1(p00_has_attribute_ ## X)(1)(0))  // Compatibility with non-clang compilers.
 
-
 #endif      /* !P99_IF_H_ */

@@ -6,7 +6,6 @@ automatically generated, do not change manually.
 
 #ifndef P99_GENERATED_H
 #define P99_GENERATED_H
-#pragma once
 
 /** @file
  ** @brief automatically generated macros to handle variadic macros.
@@ -31,7 +30,7 @@ automatically generated, do not change manually.
  **/
 #define P99_VERSION_ID "$Format:%H$"
 
-#define P00_VERSION_DATE "Fri, 23 Apr 2021 00:07:47 -0600"
+#define P00_VERSION_DATE "Wed, 09 Feb 2022 10:00:33 -0700"
 #define P00_VERSION_ID "e022cb833326d9f21583f1588b1a37bf506a97db"
 
 /** @brief The maximal number of arguments the P99 macros can handle.
@@ -39,7 +38,7 @@ automatically generated, do not change manually.
  ** This limit applies also to the integer arithmetic that is
  ** performed by the macros in @ref preprocessor_arithmetic.
  **/
-#define P99_MAX_NUMBER 158
+#define P99_MAX_NUMBER 126
 #define P00_ARG(\
  _1, _2, _3, _4, _5, _6, _7, _8,\
  _9, _10, _11, _12, _13, _14, _15, _16,\
@@ -56,17 +55,9 @@ automatically generated, do not change manually.
  _97, _98, _99, _100, _101, _102, _103, _104,\
  _105, _106, _107, _108, _109, _110, _111, _112,\
  _113, _114, _115, _116, _117, _118, _119, _120,\
- _121, _122, _123, _124, _125, _126, _127, _128,\
- _129, _130, _131, _132, _133, _134, _135, _136,\
- _137, _138, _139, _140, _141, _142, _143, _144,\
- _145, _146, _147, _148, _149, _150, _151, _152,\
- _153, _154, _155, _156, _157, _158, _159,\
- ...) _159
-#define P00_NARG_1(...) P00_ARG(__VA_ARGS__,  158, 157, 156, 155, 154, 153, 152,\
- 151, 150, 149, 148, 147, 146, 145, 144,\
- 143, 142, 141, 140, 139, 138, 137, 136,\
- 135, 134, 133, 132, 131, 130, 129, 128,\
- 127, 126, 125, 124, 123, 122, 121, 120,\
+ _121, _122, _123, _124, _125, _126, _127,\
+ ...) _127
+#define P00_NARG_1(...) P00_ARG(__VA_ARGS__,  126, 125, 124, 123, 122, 121, 120,\
  119, 118, 117, 116, 115, 114, 113, 112,\
  111, 110, 109, 108, 107, 106, 105, 104,\
  103, 102, 101, 100, 99, 98, 97, 96,\
@@ -82,11 +73,7 @@ automatically generated, do not change manually.
  23, 22, 21, 20, 19, 18, 17, 16,\
  15, 14, 13, 12, 11, 10, 9, 8,\
  7, 6, 5, 4, 3, 2, 1, 0,)
-#define P00_NARG_2(...) P00_ARG(__VA_ARGS__,  79, P00_INV(2), 78, P00_INV(2), 77, P00_INV(2), 76,\
- P00_INV(2), 75, P00_INV(2), 74, P00_INV(2), 73, P00_INV(2), 72,\
- P00_INV(2), 71, P00_INV(2), 70, P00_INV(2), 69, P00_INV(2), 68,\
- P00_INV(2), 67, P00_INV(2), 66, P00_INV(2), 65, P00_INV(2), 64,\
- P00_INV(2), 63, P00_INV(2), 62, P00_INV(2), 61, P00_INV(2), 60,\
+#define P00_NARG_2(...) P00_ARG(__VA_ARGS__,  63, P00_INV(2), 62, P00_INV(2), 61, P00_INV(2), 60,\
  P00_INV(2), 59, P00_INV(2), 58, P00_INV(2), 57, P00_INV(2), 56,\
  P00_INV(2), 55, P00_INV(2), 54, P00_INV(2), 53, P00_INV(2), 52,\
  P00_INV(2), 51, P00_INV(2), 50, P00_INV(2), 49, P00_INV(2), 48,\
@@ -102,11 +89,7 @@ automatically generated, do not change manually.
  P00_INV(2), 11, P00_INV(2), 10, P00_INV(2), 9, P00_INV(2), 8,\
  P00_INV(2), 7, P00_INV(2), 6, P00_INV(2), 5, P00_INV(2), 4,\
  P00_INV(2), 3, P00_INV(2), 2, P00_INV(2), 1, P00_INV(2), 0,)
-#define P00_NARG_3(...) P00_ARG(__VA_ARGS__,  P00_INV(3), P00_INV(3), 52, P00_INV(3), P00_INV(3), 51, P00_INV(3),\
- P00_INV(3), 50, P00_INV(3), P00_INV(3), 49, P00_INV(3), P00_INV(3), 48,\
- P00_INV(3), P00_INV(3), 47, P00_INV(3), P00_INV(3), 46, P00_INV(3), P00_INV(3),\
- 45, P00_INV(3), P00_INV(3), 44, P00_INV(3), P00_INV(3), 43, P00_INV(3),\
- P00_INV(3), 42, P00_INV(3), P00_INV(3), 41, P00_INV(3), P00_INV(3), 40,\
+#define P00_NARG_3(...) P00_ARG(__VA_ARGS__,  42, P00_INV(3), P00_INV(3), 41, P00_INV(3), P00_INV(3), 40,\
  P00_INV(3), P00_INV(3), 39, P00_INV(3), P00_INV(3), 38, P00_INV(3), P00_INV(3),\
  37, P00_INV(3), P00_INV(3), 36, P00_INV(3), P00_INV(3), 35, P00_INV(3),\
  P00_INV(3), 34, P00_INV(3), P00_INV(3), 33, P00_INV(3), P00_INV(3), 32,\
@@ -122,11 +105,7 @@ automatically generated, do not change manually.
  P00_INV(3), P00_INV(3), 7, P00_INV(3), P00_INV(3), 6, P00_INV(3), P00_INV(3),\
  5, P00_INV(3), P00_INV(3), 4, P00_INV(3), P00_INV(3), 3, P00_INV(3),\
  P00_INV(3), 2, P00_INV(3), P00_INV(3), 1, P00_INV(3), P00_INV(3), 0,)
-#define P00_NARG_4(...) P00_ARG(__VA_ARGS__,  P00_INV(4), P00_INV(4), 39, P00_INV(4), P00_INV(4), P00_INV(4), 38,\
- P00_INV(4), P00_INV(4), P00_INV(4), 37, P00_INV(4), P00_INV(4), P00_INV(4), 36,\
- P00_INV(4), P00_INV(4), P00_INV(4), 35, P00_INV(4), P00_INV(4), P00_INV(4), 34,\
- P00_INV(4), P00_INV(4), P00_INV(4), 33, P00_INV(4), P00_INV(4), P00_INV(4), 32,\
- P00_INV(4), P00_INV(4), P00_INV(4), 31, P00_INV(4), P00_INV(4), P00_INV(4), 30,\
+#define P00_NARG_4(...) P00_ARG(__VA_ARGS__,  P00_INV(4), P00_INV(4), 31, P00_INV(4), P00_INV(4), P00_INV(4), 30,\
  P00_INV(4), P00_INV(4), P00_INV(4), 29, P00_INV(4), P00_INV(4), P00_INV(4), 28,\
  P00_INV(4), P00_INV(4), P00_INV(4), 27, P00_INV(4), P00_INV(4), P00_INV(4), 26,\
  P00_INV(4), P00_INV(4), P00_INV(4), 25, P00_INV(4), P00_INV(4), P00_INV(4), 24,\
@@ -146,10 +125,6 @@ automatically generated, do not change manually.
 /** @brief Determine of the argument list has a comma, i.e at least two arguments. */
 #define P99_HAS_COMMA(...) P00_ARG(__VA_ARGS__,\
  1, 1, 1, 1, 1, 1, 1,\
- 1, 1, 1, 1, 1, 1, 1, 1,\
- 1, 1, 1, 1, 1, 1, 1, 1,\
- 1, 1, 1, 1, 1, 1, 1, 1,\
- 1, 1, 1, 1, 1, 1, 1, 1,\
  1, 1, 1, 1, 1, 1, 1, 1,\
  1, 1, 1, 1, 1, 1, 1, 1,\
  1, 1, 1, 1, 1, 1, 1, 1,\
@@ -290,38 +265,6 @@ automatically generated, do not change manually.
 #define P00_SKP124(_0, ...) P00_SKP123(__VA_ARGS__)
 #define P00_SKP125(_0, ...) P00_SKP124(__VA_ARGS__)
 #define P00_SKP126(_0, ...) P00_SKP125(__VA_ARGS__)
-#define P00_SKP127(_0, ...) P00_SKP126(__VA_ARGS__)
-#define P00_SKP128(_0, ...) P00_SKP127(__VA_ARGS__)
-#define P00_SKP129(_0, ...) P00_SKP128(__VA_ARGS__)
-#define P00_SKP130(_0, ...) P00_SKP129(__VA_ARGS__)
-#define P00_SKP131(_0, ...) P00_SKP130(__VA_ARGS__)
-#define P00_SKP132(_0, ...) P00_SKP131(__VA_ARGS__)
-#define P00_SKP133(_0, ...) P00_SKP132(__VA_ARGS__)
-#define P00_SKP134(_0, ...) P00_SKP133(__VA_ARGS__)
-#define P00_SKP135(_0, ...) P00_SKP134(__VA_ARGS__)
-#define P00_SKP136(_0, ...) P00_SKP135(__VA_ARGS__)
-#define P00_SKP137(_0, ...) P00_SKP136(__VA_ARGS__)
-#define P00_SKP138(_0, ...) P00_SKP137(__VA_ARGS__)
-#define P00_SKP139(_0, ...) P00_SKP138(__VA_ARGS__)
-#define P00_SKP140(_0, ...) P00_SKP139(__VA_ARGS__)
-#define P00_SKP141(_0, ...) P00_SKP140(__VA_ARGS__)
-#define P00_SKP142(_0, ...) P00_SKP141(__VA_ARGS__)
-#define P00_SKP143(_0, ...) P00_SKP142(__VA_ARGS__)
-#define P00_SKP144(_0, ...) P00_SKP143(__VA_ARGS__)
-#define P00_SKP145(_0, ...) P00_SKP144(__VA_ARGS__)
-#define P00_SKP146(_0, ...) P00_SKP145(__VA_ARGS__)
-#define P00_SKP147(_0, ...) P00_SKP146(__VA_ARGS__)
-#define P00_SKP148(_0, ...) P00_SKP147(__VA_ARGS__)
-#define P00_SKP149(_0, ...) P00_SKP148(__VA_ARGS__)
-#define P00_SKP150(_0, ...) P00_SKP149(__VA_ARGS__)
-#define P00_SKP151(_0, ...) P00_SKP150(__VA_ARGS__)
-#define P00_SKP152(_0, ...) P00_SKP151(__VA_ARGS__)
-#define P00_SKP153(_0, ...) P00_SKP152(__VA_ARGS__)
-#define P00_SKP154(_0, ...) P00_SKP153(__VA_ARGS__)
-#define P00_SKP155(_0, ...) P00_SKP154(__VA_ARGS__)
-#define P00_SKP156(_0, ...) P00_SKP155(__VA_ARGS__)
-#define P00_SKP157(_0, ...) P00_SKP156(__VA_ARGS__)
-#define P00_SKP158(_0, ...) P00_SKP157(__VA_ARGS__)
 #define P00_PRE2(_0, ...) _0, P00_PRE1(__VA_ARGS__)
 #define P00_PRE3(_0, ...) _0, P00_PRE2(__VA_ARGS__)
 #define P00_PRE4(_0, ...) _0, P00_PRE3(__VA_ARGS__)
@@ -447,38 +390,6 @@ automatically generated, do not change manually.
 #define P00_PRE124(_0, ...) _0, P00_PRE123(__VA_ARGS__)
 #define P00_PRE125(_0, ...) _0, P00_PRE124(__VA_ARGS__)
 #define P00_PRE126(_0, ...) _0, P00_PRE125(__VA_ARGS__)
-#define P00_PRE127(_0, ...) _0, P00_PRE126(__VA_ARGS__)
-#define P00_PRE128(_0, ...) _0, P00_PRE127(__VA_ARGS__)
-#define P00_PRE129(_0, ...) _0, P00_PRE128(__VA_ARGS__)
-#define P00_PRE130(_0, ...) _0, P00_PRE129(__VA_ARGS__)
-#define P00_PRE131(_0, ...) _0, P00_PRE130(__VA_ARGS__)
-#define P00_PRE132(_0, ...) _0, P00_PRE131(__VA_ARGS__)
-#define P00_PRE133(_0, ...) _0, P00_PRE132(__VA_ARGS__)
-#define P00_PRE134(_0, ...) _0, P00_PRE133(__VA_ARGS__)
-#define P00_PRE135(_0, ...) _0, P00_PRE134(__VA_ARGS__)
-#define P00_PRE136(_0, ...) _0, P00_PRE135(__VA_ARGS__)
-#define P00_PRE137(_0, ...) _0, P00_PRE136(__VA_ARGS__)
-#define P00_PRE138(_0, ...) _0, P00_PRE137(__VA_ARGS__)
-#define P00_PRE139(_0, ...) _0, P00_PRE138(__VA_ARGS__)
-#define P00_PRE140(_0, ...) _0, P00_PRE139(__VA_ARGS__)
-#define P00_PRE141(_0, ...) _0, P00_PRE140(__VA_ARGS__)
-#define P00_PRE142(_0, ...) _0, P00_PRE141(__VA_ARGS__)
-#define P00_PRE143(_0, ...) _0, P00_PRE142(__VA_ARGS__)
-#define P00_PRE144(_0, ...) _0, P00_PRE143(__VA_ARGS__)
-#define P00_PRE145(_0, ...) _0, P00_PRE144(__VA_ARGS__)
-#define P00_PRE146(_0, ...) _0, P00_PRE145(__VA_ARGS__)
-#define P00_PRE147(_0, ...) _0, P00_PRE146(__VA_ARGS__)
-#define P00_PRE148(_0, ...) _0, P00_PRE147(__VA_ARGS__)
-#define P00_PRE149(_0, ...) _0, P00_PRE148(__VA_ARGS__)
-#define P00_PRE150(_0, ...) _0, P00_PRE149(__VA_ARGS__)
-#define P00_PRE151(_0, ...) _0, P00_PRE150(__VA_ARGS__)
-#define P00_PRE152(_0, ...) _0, P00_PRE151(__VA_ARGS__)
-#define P00_PRE153(_0, ...) _0, P00_PRE152(__VA_ARGS__)
-#define P00_PRE154(_0, ...) _0, P00_PRE153(__VA_ARGS__)
-#define P00_PRE155(_0, ...) _0, P00_PRE154(__VA_ARGS__)
-#define P00_PRE156(_0, ...) _0, P00_PRE155(__VA_ARGS__)
-#define P00_PRE157(_0, ...) _0, P00_PRE156(__VA_ARGS__)
-#define P00_PRE158(_0, ...) _0, P00_PRE157(__VA_ARGS__)
 #define P00_ASCENDING() \
  0, 1, 2, 3, 4, 5, 6, 7,\
  8, 9, 10, 11, 12, 13, 14, 15,\
@@ -495,16 +406,8 @@ automatically generated, do not change manually.
  96, 97, 98, 99, 100, 101, 102, 103,\
  104, 105, 106, 107, 108, 109, 110, 111,\
  112, 113, 114, 115, 116, 117, 118, 119,\
- 120, 121, 122, 123, 124, 125, 126, 127,\
- 128, 129, 130, 131, 132, 133, 134, 135,\
- 136, 137, 138, 139, 140, 141, 142, 143,\
- 144, 145, 146, 147, 148, 149, 150, 151,\
- 152, 153, 154, 155, 156, 157, 158,
-#define P00_DESCENDING()  158, 157, 156, 155, 154, 153,\
- 152, 151, 150, 149, 148, 147, 146, 145,\
- 144, 143, 142, 141, 140, 139, 138, 137,\
- 136, 135, 134, 133, 132, 131, 130, 129,\
- 128, 127, 126, 125, 124, 123, 122, 121,\
+ 120, 121, 122, 123, 124, 125, 126,
+#define P00_DESCENDING()  126, 125, 124, 123, 122, 121,\
  120, 119, 118, 117, 116, 115, 114, 113,\
  112, 111, 110, 109, 108, 107, 106, 105,\
  104, 103, 102, 101, 100, 99, 98, 97,\
@@ -537,16 +440,8 @@ automatically generated, do not change manually.
  0, 0, 0, 0, 0, 0, 0, 0,\
  0, 0, 0, 0, 0, 0, 0, 0,\
  0, 0, 0, 0, 0, 0, 0, 0,\
- 0, 0, 0, 0, 0, 0, 0, 0,\
- 0, 0, 0, 0, 0, 0, 0, 0,\
- 0, 0, 0, 0, 0, 0, 0, 0,\
- 0, 0, 0, 0, 0, 0, 0, 0,\
  0, 0, 0, 0, 0, 0, 0,
 #define P00_ALL_ONES() \
- 1, 1, 1, 1, 1, 1, 1, 1,\
- 1, 1, 1, 1, 1, 1, 1, 1,\
- 1, 1, 1, 1, 1, 1, 1, 1,\
- 1, 1, 1, 1, 1, 1, 1, 1,\
  1, 1, 1, 1, 1, 1, 1, 1,\
  1, 1, 1, 1, 1, 1, 1, 1,\
  1, 1, 1, 1, 1, 1, 1, 1,\
@@ -923,102 +818,6 @@ automatically generated, do not change manually.
 /** @brief Paste 126 arguments at their boundary.*/
 #define P99_PASTE126(...) P00_PASTE126(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
 #define P00_PASTE126(L, ...) P99_PASTE2(P99_PASTE125(__VA_ARGS__), L)
-/** @brief Paste 127 arguments at their boundary.*/
-#define P99_PASTE127(...) P00_PASTE127(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE127(L, ...) P99_PASTE2(P99_PASTE126(__VA_ARGS__), L)
-/** @brief Paste 128 arguments at their boundary.*/
-#define P99_PASTE128(...) P00_PASTE128(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE128(L, ...) P99_PASTE2(P99_PASTE127(__VA_ARGS__), L)
-/** @brief Paste 129 arguments at their boundary.*/
-#define P99_PASTE129(...) P00_PASTE129(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE129(L, ...) P99_PASTE2(P99_PASTE128(__VA_ARGS__), L)
-/** @brief Paste 130 arguments at their boundary.*/
-#define P99_PASTE130(...) P00_PASTE130(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE130(L, ...) P99_PASTE2(P99_PASTE129(__VA_ARGS__), L)
-/** @brief Paste 131 arguments at their boundary.*/
-#define P99_PASTE131(...) P00_PASTE131(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE131(L, ...) P99_PASTE2(P99_PASTE130(__VA_ARGS__), L)
-/** @brief Paste 132 arguments at their boundary.*/
-#define P99_PASTE132(...) P00_PASTE132(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE132(L, ...) P99_PASTE2(P99_PASTE131(__VA_ARGS__), L)
-/** @brief Paste 133 arguments at their boundary.*/
-#define P99_PASTE133(...) P00_PASTE133(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE133(L, ...) P99_PASTE2(P99_PASTE132(__VA_ARGS__), L)
-/** @brief Paste 134 arguments at their boundary.*/
-#define P99_PASTE134(...) P00_PASTE134(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE134(L, ...) P99_PASTE2(P99_PASTE133(__VA_ARGS__), L)
-/** @brief Paste 135 arguments at their boundary.*/
-#define P99_PASTE135(...) P00_PASTE135(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE135(L, ...) P99_PASTE2(P99_PASTE134(__VA_ARGS__), L)
-/** @brief Paste 136 arguments at their boundary.*/
-#define P99_PASTE136(...) P00_PASTE136(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE136(L, ...) P99_PASTE2(P99_PASTE135(__VA_ARGS__), L)
-/** @brief Paste 137 arguments at their boundary.*/
-#define P99_PASTE137(...) P00_PASTE137(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE137(L, ...) P99_PASTE2(P99_PASTE136(__VA_ARGS__), L)
-/** @brief Paste 138 arguments at their boundary.*/
-#define P99_PASTE138(...) P00_PASTE138(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE138(L, ...) P99_PASTE2(P99_PASTE137(__VA_ARGS__), L)
-/** @brief Paste 139 arguments at their boundary.*/
-#define P99_PASTE139(...) P00_PASTE139(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE139(L, ...) P99_PASTE2(P99_PASTE138(__VA_ARGS__), L)
-/** @brief Paste 140 arguments at their boundary.*/
-#define P99_PASTE140(...) P00_PASTE140(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE140(L, ...) P99_PASTE2(P99_PASTE139(__VA_ARGS__), L)
-/** @brief Paste 141 arguments at their boundary.*/
-#define P99_PASTE141(...) P00_PASTE141(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE141(L, ...) P99_PASTE2(P99_PASTE140(__VA_ARGS__), L)
-/** @brief Paste 142 arguments at their boundary.*/
-#define P99_PASTE142(...) P00_PASTE142(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE142(L, ...) P99_PASTE2(P99_PASTE141(__VA_ARGS__), L)
-/** @brief Paste 143 arguments at their boundary.*/
-#define P99_PASTE143(...) P00_PASTE143(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE143(L, ...) P99_PASTE2(P99_PASTE142(__VA_ARGS__), L)
-/** @brief Paste 144 arguments at their boundary.*/
-#define P99_PASTE144(...) P00_PASTE144(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE144(L, ...) P99_PASTE2(P99_PASTE143(__VA_ARGS__), L)
-/** @brief Paste 145 arguments at their boundary.*/
-#define P99_PASTE145(...) P00_PASTE145(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE145(L, ...) P99_PASTE2(P99_PASTE144(__VA_ARGS__), L)
-/** @brief Paste 146 arguments at their boundary.*/
-#define P99_PASTE146(...) P00_PASTE146(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE146(L, ...) P99_PASTE2(P99_PASTE145(__VA_ARGS__), L)
-/** @brief Paste 147 arguments at their boundary.*/
-#define P99_PASTE147(...) P00_PASTE147(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE147(L, ...) P99_PASTE2(P99_PASTE146(__VA_ARGS__), L)
-/** @brief Paste 148 arguments at their boundary.*/
-#define P99_PASTE148(...) P00_PASTE148(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE148(L, ...) P99_PASTE2(P99_PASTE147(__VA_ARGS__), L)
-/** @brief Paste 149 arguments at their boundary.*/
-#define P99_PASTE149(...) P00_PASTE149(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE149(L, ...) P99_PASTE2(P99_PASTE148(__VA_ARGS__), L)
-/** @brief Paste 150 arguments at their boundary.*/
-#define P99_PASTE150(...) P00_PASTE150(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE150(L, ...) P99_PASTE2(P99_PASTE149(__VA_ARGS__), L)
-/** @brief Paste 151 arguments at their boundary.*/
-#define P99_PASTE151(...) P00_PASTE151(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE151(L, ...) P99_PASTE2(P99_PASTE150(__VA_ARGS__), L)
-/** @brief Paste 152 arguments at their boundary.*/
-#define P99_PASTE152(...) P00_PASTE152(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE152(L, ...) P99_PASTE2(P99_PASTE151(__VA_ARGS__), L)
-/** @brief Paste 153 arguments at their boundary.*/
-#define P99_PASTE153(...) P00_PASTE153(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE153(L, ...) P99_PASTE2(P99_PASTE152(__VA_ARGS__), L)
-/** @brief Paste 154 arguments at their boundary.*/
-#define P99_PASTE154(...) P00_PASTE154(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE154(L, ...) P99_PASTE2(P99_PASTE153(__VA_ARGS__), L)
-/** @brief Paste 155 arguments at their boundary.*/
-#define P99_PASTE155(...) P00_PASTE155(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE155(L, ...) P99_PASTE2(P99_PASTE154(__VA_ARGS__), L)
-/** @brief Paste 156 arguments at their boundary.*/
-#define P99_PASTE156(...) P00_PASTE156(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE156(L, ...) P99_PASTE2(P99_PASTE155(__VA_ARGS__), L)
-/** @brief Paste 157 arguments at their boundary.*/
-#define P99_PASTE157(...) P00_PASTE157(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE157(L, ...) P99_PASTE2(P99_PASTE156(__VA_ARGS__), L)
-/** @brief Paste 158 arguments at their boundary.*/
-#define P99_PASTE158(...) P00_PASTE158(P99_LAST(__VA_ARGS__), P99_ALLBUTLAST(__VA_ARGS__))
-#define P00_PASTE158(L, ...) P99_PASTE2(P99_PASTE157(__VA_ARGS__), L)
 /** @brief Paste 3 partial identifiers separated by an underscore.*/
 #define P99_PASTID3(...) P00_PASTID3(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
 #define P00_PASTID3(S, L) P99_PASTID2(P99_PASTID2(S), L)
@@ -1391,109 +1190,13 @@ automatically generated, do not change manually.
 /** @brief Paste 126 partial identifiers separated by an underscore.*/
 #define P99_PASTID126(...) P00_PASTID126(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
 #define P00_PASTID126(S, L) P99_PASTID2(P99_PASTID125(S), L)
-/** @brief Paste 127 partial identifiers separated by an underscore.*/
-#define P99_PASTID127(...) P00_PASTID127(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID127(S, L) P99_PASTID2(P99_PASTID126(S), L)
-/** @brief Paste 128 partial identifiers separated by an underscore.*/
-#define P99_PASTID128(...) P00_PASTID128(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID128(S, L) P99_PASTID2(P99_PASTID127(S), L)
-/** @brief Paste 129 partial identifiers separated by an underscore.*/
-#define P99_PASTID129(...) P00_PASTID129(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID129(S, L) P99_PASTID2(P99_PASTID128(S), L)
-/** @brief Paste 130 partial identifiers separated by an underscore.*/
-#define P99_PASTID130(...) P00_PASTID130(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID130(S, L) P99_PASTID2(P99_PASTID129(S), L)
-/** @brief Paste 131 partial identifiers separated by an underscore.*/
-#define P99_PASTID131(...) P00_PASTID131(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID131(S, L) P99_PASTID2(P99_PASTID130(S), L)
-/** @brief Paste 132 partial identifiers separated by an underscore.*/
-#define P99_PASTID132(...) P00_PASTID132(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID132(S, L) P99_PASTID2(P99_PASTID131(S), L)
-/** @brief Paste 133 partial identifiers separated by an underscore.*/
-#define P99_PASTID133(...) P00_PASTID133(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID133(S, L) P99_PASTID2(P99_PASTID132(S), L)
-/** @brief Paste 134 partial identifiers separated by an underscore.*/
-#define P99_PASTID134(...) P00_PASTID134(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID134(S, L) P99_PASTID2(P99_PASTID133(S), L)
-/** @brief Paste 135 partial identifiers separated by an underscore.*/
-#define P99_PASTID135(...) P00_PASTID135(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID135(S, L) P99_PASTID2(P99_PASTID134(S), L)
-/** @brief Paste 136 partial identifiers separated by an underscore.*/
-#define P99_PASTID136(...) P00_PASTID136(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID136(S, L) P99_PASTID2(P99_PASTID135(S), L)
-/** @brief Paste 137 partial identifiers separated by an underscore.*/
-#define P99_PASTID137(...) P00_PASTID137(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID137(S, L) P99_PASTID2(P99_PASTID136(S), L)
-/** @brief Paste 138 partial identifiers separated by an underscore.*/
-#define P99_PASTID138(...) P00_PASTID138(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID138(S, L) P99_PASTID2(P99_PASTID137(S), L)
-/** @brief Paste 139 partial identifiers separated by an underscore.*/
-#define P99_PASTID139(...) P00_PASTID139(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID139(S, L) P99_PASTID2(P99_PASTID138(S), L)
-/** @brief Paste 140 partial identifiers separated by an underscore.*/
-#define P99_PASTID140(...) P00_PASTID140(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID140(S, L) P99_PASTID2(P99_PASTID139(S), L)
-/** @brief Paste 141 partial identifiers separated by an underscore.*/
-#define P99_PASTID141(...) P00_PASTID141(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID141(S, L) P99_PASTID2(P99_PASTID140(S), L)
-/** @brief Paste 142 partial identifiers separated by an underscore.*/
-#define P99_PASTID142(...) P00_PASTID142(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID142(S, L) P99_PASTID2(P99_PASTID141(S), L)
-/** @brief Paste 143 partial identifiers separated by an underscore.*/
-#define P99_PASTID143(...) P00_PASTID143(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID143(S, L) P99_PASTID2(P99_PASTID142(S), L)
-/** @brief Paste 144 partial identifiers separated by an underscore.*/
-#define P99_PASTID144(...) P00_PASTID144(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID144(S, L) P99_PASTID2(P99_PASTID143(S), L)
-/** @brief Paste 145 partial identifiers separated by an underscore.*/
-#define P99_PASTID145(...) P00_PASTID145(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID145(S, L) P99_PASTID2(P99_PASTID144(S), L)
-/** @brief Paste 146 partial identifiers separated by an underscore.*/
-#define P99_PASTID146(...) P00_PASTID146(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID146(S, L) P99_PASTID2(P99_PASTID145(S), L)
-/** @brief Paste 147 partial identifiers separated by an underscore.*/
-#define P99_PASTID147(...) P00_PASTID147(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID147(S, L) P99_PASTID2(P99_PASTID146(S), L)
-/** @brief Paste 148 partial identifiers separated by an underscore.*/
-#define P99_PASTID148(...) P00_PASTID148(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID148(S, L) P99_PASTID2(P99_PASTID147(S), L)
-/** @brief Paste 149 partial identifiers separated by an underscore.*/
-#define P99_PASTID149(...) P00_PASTID149(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID149(S, L) P99_PASTID2(P99_PASTID148(S), L)
-/** @brief Paste 150 partial identifiers separated by an underscore.*/
-#define P99_PASTID150(...) P00_PASTID150(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID150(S, L) P99_PASTID2(P99_PASTID149(S), L)
-/** @brief Paste 151 partial identifiers separated by an underscore.*/
-#define P99_PASTID151(...) P00_PASTID151(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID151(S, L) P99_PASTID2(P99_PASTID150(S), L)
-/** @brief Paste 152 partial identifiers separated by an underscore.*/
-#define P99_PASTID152(...) P00_PASTID152(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID152(S, L) P99_PASTID2(P99_PASTID151(S), L)
-/** @brief Paste 153 partial identifiers separated by an underscore.*/
-#define P99_PASTID153(...) P00_PASTID153(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID153(S, L) P99_PASTID2(P99_PASTID152(S), L)
-/** @brief Paste 154 partial identifiers separated by an underscore.*/
-#define P99_PASTID154(...) P00_PASTID154(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID154(S, L) P99_PASTID2(P99_PASTID153(S), L)
-/** @brief Paste 155 partial identifiers separated by an underscore.*/
-#define P99_PASTID155(...) P00_PASTID155(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID155(S, L) P99_PASTID2(P99_PASTID154(S), L)
-/** @brief Paste 156 partial identifiers separated by an underscore.*/
-#define P99_PASTID156(...) P00_PASTID156(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID156(S, L) P99_PASTID2(P99_PASTID155(S), L)
-/** @brief Paste 157 partial identifiers separated by an underscore.*/
-#define P99_PASTID157(...) P00_PASTID157(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID157(S, L) P99_PASTID2(P99_PASTID156(S), L)
-/** @brief Paste 158 partial identifiers separated by an underscore.*/
-#define P99_PASTID158(...) P00_PASTID158(P99_ALLBUTLAST(__VA_ARGS__), P99_LAST(__VA_ARGS__))
-#define P00_PASTID158(S, L) P99_PASTID2(P99_PASTID157(S), L)
 /**
  ** @addtogroup preprocessor_text
  **
  ** @brief These macros allow the handling of small texts and tokens.
  **
  ** For the following tokens, the macro ::P99_TOK_EQ will work.
- ** - decimal numbers: 0 ... 159
+ ** - decimal numbers: 0 ... 127
  ** - keywords:
  **     @c _Bool
  **     @c _Complex
@@ -1980,38 +1683,6 @@ automatically generated, do not change manually.
 #define P00_IS_125_EQ_125(...) ,
 #define P00_IS_126_EQ_126(...) ,
 #define P00_IS_127_EQ_127(...) ,
-#define P00_IS_128_EQ_128(...) ,
-#define P00_IS_129_EQ_129(...) ,
-#define P00_IS_130_EQ_130(...) ,
-#define P00_IS_131_EQ_131(...) ,
-#define P00_IS_132_EQ_132(...) ,
-#define P00_IS_133_EQ_133(...) ,
-#define P00_IS_134_EQ_134(...) ,
-#define P00_IS_135_EQ_135(...) ,
-#define P00_IS_136_EQ_136(...) ,
-#define P00_IS_137_EQ_137(...) ,
-#define P00_IS_138_EQ_138(...) ,
-#define P00_IS_139_EQ_139(...) ,
-#define P00_IS_140_EQ_140(...) ,
-#define P00_IS_141_EQ_141(...) ,
-#define P00_IS_142_EQ_142(...) ,
-#define P00_IS_143_EQ_143(...) ,
-#define P00_IS_144_EQ_144(...) ,
-#define P00_IS_145_EQ_145(...) ,
-#define P00_IS_146_EQ_146(...) ,
-#define P00_IS_147_EQ_147(...) ,
-#define P00_IS_148_EQ_148(...) ,
-#define P00_IS_149_EQ_149(...) ,
-#define P00_IS_150_EQ_150(...) ,
-#define P00_IS_151_EQ_151(...) ,
-#define P00_IS_152_EQ_152(...) ,
-#define P00_IS_153_EQ_153(...) ,
-#define P00_IS_154_EQ_154(...) ,
-#define P00_IS_155_EQ_155(...) ,
-#define P00_IS_156_EQ_156(...) ,
-#define P00_IS_157_EQ_157(...) ,
-#define P00_IS_158_EQ_158(...) ,
-#define P00_IS_159_EQ_159(...) ,
 #define P00_IS__Bool_EQ__Bool(...) ,
 #define P00_IS__Complex_EQ__Complex(...) ,
 #define P00_IS__Exit_EQ__Exit(...) ,
@@ -2529,38 +2200,6 @@ automatically generated, do not change manually.
 #define P00_TOK_125_STARTS_125 ,
 #define P00_TOK_126_STARTS_126 ,
 #define P00_TOK_127_STARTS_127 ,
-#define P00_TOK_128_STARTS_128 ,
-#define P00_TOK_129_STARTS_129 ,
-#define P00_TOK_130_STARTS_130 ,
-#define P00_TOK_131_STARTS_131 ,
-#define P00_TOK_132_STARTS_132 ,
-#define P00_TOK_133_STARTS_133 ,
-#define P00_TOK_134_STARTS_134 ,
-#define P00_TOK_135_STARTS_135 ,
-#define P00_TOK_136_STARTS_136 ,
-#define P00_TOK_137_STARTS_137 ,
-#define P00_TOK_138_STARTS_138 ,
-#define P00_TOK_139_STARTS_139 ,
-#define P00_TOK_140_STARTS_140 ,
-#define P00_TOK_141_STARTS_141 ,
-#define P00_TOK_142_STARTS_142 ,
-#define P00_TOK_143_STARTS_143 ,
-#define P00_TOK_144_STARTS_144 ,
-#define P00_TOK_145_STARTS_145 ,
-#define P00_TOK_146_STARTS_146 ,
-#define P00_TOK_147_STARTS_147 ,
-#define P00_TOK_148_STARTS_148 ,
-#define P00_TOK_149_STARTS_149 ,
-#define P00_TOK_150_STARTS_150 ,
-#define P00_TOK_151_STARTS_151 ,
-#define P00_TOK_152_STARTS_152 ,
-#define P00_TOK_153_STARTS_153 ,
-#define P00_TOK_154_STARTS_154 ,
-#define P00_TOK_155_STARTS_155 ,
-#define P00_TOK_156_STARTS_156 ,
-#define P00_TOK_157_STARTS_157 ,
-#define P00_TOK_158_STARTS_158 ,
-#define P00_TOK_159_STARTS_159 ,
 #define P00_TOK__Bool_STARTS__Bool ,
 #define P00_TOK__Complex_STARTS__Complex ,
 #define P00_TOK__Exit_STARTS__Exit ,
@@ -3206,70 +2845,6 @@ automatically generated, do not change manually.
 #define P99_IS_EQ_126(...) P99_TOK_EQ(126, __VA_ARGS__)
 /*! @brief Test if the argument consists of exactly the token @c 127 */ 
 #define P99_IS_EQ_127(...) P99_TOK_EQ(127, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 128 */ 
-#define P99_IS_EQ_128(...) P99_TOK_EQ(128, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 129 */ 
-#define P99_IS_EQ_129(...) P99_TOK_EQ(129, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 130 */ 
-#define P99_IS_EQ_130(...) P99_TOK_EQ(130, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 131 */ 
-#define P99_IS_EQ_131(...) P99_TOK_EQ(131, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 132 */ 
-#define P99_IS_EQ_132(...) P99_TOK_EQ(132, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 133 */ 
-#define P99_IS_EQ_133(...) P99_TOK_EQ(133, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 134 */ 
-#define P99_IS_EQ_134(...) P99_TOK_EQ(134, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 135 */ 
-#define P99_IS_EQ_135(...) P99_TOK_EQ(135, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 136 */ 
-#define P99_IS_EQ_136(...) P99_TOK_EQ(136, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 137 */ 
-#define P99_IS_EQ_137(...) P99_TOK_EQ(137, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 138 */ 
-#define P99_IS_EQ_138(...) P99_TOK_EQ(138, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 139 */ 
-#define P99_IS_EQ_139(...) P99_TOK_EQ(139, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 140 */ 
-#define P99_IS_EQ_140(...) P99_TOK_EQ(140, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 141 */ 
-#define P99_IS_EQ_141(...) P99_TOK_EQ(141, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 142 */ 
-#define P99_IS_EQ_142(...) P99_TOK_EQ(142, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 143 */ 
-#define P99_IS_EQ_143(...) P99_TOK_EQ(143, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 144 */ 
-#define P99_IS_EQ_144(...) P99_TOK_EQ(144, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 145 */ 
-#define P99_IS_EQ_145(...) P99_TOK_EQ(145, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 146 */ 
-#define P99_IS_EQ_146(...) P99_TOK_EQ(146, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 147 */ 
-#define P99_IS_EQ_147(...) P99_TOK_EQ(147, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 148 */ 
-#define P99_IS_EQ_148(...) P99_TOK_EQ(148, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 149 */ 
-#define P99_IS_EQ_149(...) P99_TOK_EQ(149, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 150 */ 
-#define P99_IS_EQ_150(...) P99_TOK_EQ(150, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 151 */ 
-#define P99_IS_EQ_151(...) P99_TOK_EQ(151, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 152 */ 
-#define P99_IS_EQ_152(...) P99_TOK_EQ(152, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 153 */ 
-#define P99_IS_EQ_153(...) P99_TOK_EQ(153, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 154 */ 
-#define P99_IS_EQ_154(...) P99_TOK_EQ(154, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 155 */ 
-#define P99_IS_EQ_155(...) P99_TOK_EQ(155, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 156 */ 
-#define P99_IS_EQ_156(...) P99_TOK_EQ(156, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 157 */ 
-#define P99_IS_EQ_157(...) P99_TOK_EQ(157, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 158 */ 
-#define P99_IS_EQ_158(...) P99_TOK_EQ(158, __VA_ARGS__)
-/*! @brief Test if the argument consists of exactly the token @c 159 */ 
-#define P99_IS_EQ_159(...) P99_TOK_EQ(159, __VA_ARGS__)
 /*! @brief Test if the argument consists of exactly the token @c _Bool */ 
 #define P99_IS_EQ__Bool(...) P99_TOK_EQ(_Bool, __VA_ARGS__)
 /*! @brief Test if the argument consists of exactly the token @c _Complex */ 
@@ -4176,38 +3751,6 @@ automatically generated, do not change manually.
 #define P00_EAT_125 
 #define P00_EAT_126 
 #define P00_EAT_127 
-#define P00_EAT_128 
-#define P00_EAT_129 
-#define P00_EAT_130 
-#define P00_EAT_131 
-#define P00_EAT_132 
-#define P00_EAT_133 
-#define P00_EAT_134 
-#define P00_EAT_135 
-#define P00_EAT_136 
-#define P00_EAT_137 
-#define P00_EAT_138 
-#define P00_EAT_139 
-#define P00_EAT_140 
-#define P00_EAT_141 
-#define P00_EAT_142 
-#define P00_EAT_143 
-#define P00_EAT_144 
-#define P00_EAT_145 
-#define P00_EAT_146 
-#define P00_EAT_147 
-#define P00_EAT_148 
-#define P00_EAT_149 
-#define P00_EAT_150 
-#define P00_EAT_151 
-#define P00_EAT_152 
-#define P00_EAT_153 
-#define P00_EAT_154 
-#define P00_EAT_155 
-#define P00_EAT_156 
-#define P00_EAT_157 
-#define P00_EAT_158 
-#define P00_EAT_159 
 #define P00_EAT__Bool 
 #define P00_EAT__Complex 
 #define P00_EAT__Exit 
@@ -4725,38 +4268,6 @@ automatically generated, do not change manually.
 #define P00_TOKEN_125 ,
 #define P00_TOKEN_126 ,
 #define P00_TOKEN_127 ,
-#define P00_TOKEN_128 ,
-#define P00_TOKEN_129 ,
-#define P00_TOKEN_130 ,
-#define P00_TOKEN_131 ,
-#define P00_TOKEN_132 ,
-#define P00_TOKEN_133 ,
-#define P00_TOKEN_134 ,
-#define P00_TOKEN_135 ,
-#define P00_TOKEN_136 ,
-#define P00_TOKEN_137 ,
-#define P00_TOKEN_138 ,
-#define P00_TOKEN_139 ,
-#define P00_TOKEN_140 ,
-#define P00_TOKEN_141 ,
-#define P00_TOKEN_142 ,
-#define P00_TOKEN_143 ,
-#define P00_TOKEN_144 ,
-#define P00_TOKEN_145 ,
-#define P00_TOKEN_146 ,
-#define P00_TOKEN_147 ,
-#define P00_TOKEN_148 ,
-#define P00_TOKEN_149 ,
-#define P00_TOKEN_150 ,
-#define P00_TOKEN_151 ,
-#define P00_TOKEN_152 ,
-#define P00_TOKEN_153 ,
-#define P00_TOKEN_154 ,
-#define P00_TOKEN_155 ,
-#define P00_TOKEN_156 ,
-#define P00_TOKEN_157 ,
-#define P00_TOKEN_158 ,
-#define P00_TOKEN_159 ,
 #define P00_TOKEN__Bool ,
 #define P00_TOKEN__Complex ,
 #define P00_TOKEN__Exit ,
@@ -6215,7 +5726,7 @@ automatically generated, do not change manually.
  ** <tr><td>ld</td><td><code>long double</code></td><td></td><td></td><td></td><td></td></tr>
  ** <tr><td>ldc</td><td><code>long double _Complex</code></td><td></td><td></td><td></td><td></td></tr>
  ** <tr><td>t</td><td><code>ptrdiff_t</code></td><td></td><td></td><td></td><td></td></tr>
- ** <tr><td></td><td><code>signed</code></td><td>1</td><td>i</td><td>u</td><td>3</td></tr>
+ ** <tr><td>i</td><td><code>signed</code></td><td>1</td><td>i</td><td>u</td><td>3</td></tr>
  ** <tr><td>hh</td><td><code>signed char</code></td><td>1</td><td>hh</td><td>uhh</td><td>1</td></tr>
  ** <tr><td>l</td><td><code>signed long</code></td><td>1</td><td>l</td><td>ul</td><td>4</td></tr>
  ** <tr><td>ll</td><td><code>signed long long</code></td><td>1</td><td>ll</td><td>ull</td><td>5</td></tr>
@@ -6228,7 +5739,7 @@ automatically generated, do not change manually.
  ** <tr><td>u8</td><td><code>uint_least8_t</code></td><td></td><td></td><td></td><td></td></tr>
  ** <tr><td>uj</td><td><code>uintmax_t</code></td><td></td><td></td><td></td><td></td></tr>
  ** <tr><td>u</td><td><code>unsigned</code></td><td>0</td><td>i</td><td>u</td><td>3</td></tr>
- ** <tr><td>uhh</td><td><code>unsigned char</code></td><td>0</td><td>hh</td><td>uhh</td><td>1</td></tr>
+ ** <tr><td>uc</td><td><code>unsigned char</code></td><td></td><td></td><td></td><td></td></tr>
  ** <tr><td>ul</td><td><code>unsigned long</code></td><td>0</td><td>l</td><td>ul</td><td>4</td></tr>
  ** <tr><td>ull</td><td><code>unsigned long long</code></td><td>0</td><td>ll</td><td>ull</td><td>5</td></tr>
  ** <tr><td>uh</td><td><code>unsigned short</code></td><td>0</td><td>h</td><td>uh</td><td>2</td></tr>
@@ -6525,38 +6036,6 @@ automatically generated, do not change manually.
 #define P00_PRED_126 125
 #define P00_PRED_127 126
 #define P00_PRED_128 127
-#define P00_PRED_129 128
-#define P00_PRED_130 129
-#define P00_PRED_131 130
-#define P00_PRED_132 131
-#define P00_PRED_133 132
-#define P00_PRED_134 133
-#define P00_PRED_135 134
-#define P00_PRED_136 135
-#define P00_PRED_137 136
-#define P00_PRED_138 137
-#define P00_PRED_139 138
-#define P00_PRED_140 139
-#define P00_PRED_141 140
-#define P00_PRED_142 141
-#define P00_PRED_143 142
-#define P00_PRED_144 143
-#define P00_PRED_145 144
-#define P00_PRED_146 145
-#define P00_PRED_147 146
-#define P00_PRED_148 147
-#define P00_PRED_149 148
-#define P00_PRED_150 149
-#define P00_PRED_151 150
-#define P00_PRED_152 151
-#define P00_PRED_153 152
-#define P00_PRED_154 153
-#define P00_PRED_155 154
-#define P00_PRED_156 155
-#define P00_PRED_157 156
-#define P00_PRED_158 157
-#define P00_PRED_159 158
-#define P00_PRED_160 159
 #define P00_PRED_minus_0 minus_1
 #define P00_PRED_minus_1 minus_2
 #define P00_PRED_minus_2 minus_3
@@ -6685,38 +6164,6 @@ automatically generated, do not change manually.
 #define P00_PRED_minus_125 minus_126
 #define P00_PRED_minus_126 minus_127
 #define P00_PRED_minus_127 minus_128
-#define P00_PRED_minus_128 minus_129
-#define P00_PRED_minus_129 minus_130
-#define P00_PRED_minus_130 minus_131
-#define P00_PRED_minus_131 minus_132
-#define P00_PRED_minus_132 minus_133
-#define P00_PRED_minus_133 minus_134
-#define P00_PRED_minus_134 minus_135
-#define P00_PRED_minus_135 minus_136
-#define P00_PRED_minus_136 minus_137
-#define P00_PRED_minus_137 minus_138
-#define P00_PRED_minus_138 minus_139
-#define P00_PRED_minus_139 minus_140
-#define P00_PRED_minus_140 minus_141
-#define P00_PRED_minus_141 minus_142
-#define P00_PRED_minus_142 minus_143
-#define P00_PRED_minus_143 minus_144
-#define P00_PRED_minus_144 minus_145
-#define P00_PRED_minus_145 minus_146
-#define P00_PRED_minus_146 minus_147
-#define P00_PRED_minus_147 minus_148
-#define P00_PRED_minus_148 minus_149
-#define P00_PRED_minus_149 minus_150
-#define P00_PRED_minus_150 minus_151
-#define P00_PRED_minus_151 minus_152
-#define P00_PRED_minus_152 minus_153
-#define P00_PRED_minus_153 minus_154
-#define P00_PRED_minus_154 minus_155
-#define P00_PRED_minus_155 minus_156
-#define P00_PRED_minus_156 minus_157
-#define P00_PRED_minus_157 minus_158
-#define P00_PRED_minus_158 minus_159
-#define P00_PRED_minus_159 minus_160
 #define P00_minus_minus_0 0
 #define P00_minus_minus_1 1
 #define P00_minus_minus_2 2
@@ -6845,38 +6292,6 @@ automatically generated, do not change manually.
 #define P00_minus_minus_125 125
 #define P00_minus_minus_126 126
 #define P00_minus_minus_127 127
-#define P00_minus_minus_128 128
-#define P00_minus_minus_129 129
-#define P00_minus_minus_130 130
-#define P00_minus_minus_131 131
-#define P00_minus_minus_132 132
-#define P00_minus_minus_133 133
-#define P00_minus_minus_134 134
-#define P00_minus_minus_135 135
-#define P00_minus_minus_136 136
-#define P00_minus_minus_137 137
-#define P00_minus_minus_138 138
-#define P00_minus_minus_139 139
-#define P00_minus_minus_140 140
-#define P00_minus_minus_141 141
-#define P00_minus_minus_142 142
-#define P00_minus_minus_143 143
-#define P00_minus_minus_144 144
-#define P00_minus_minus_145 145
-#define P00_minus_minus_146 146
-#define P00_minus_minus_147 147
-#define P00_minus_minus_148 148
-#define P00_minus_minus_149 149
-#define P00_minus_minus_150 150
-#define P00_minus_minus_151 151
-#define P00_minus_minus_152 152
-#define P00_minus_minus_153 153
-#define P00_minus_minus_154 154
-#define P00_minus_minus_155 155
-#define P00_minus_minus_156 156
-#define P00_minus_minus_157 157
-#define P00_minus_minus_158 158
-#define P00_minus_minus_159 159
 #define P00_IS_0_GE_0 ,
 #define P00_IS_1_GE_0 ,
 #define P00_IS_2_GE_0 ,
@@ -7005,38 +6420,6 @@ automatically generated, do not change manually.
 #define P00_IS_125_GE_0 ,
 #define P00_IS_126_GE_0 ,
 #define P00_IS_127_GE_0 ,
-#define P00_IS_128_GE_0 ,
-#define P00_IS_129_GE_0 ,
-#define P00_IS_130_GE_0 ,
-#define P00_IS_131_GE_0 ,
-#define P00_IS_132_GE_0 ,
-#define P00_IS_133_GE_0 ,
-#define P00_IS_134_GE_0 ,
-#define P00_IS_135_GE_0 ,
-#define P00_IS_136_GE_0 ,
-#define P00_IS_137_GE_0 ,
-#define P00_IS_138_GE_0 ,
-#define P00_IS_139_GE_0 ,
-#define P00_IS_140_GE_0 ,
-#define P00_IS_141_GE_0 ,
-#define P00_IS_142_GE_0 ,
-#define P00_IS_143_GE_0 ,
-#define P00_IS_144_GE_0 ,
-#define P00_IS_145_GE_0 ,
-#define P00_IS_146_GE_0 ,
-#define P00_IS_147_GE_0 ,
-#define P00_IS_148_GE_0 ,
-#define P00_IS_149_GE_0 ,
-#define P00_IS_150_GE_0 ,
-#define P00_IS_151_GE_0 ,
-#define P00_IS_152_GE_0 ,
-#define P00_IS_153_GE_0 ,
-#define P00_IS_154_GE_0 ,
-#define P00_IS_155_GE_0 ,
-#define P00_IS_156_GE_0 ,
-#define P00_IS_157_GE_0 ,
-#define P00_IS_158_GE_0 ,
-#define P00_IS_159_GE_0 ,
 #define P00_dec_eval_0 0
 #define P00_dec_eval_1 1
 #define P00_dec_eval_2 2
@@ -7165,38 +6548,6 @@ automatically generated, do not change manually.
 #define P00_dec_eval_125 125
 #define P00_dec_eval_126 126
 #define P00_dec_eval_127 127
-#define P00_dec_eval_128 128
-#define P00_dec_eval_129 129
-#define P00_dec_eval_130 130
-#define P00_dec_eval_131 131
-#define P00_dec_eval_132 132
-#define P00_dec_eval_133 133
-#define P00_dec_eval_134 134
-#define P00_dec_eval_135 135
-#define P00_dec_eval_136 136
-#define P00_dec_eval_137 137
-#define P00_dec_eval_138 138
-#define P00_dec_eval_139 139
-#define P00_dec_eval_140 140
-#define P00_dec_eval_141 141
-#define P00_dec_eval_142 142
-#define P00_dec_eval_143 143
-#define P00_dec_eval_144 144
-#define P00_dec_eval_145 145
-#define P00_dec_eval_146 146
-#define P00_dec_eval_147 147
-#define P00_dec_eval_148 148
-#define P00_dec_eval_149 149
-#define P00_dec_eval_150 150
-#define P00_dec_eval_151 151
-#define P00_dec_eval_152 152
-#define P00_dec_eval_153 153
-#define P00_dec_eval_154 154
-#define P00_dec_eval_155 155
-#define P00_dec_eval_156 156
-#define P00_dec_eval_157 157
-#define P00_dec_eval_158 158
-#define P00_dec_eval_159 159
 #define P00_dec_eval_minus_0 0
 #define P00_dec_eval_minus_1 -1
 #define P00_dec_eval_minus_2 -2
@@ -7325,38 +6676,6 @@ automatically generated, do not change manually.
 #define P00_dec_eval_minus_125 -125
 #define P00_dec_eval_minus_126 -126
 #define P00_dec_eval_minus_127 -127
-#define P00_dec_eval_minus_128 -128
-#define P00_dec_eval_minus_129 -129
-#define P00_dec_eval_minus_130 -130
-#define P00_dec_eval_minus_131 -131
-#define P00_dec_eval_minus_132 -132
-#define P00_dec_eval_minus_133 -133
-#define P00_dec_eval_minus_134 -134
-#define P00_dec_eval_minus_135 -135
-#define P00_dec_eval_minus_136 -136
-#define P00_dec_eval_minus_137 -137
-#define P00_dec_eval_minus_138 -138
-#define P00_dec_eval_minus_139 -139
-#define P00_dec_eval_minus_140 -140
-#define P00_dec_eval_minus_141 -141
-#define P00_dec_eval_minus_142 -142
-#define P00_dec_eval_minus_143 -143
-#define P00_dec_eval_minus_144 -144
-#define P00_dec_eval_minus_145 -145
-#define P00_dec_eval_minus_146 -146
-#define P00_dec_eval_minus_147 -147
-#define P00_dec_eval_minus_148 -148
-#define P00_dec_eval_minus_149 -149
-#define P00_dec_eval_minus_150 -150
-#define P00_dec_eval_minus_151 -151
-#define P00_dec_eval_minus_152 -152
-#define P00_dec_eval_minus_153 -153
-#define P00_dec_eval_minus_154 -154
-#define P00_dec_eval_minus_155 -155
-#define P00_dec_eval_minus_156 -156
-#define P00_dec_eval_minus_157 -157
-#define P00_dec_eval_minus_158 -158
-#define P00_dec_eval_minus_159 -159
 #define P00_DUPL_2(...) __VA_ARGS__, P00_DUPL_1(__VA_ARGS__)
 #define P00_DUPL_3(...) __VA_ARGS__, P00_DUPL_2(__VA_ARGS__)
 #define P00_DUPL_4(...) __VA_ARGS__, P00_DUPL_3(__VA_ARGS__)
@@ -7483,38 +6802,6 @@ automatically generated, do not change manually.
 #define P00_DUPL_125(...) __VA_ARGS__, P00_DUPL_124(__VA_ARGS__)
 #define P00_DUPL_126(...) __VA_ARGS__, P00_DUPL_125(__VA_ARGS__)
 #define P00_DUPL_127(...) __VA_ARGS__, P00_DUPL_126(__VA_ARGS__)
-#define P00_DUPL_128(...) __VA_ARGS__, P00_DUPL_127(__VA_ARGS__)
-#define P00_DUPL_129(...) __VA_ARGS__, P00_DUPL_128(__VA_ARGS__)
-#define P00_DUPL_130(...) __VA_ARGS__, P00_DUPL_129(__VA_ARGS__)
-#define P00_DUPL_131(...) __VA_ARGS__, P00_DUPL_130(__VA_ARGS__)
-#define P00_DUPL_132(...) __VA_ARGS__, P00_DUPL_131(__VA_ARGS__)
-#define P00_DUPL_133(...) __VA_ARGS__, P00_DUPL_132(__VA_ARGS__)
-#define P00_DUPL_134(...) __VA_ARGS__, P00_DUPL_133(__VA_ARGS__)
-#define P00_DUPL_135(...) __VA_ARGS__, P00_DUPL_134(__VA_ARGS__)
-#define P00_DUPL_136(...) __VA_ARGS__, P00_DUPL_135(__VA_ARGS__)
-#define P00_DUPL_137(...) __VA_ARGS__, P00_DUPL_136(__VA_ARGS__)
-#define P00_DUPL_138(...) __VA_ARGS__, P00_DUPL_137(__VA_ARGS__)
-#define P00_DUPL_139(...) __VA_ARGS__, P00_DUPL_138(__VA_ARGS__)
-#define P00_DUPL_140(...) __VA_ARGS__, P00_DUPL_139(__VA_ARGS__)
-#define P00_DUPL_141(...) __VA_ARGS__, P00_DUPL_140(__VA_ARGS__)
-#define P00_DUPL_142(...) __VA_ARGS__, P00_DUPL_141(__VA_ARGS__)
-#define P00_DUPL_143(...) __VA_ARGS__, P00_DUPL_142(__VA_ARGS__)
-#define P00_DUPL_144(...) __VA_ARGS__, P00_DUPL_143(__VA_ARGS__)
-#define P00_DUPL_145(...) __VA_ARGS__, P00_DUPL_144(__VA_ARGS__)
-#define P00_DUPL_146(...) __VA_ARGS__, P00_DUPL_145(__VA_ARGS__)
-#define P00_DUPL_147(...) __VA_ARGS__, P00_DUPL_146(__VA_ARGS__)
-#define P00_DUPL_148(...) __VA_ARGS__, P00_DUPL_147(__VA_ARGS__)
-#define P00_DUPL_149(...) __VA_ARGS__, P00_DUPL_148(__VA_ARGS__)
-#define P00_DUPL_150(...) __VA_ARGS__, P00_DUPL_149(__VA_ARGS__)
-#define P00_DUPL_151(...) __VA_ARGS__, P00_DUPL_150(__VA_ARGS__)
-#define P00_DUPL_152(...) __VA_ARGS__, P00_DUPL_151(__VA_ARGS__)
-#define P00_DUPL_153(...) __VA_ARGS__, P00_DUPL_152(__VA_ARGS__)
-#define P00_DUPL_154(...) __VA_ARGS__, P00_DUPL_153(__VA_ARGS__)
-#define P00_DUPL_155(...) __VA_ARGS__, P00_DUPL_154(__VA_ARGS__)
-#define P00_DUPL_156(...) __VA_ARGS__, P00_DUPL_155(__VA_ARGS__)
-#define P00_DUPL_157(...) __VA_ARGS__, P00_DUPL_156(__VA_ARGS__)
-#define P00_DUPL_158(...) __VA_ARGS__, P00_DUPL_157(__VA_ARGS__)
-#define P00_DUPL_159(...) __VA_ARGS__, P00_DUPL_158(__VA_ARGS__)
 #define P00_REP_2(...) P00_REP_1(__VA_ARGS__)__VA_ARGS__
 #define P00_REP_3(...) P00_REP_2(__VA_ARGS__)__VA_ARGS__
 #define P00_REP_4(...) P00_REP_3(__VA_ARGS__)__VA_ARGS__
@@ -7641,38 +6928,6 @@ automatically generated, do not change manually.
 #define P00_REP_125(...) P00_REP_124(__VA_ARGS__)__VA_ARGS__
 #define P00_REP_126(...) P00_REP_125(__VA_ARGS__)__VA_ARGS__
 #define P00_REP_127(...) P00_REP_126(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_128(...) P00_REP_127(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_129(...) P00_REP_128(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_130(...) P00_REP_129(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_131(...) P00_REP_130(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_132(...) P00_REP_131(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_133(...) P00_REP_132(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_134(...) P00_REP_133(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_135(...) P00_REP_134(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_136(...) P00_REP_135(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_137(...) P00_REP_136(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_138(...) P00_REP_137(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_139(...) P00_REP_138(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_140(...) P00_REP_139(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_141(...) P00_REP_140(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_142(...) P00_REP_141(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_143(...) P00_REP_142(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_144(...) P00_REP_143(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_145(...) P00_REP_144(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_146(...) P00_REP_145(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_147(...) P00_REP_146(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_148(...) P00_REP_147(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_149(...) P00_REP_148(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_150(...) P00_REP_149(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_151(...) P00_REP_150(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_152(...) P00_REP_151(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_153(...) P00_REP_152(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_154(...) P00_REP_153(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_155(...) P00_REP_154(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_156(...) P00_REP_155(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_157(...) P00_REP_156(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_158(...) P00_REP_157(__VA_ARGS__)__VA_ARGS__
-#define P00_REP_159(...) P00_REP_158(__VA_ARGS__)__VA_ARGS__
 #define P00_BRACKET_2(X, ...) [X]P00_BRACKET_1(__VA_ARGS__)
 #define P00_BRACKET_3(X, ...) [X]P00_BRACKET_2(__VA_ARGS__)
 #define P00_BRACKET_4(X, ...) [X]P00_BRACKET_3(__VA_ARGS__)
@@ -7799,38 +7054,6 @@ automatically generated, do not change manually.
 #define P00_BRACKET_125(X, ...) [X]P00_BRACKET_124(__VA_ARGS__)
 #define P00_BRACKET_126(X, ...) [X]P00_BRACKET_125(__VA_ARGS__)
 #define P00_BRACKET_127(X, ...) [X]P00_BRACKET_126(__VA_ARGS__)
-#define P00_BRACKET_128(X, ...) [X]P00_BRACKET_127(__VA_ARGS__)
-#define P00_BRACKET_129(X, ...) [X]P00_BRACKET_128(__VA_ARGS__)
-#define P00_BRACKET_130(X, ...) [X]P00_BRACKET_129(__VA_ARGS__)
-#define P00_BRACKET_131(X, ...) [X]P00_BRACKET_130(__VA_ARGS__)
-#define P00_BRACKET_132(X, ...) [X]P00_BRACKET_131(__VA_ARGS__)
-#define P00_BRACKET_133(X, ...) [X]P00_BRACKET_132(__VA_ARGS__)
-#define P00_BRACKET_134(X, ...) [X]P00_BRACKET_133(__VA_ARGS__)
-#define P00_BRACKET_135(X, ...) [X]P00_BRACKET_134(__VA_ARGS__)
-#define P00_BRACKET_136(X, ...) [X]P00_BRACKET_135(__VA_ARGS__)
-#define P00_BRACKET_137(X, ...) [X]P00_BRACKET_136(__VA_ARGS__)
-#define P00_BRACKET_138(X, ...) [X]P00_BRACKET_137(__VA_ARGS__)
-#define P00_BRACKET_139(X, ...) [X]P00_BRACKET_138(__VA_ARGS__)
-#define P00_BRACKET_140(X, ...) [X]P00_BRACKET_139(__VA_ARGS__)
-#define P00_BRACKET_141(X, ...) [X]P00_BRACKET_140(__VA_ARGS__)
-#define P00_BRACKET_142(X, ...) [X]P00_BRACKET_141(__VA_ARGS__)
-#define P00_BRACKET_143(X, ...) [X]P00_BRACKET_142(__VA_ARGS__)
-#define P00_BRACKET_144(X, ...) [X]P00_BRACKET_143(__VA_ARGS__)
-#define P00_BRACKET_145(X, ...) [X]P00_BRACKET_144(__VA_ARGS__)
-#define P00_BRACKET_146(X, ...) [X]P00_BRACKET_145(__VA_ARGS__)
-#define P00_BRACKET_147(X, ...) [X]P00_BRACKET_146(__VA_ARGS__)
-#define P00_BRACKET_148(X, ...) [X]P00_BRACKET_147(__VA_ARGS__)
-#define P00_BRACKET_149(X, ...) [X]P00_BRACKET_148(__VA_ARGS__)
-#define P00_BRACKET_150(X, ...) [X]P00_BRACKET_149(__VA_ARGS__)
-#define P00_BRACKET_151(X, ...) [X]P00_BRACKET_150(__VA_ARGS__)
-#define P00_BRACKET_152(X, ...) [X]P00_BRACKET_151(__VA_ARGS__)
-#define P00_BRACKET_153(X, ...) [X]P00_BRACKET_152(__VA_ARGS__)
-#define P00_BRACKET_154(X, ...) [X]P00_BRACKET_153(__VA_ARGS__)
-#define P00_BRACKET_155(X, ...) [X]P00_BRACKET_154(__VA_ARGS__)
-#define P00_BRACKET_156(X, ...) [X]P00_BRACKET_155(__VA_ARGS__)
-#define P00_BRACKET_157(X, ...) [X]P00_BRACKET_156(__VA_ARGS__)
-#define P00_BRACKET_158(X, ...) [X]P00_BRACKET_157(__VA_ARGS__)
-#define P00_BRACKET_159(X, ...) [X]P00_BRACKET_158(__VA_ARGS__)
 #define P00_BRACE_2(X, ...) {X}, P00_BRACE_1(__VA_ARGS__)
 #define P00_BRACE_3(X, ...) {X}, P00_BRACE_2(__VA_ARGS__)
 #define P00_BRACE_4(X, ...) {X}, P00_BRACE_3(__VA_ARGS__)
@@ -7957,38 +7180,6 @@ automatically generated, do not change manually.
 #define P00_BRACE_125(X, ...) {X}, P00_BRACE_124(__VA_ARGS__)
 #define P00_BRACE_126(X, ...) {X}, P00_BRACE_125(__VA_ARGS__)
 #define P00_BRACE_127(X, ...) {X}, P00_BRACE_126(__VA_ARGS__)
-#define P00_BRACE_128(X, ...) {X}, P00_BRACE_127(__VA_ARGS__)
-#define P00_BRACE_129(X, ...) {X}, P00_BRACE_128(__VA_ARGS__)
-#define P00_BRACE_130(X, ...) {X}, P00_BRACE_129(__VA_ARGS__)
-#define P00_BRACE_131(X, ...) {X}, P00_BRACE_130(__VA_ARGS__)
-#define P00_BRACE_132(X, ...) {X}, P00_BRACE_131(__VA_ARGS__)
-#define P00_BRACE_133(X, ...) {X}, P00_BRACE_132(__VA_ARGS__)
-#define P00_BRACE_134(X, ...) {X}, P00_BRACE_133(__VA_ARGS__)
-#define P00_BRACE_135(X, ...) {X}, P00_BRACE_134(__VA_ARGS__)
-#define P00_BRACE_136(X, ...) {X}, P00_BRACE_135(__VA_ARGS__)
-#define P00_BRACE_137(X, ...) {X}, P00_BRACE_136(__VA_ARGS__)
-#define P00_BRACE_138(X, ...) {X}, P00_BRACE_137(__VA_ARGS__)
-#define P00_BRACE_139(X, ...) {X}, P00_BRACE_138(__VA_ARGS__)
-#define P00_BRACE_140(X, ...) {X}, P00_BRACE_139(__VA_ARGS__)
-#define P00_BRACE_141(X, ...) {X}, P00_BRACE_140(__VA_ARGS__)
-#define P00_BRACE_142(X, ...) {X}, P00_BRACE_141(__VA_ARGS__)
-#define P00_BRACE_143(X, ...) {X}, P00_BRACE_142(__VA_ARGS__)
-#define P00_BRACE_144(X, ...) {X}, P00_BRACE_143(__VA_ARGS__)
-#define P00_BRACE_145(X, ...) {X}, P00_BRACE_144(__VA_ARGS__)
-#define P00_BRACE_146(X, ...) {X}, P00_BRACE_145(__VA_ARGS__)
-#define P00_BRACE_147(X, ...) {X}, P00_BRACE_146(__VA_ARGS__)
-#define P00_BRACE_148(X, ...) {X}, P00_BRACE_147(__VA_ARGS__)
-#define P00_BRACE_149(X, ...) {X}, P00_BRACE_148(__VA_ARGS__)
-#define P00_BRACE_150(X, ...) {X}, P00_BRACE_149(__VA_ARGS__)
-#define P00_BRACE_151(X, ...) {X}, P00_BRACE_150(__VA_ARGS__)
-#define P00_BRACE_152(X, ...) {X}, P00_BRACE_151(__VA_ARGS__)
-#define P00_BRACE_153(X, ...) {X}, P00_BRACE_152(__VA_ARGS__)
-#define P00_BRACE_154(X, ...) {X}, P00_BRACE_153(__VA_ARGS__)
-#define P00_BRACE_155(X, ...) {X}, P00_BRACE_154(__VA_ARGS__)
-#define P00_BRACE_156(X, ...) {X}, P00_BRACE_155(__VA_ARGS__)
-#define P00_BRACE_157(X, ...) {X}, P00_BRACE_156(__VA_ARGS__)
-#define P00_BRACE_158(X, ...) {X}, P00_BRACE_157(__VA_ARGS__)
-#define P00_BRACE_159(X, ...) {X}, P00_BRACE_158(__VA_ARGS__)
 #define P00_PAREN_2(X, ...) (X)P00_PAREN_1(__VA_ARGS__)
 #define P00_PAREN_3(X, ...) (X)P00_PAREN_2(__VA_ARGS__)
 #define P00_PAREN_4(X, ...) (X)P00_PAREN_3(__VA_ARGS__)
@@ -8115,38 +7306,6 @@ automatically generated, do not change manually.
 #define P00_PAREN_125(X, ...) (X)P00_PAREN_124(__VA_ARGS__)
 #define P00_PAREN_126(X, ...) (X)P00_PAREN_125(__VA_ARGS__)
 #define P00_PAREN_127(X, ...) (X)P00_PAREN_126(__VA_ARGS__)
-#define P00_PAREN_128(X, ...) (X)P00_PAREN_127(__VA_ARGS__)
-#define P00_PAREN_129(X, ...) (X)P00_PAREN_128(__VA_ARGS__)
-#define P00_PAREN_130(X, ...) (X)P00_PAREN_129(__VA_ARGS__)
-#define P00_PAREN_131(X, ...) (X)P00_PAREN_130(__VA_ARGS__)
-#define P00_PAREN_132(X, ...) (X)P00_PAREN_131(__VA_ARGS__)
-#define P00_PAREN_133(X, ...) (X)P00_PAREN_132(__VA_ARGS__)
-#define P00_PAREN_134(X, ...) (X)P00_PAREN_133(__VA_ARGS__)
-#define P00_PAREN_135(X, ...) (X)P00_PAREN_134(__VA_ARGS__)
-#define P00_PAREN_136(X, ...) (X)P00_PAREN_135(__VA_ARGS__)
-#define P00_PAREN_137(X, ...) (X)P00_PAREN_136(__VA_ARGS__)
-#define P00_PAREN_138(X, ...) (X)P00_PAREN_137(__VA_ARGS__)
-#define P00_PAREN_139(X, ...) (X)P00_PAREN_138(__VA_ARGS__)
-#define P00_PAREN_140(X, ...) (X)P00_PAREN_139(__VA_ARGS__)
-#define P00_PAREN_141(X, ...) (X)P00_PAREN_140(__VA_ARGS__)
-#define P00_PAREN_142(X, ...) (X)P00_PAREN_141(__VA_ARGS__)
-#define P00_PAREN_143(X, ...) (X)P00_PAREN_142(__VA_ARGS__)
-#define P00_PAREN_144(X, ...) (X)P00_PAREN_143(__VA_ARGS__)
-#define P00_PAREN_145(X, ...) (X)P00_PAREN_144(__VA_ARGS__)
-#define P00_PAREN_146(X, ...) (X)P00_PAREN_145(__VA_ARGS__)
-#define P00_PAREN_147(X, ...) (X)P00_PAREN_146(__VA_ARGS__)
-#define P00_PAREN_148(X, ...) (X)P00_PAREN_147(__VA_ARGS__)
-#define P00_PAREN_149(X, ...) (X)P00_PAREN_148(__VA_ARGS__)
-#define P00_PAREN_150(X, ...) (X)P00_PAREN_149(__VA_ARGS__)
-#define P00_PAREN_151(X, ...) (X)P00_PAREN_150(__VA_ARGS__)
-#define P00_PAREN_152(X, ...) (X)P00_PAREN_151(__VA_ARGS__)
-#define P00_PAREN_153(X, ...) (X)P00_PAREN_152(__VA_ARGS__)
-#define P00_PAREN_154(X, ...) (X)P00_PAREN_153(__VA_ARGS__)
-#define P00_PAREN_155(X, ...) (X)P00_PAREN_154(__VA_ARGS__)
-#define P00_PAREN_156(X, ...) (X)P00_PAREN_155(__VA_ARGS__)
-#define P00_PAREN_157(X, ...) (X)P00_PAREN_156(__VA_ARGS__)
-#define P00_PAREN_158(X, ...) (X)P00_PAREN_157(__VA_ARGS__)
-#define P00_PAREN_159(X, ...) (X)P00_PAREN_158(__VA_ARGS__)
 #define P00_MAP_2(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_1(MAC, SEP, __VA_ARGS__)
 #define P00_MAP_3(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_2(MAC, SEP, __VA_ARGS__)
 #define P00_MAP_4(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_3(MAC, SEP, __VA_ARGS__)
@@ -8273,38 +7432,6 @@ automatically generated, do not change manually.
 #define P00_MAP_125(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_124(MAC, SEP, __VA_ARGS__)
 #define P00_MAP_126(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_125(MAC, SEP, __VA_ARGS__)
 #define P00_MAP_127(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_126(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_128(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_127(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_129(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_128(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_130(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_129(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_131(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_130(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_132(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_131(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_133(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_132(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_134(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_133(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_135(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_134(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_136(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_135(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_137(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_136(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_138(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_137(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_139(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_138(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_140(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_139(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_141(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_140(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_142(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_141(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_143(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_142(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_144(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_143(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_145(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_144(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_146(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_145(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_147(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_146(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_148(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_147(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_149(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_148(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_150(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_149(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_151(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_150(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_152(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_151(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_153(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_152(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_154(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_153(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_155(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_154(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_156(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_155(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_157(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_156(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_158(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_157(MAC, SEP, __VA_ARGS__)
-#define P00_MAP_159(MAC, SEP, X, ...) MAC(X)P00_ROBUST SEP P00_MAP_158(MAC, SEP, __VA_ARGS__)
 #define P00_FOR2(NAME, OP, FUNC, ...) \
  OP(NAME, 1, P00_FOR1(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 1))
 #define P00_FOR3(NAME, OP, FUNC, ...) \
@@ -8555,70 +7682,6 @@ automatically generated, do not change manually.
  OP(NAME, 124, P00_FOR124(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 124))
 #define P00_FOR126(NAME, OP, FUNC, ...) \
  OP(NAME, 125, P00_FOR125(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 125))
-#define P00_FOR127(NAME, OP, FUNC, ...) \
- OP(NAME, 126, P00_FOR126(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 126))
-#define P00_FOR128(NAME, OP, FUNC, ...) \
- OP(NAME, 127, P00_FOR127(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 127))
-#define P00_FOR129(NAME, OP, FUNC, ...) \
- OP(NAME, 128, P00_FOR128(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 128))
-#define P00_FOR130(NAME, OP, FUNC, ...) \
- OP(NAME, 129, P00_FOR129(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 129))
-#define P00_FOR131(NAME, OP, FUNC, ...) \
- OP(NAME, 130, P00_FOR130(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 130))
-#define P00_FOR132(NAME, OP, FUNC, ...) \
- OP(NAME, 131, P00_FOR131(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 131))
-#define P00_FOR133(NAME, OP, FUNC, ...) \
- OP(NAME, 132, P00_FOR132(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 132))
-#define P00_FOR134(NAME, OP, FUNC, ...) \
- OP(NAME, 133, P00_FOR133(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 133))
-#define P00_FOR135(NAME, OP, FUNC, ...) \
- OP(NAME, 134, P00_FOR134(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 134))
-#define P00_FOR136(NAME, OP, FUNC, ...) \
- OP(NAME, 135, P00_FOR135(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 135))
-#define P00_FOR137(NAME, OP, FUNC, ...) \
- OP(NAME, 136, P00_FOR136(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 136))
-#define P00_FOR138(NAME, OP, FUNC, ...) \
- OP(NAME, 137, P00_FOR137(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 137))
-#define P00_FOR139(NAME, OP, FUNC, ...) \
- OP(NAME, 138, P00_FOR138(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 138))
-#define P00_FOR140(NAME, OP, FUNC, ...) \
- OP(NAME, 139, P00_FOR139(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 139))
-#define P00_FOR141(NAME, OP, FUNC, ...) \
- OP(NAME, 140, P00_FOR140(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 140))
-#define P00_FOR142(NAME, OP, FUNC, ...) \
- OP(NAME, 141, P00_FOR141(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 141))
-#define P00_FOR143(NAME, OP, FUNC, ...) \
- OP(NAME, 142, P00_FOR142(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 142))
-#define P00_FOR144(NAME, OP, FUNC, ...) \
- OP(NAME, 143, P00_FOR143(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 143))
-#define P00_FOR145(NAME, OP, FUNC, ...) \
- OP(NAME, 144, P00_FOR144(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 144))
-#define P00_FOR146(NAME, OP, FUNC, ...) \
- OP(NAME, 145, P00_FOR145(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 145))
-#define P00_FOR147(NAME, OP, FUNC, ...) \
- OP(NAME, 146, P00_FOR146(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 146))
-#define P00_FOR148(NAME, OP, FUNC, ...) \
- OP(NAME, 147, P00_FOR147(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 147))
-#define P00_FOR149(NAME, OP, FUNC, ...) \
- OP(NAME, 148, P00_FOR148(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 148))
-#define P00_FOR150(NAME, OP, FUNC, ...) \
- OP(NAME, 149, P00_FOR149(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 149))
-#define P00_FOR151(NAME, OP, FUNC, ...) \
- OP(NAME, 150, P00_FOR150(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 150))
-#define P00_FOR152(NAME, OP, FUNC, ...) \
- OP(NAME, 151, P00_FOR151(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 151))
-#define P00_FOR153(NAME, OP, FUNC, ...) \
- OP(NAME, 152, P00_FOR152(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 152))
-#define P00_FOR154(NAME, OP, FUNC, ...) \
- OP(NAME, 153, P00_FOR153(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 153))
-#define P00_FOR155(NAME, OP, FUNC, ...) \
- OP(NAME, 154, P00_FOR154(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 154))
-#define P00_FOR156(NAME, OP, FUNC, ...) \
- OP(NAME, 155, P00_FOR155(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 155))
-#define P00_FOR157(NAME, OP, FUNC, ...) \
- OP(NAME, 156, P00_FOR156(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 156))
-#define P00_FOR158(NAME, OP, FUNC, ...) \
- OP(NAME, 157, P00_FOR157(NAME, OP, FUNC, P99_ALLBUTLAST(__VA_ARGS__)), FUNC(NAME, P99_LAST(__VA_ARGS__), 157))
 
 /* The preprocessor always computes with the precision of uintmax_t */
 /* so for the preprocessor this is equivalent to UINITMAX_MAX       */
@@ -10107,6 +9170,16 @@ automatically generated, do not change manually.
 # define P99_COMPILER_VERSION "metrowerks "
 # undef P00_COMPILER_PRAGMA_METROWERKS
 # define P00_COMPILER_PRAGMA_METROWERKS(...) _Pragma(__VA_ARGS__)
+#elif defined(__apple_build_version__)
+# define P99_COMPILER 1U
+# define P99_COMPILER_VERSION "apple "
+# undef P00_COMPILER_PRAGMA_APPLE
+# define P00_COMPILER_PRAGMA_APPLE(...) _Pragma(__VA_ARGS__)
+#elif defined(__clang__)
+# define P99_COMPILER 8U
+# define P99_COMPILER_VERSION "clang "
+# undef P00_COMPILER_PRAGMA_CLANG
+# define P00_COMPILER_PRAGMA_CLANG(...) _Pragma(__VA_ARGS__)
 #elif defined(_MSC_VER)
 # define P99_COMPILER 32768U
 # define P99_COMPILER_VERSION "microsoft "
@@ -10147,16 +9220,6 @@ automatically generated, do not change manually.
 # define P99_COMPILER_VERSION "watcom "
 # undef P00_COMPILER_PRAGMA_WATCOM
 # define P00_COMPILER_PRAGMA_WATCOM(...) _Pragma(__VA_ARGS__)
-#elif defined(__apple_build_version__)
-# define P99_COMPILER 1U
-# define P99_COMPILER_VERSION "apple "
-# undef P00_COMPILER_PRAGMA_APPLE
-# define P00_COMPILER_PRAGMA_APPLE(...) _Pragma(__VA_ARGS__)
-#elif defined(__clang__)
-# define P99_COMPILER 8U
-# define P99_COMPILER_VERSION "clang "
-# undef P00_COMPILER_PRAGMA_CLANG
-# define P00_COMPILER_PRAGMA_CLANG(...) _Pragma(__VA_ARGS__)
 #elif defined(__GNUC__)
 # define P99_COMPILER 256U
 # define P99_COMPILER_VERSION "gnu "

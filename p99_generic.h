@@ -35,7 +35,7 @@
 # define P00_GENERIC_EXP(EXP, PAIR, I) P00_GENERIC_EXPRESSION(P00_GENERIC_TYPE, P00_GENERIC_EXP_, EXP, PAIR, I)
 # define P00_GENERIC_LIT(EXP, PAIR, I) P00_GENERIC_EXPRESSION(P00_GENERIC_TYPE, P00_GENERIC_LIT_, EXP, PAIR, I)
 
-# if p99_has_extension(c_generic_selections)
+# if p99_has_extension(c_generic_selections) || defined __clang__
 
 #  define P00_GENERIC_EXPRESSION(TOP, EOP, EXP, PAIR, I)         \
 TOP PAIR: EOP PAIR
@@ -103,7 +103,7 @@ P00_GENERIC_                                                   \
  P00_ROBUST(DEF),                                              \
  __VA_ARGS__)
 
-# define P00_GENERIC(N, ...) P99_IF_LT(N, 3)()(P00_GENERIC0(__VA_ARGS__))
+# define P00_GENERIC(N, ...) P99_IF_LT(N, 3)()(P00_GENERIC0(__VA_ARGS__)/* clang-format off */)
 
 P00_DOCUMENT_PERMITTED_ARGUMENT(P99_GENERIC, 0)
 P00_DOCUMENT_PERMITTED_ARGUMENT(P99_GENERIC, 2)
@@ -209,7 +209,7 @@ P99_GENERIC((A)+0,                                             \
   P00_SVALUE_QUAL(X, const volatile)
 
 P00_DOCUMENT_PERMITTED_ARGUMENT(P99_SVALUE, 0)
-# define P99_SVALUE(X)                                             \
+# define P99_SVALUE(X)                                            \
 P99_GENERIC((X),                                                  \
             P00_SVALUE(X),                                        \
             (void*, (X)),                                         \
@@ -393,13 +393,13 @@ P99_BUILTIN_TYPE(EXT) P99_PASTE3(p00_gen_, BASE, EXT)                 \
 }
 
 # define P00_DECLARE_INLINE_EXPRESSION6(EXT, BASE, EXP, A, B, C, D, E, F) \
-p99_inline                                                               \
-P99_BUILTIN_TYPE(EXT) P99_PASTE3(p00_gen_, BASE, EXT)                    \
-(P99_BUILTIN_TYPE(EXT) A, P99_BUILTIN_TYPE(EXT) B,                       \
- P99_BUILTIN_TYPE(EXT) C, P99_BUILTIN_TYPE(EXT) D,                       \
- P99_BUILTIN_TYPE(EXT) E, P99_BUILTIN_TYPE(EXT) F)                       \
-{                                                                        \
-  return (EXP);                                                          \
+p99_inline                                                                \
+P99_BUILTIN_TYPE(EXT) P99_PASTE3(p00_gen_, BASE, EXT)                     \
+(P99_BUILTIN_TYPE(EXT) A, P99_BUILTIN_TYPE(EXT) B,                        \
+ P99_BUILTIN_TYPE(EXT) C, P99_BUILTIN_TYPE(EXT) D,                        \
+ P99_BUILTIN_TYPE(EXT) E, P99_BUILTIN_TYPE(EXT) F)                        \
+{                                                                         \
+  return (EXP);                                                           \
 }
 
 # ifdef P99_WANT_GENERIC_INLINES

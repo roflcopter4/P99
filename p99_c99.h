@@ -75,11 +75,16 @@
 #endif
 
 /* Additions by C11 */
-#if p99_has_feature(stdatomic_h)
+#if p99_has_feature(stdatomic_h) && !defined _MSC_VER 
 # include <stdatomic.h>
 #endif
-#if p99_has_feature(threads_h)
+#if p99_has_feature(threads_h) && __has_include(<threads.h>)
 # include <threads.h>
+#elif __has_include(<tinycthread.h>)
+# include <tinycthread.h>
+# ifdef _MSC_VER
+#  pragma comment(lib, "tinycthread.lib")
+# endif
 #endif
 #ifndef __STDC_NO_COMPLEX__
 /* The CMPLX macros expand to an expression of the specified complex

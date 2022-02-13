@@ -17,7 +17,7 @@ if 0;               #### for this magic, see findSvnAuthors ####
 # particular purpose.
 #
 
-my $maxnumber = 159;
+my $maxnumber = 127;
 
 my @qualpar_C99
     = sort qw(const restrict volatile);
@@ -431,6 +431,9 @@ my @compilers = (
     "kai" => "__KCC",
     "lcc" => "__LCC__",
     "metrowerks" => "__MWERKS__",
+    "apple" => "__apple_build_version__",
+## apple must come before clang, because it is badly faking it
+    "clang" => "__clang__",
     "microsoft" => "_MSC_VER",
     "open64" => "__OPEN64__",
     "pcc" => "__PCC__",
@@ -439,9 +442,7 @@ my @compilers = (
     "sun" => "__SUNPRO_C",
     "tinyc" => "__TINYC__",
     "watcom" => "__WATCOMC__",
-    "apple" => "__apple_build_version__",
-## apple must come before clang, because it is badly faking it
-    "clang" => "__clang__",
+
 ## put gcc last, since clang in turn pretends to be gcc
     "gnu" => "__GNUC__",
     );

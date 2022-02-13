@@ -30,10 +30,10 @@ struct p99_futex_c11 {
    **/
   unsigned p99_awaking;
   /** @brief A mutex that locks the access to the data structure */
-  mtx_t p99_mut;
+  pthread_mutex_t p99_mut;
   /** @brief A conditional variable to wait and signal changes to the value.
    **/
-  cnd_t p99_cnd;
+  pthread_cond_t p99_cnd;
 };
 
 #ifndef P00_DOXYGEN
@@ -46,8 +46,8 @@ p99_inline
 p99_futex* p99_futex_init(p99_futex* p00_fut, unsigned p00_ini) {
   if (p00_fut) {
     *p00_fut = (p99_futex)P99_FUTEX_INITIALIZER(p00_ini);
-    (void)mtx_init(&p00_fut->p99_mut, mtx_recursive);
-    (void)cnd_init(&p00_fut->p99_cnd);
+    (void)pthread_mutex_init(&p00_fut->p99_mut, NULL);
+    (void)pthread_cond_init(&p00_fut->p99_cnd, NULL);
   }
   return p00_fut;
 }
@@ -56,8 +56,8 @@ p99_inline
 void p99_futex_destroy(p99_futex* p00_fut) {
   if (p00_fut) {
     p00_fut->p99_cnt = UINT_MAX;
-    mtx_destroy(&p00_fut->p99_mut);
-    cnd_destroy(&p00_fut->p99_cnd);
+    pthread_mutex_destroy(&p00_fut->p99_mut);
+    pthread_cond_destroy(&p00_fut->p99_cnd);
   }
 }
 
@@ -66,7 +66,7 @@ unsigned
 p99_futex_load(p99_futex volatile *p00_fut)
 {
         unsigned p00_ret = 0;
-        P99_MUTUAL_EXCLUDE(*(mtx_t *)&p00_fut->p99_mut) {
+        P99_MUTUAL_EXCLUDE(*(pthread_mutex_t *)&p00_fut->p99_mut) {
                 p00_ret = p00_fut->p99_cnt;
         }
         return p00_ret;
@@ -83,9 +83,9 @@ unsigned p00_futex_wakeup(p99_futex volatile* p00_fut,
     if (p00_wmax > p00_fut->p99_waiting) 
         p00_wmax = p00_fut->p99_waiting;
     if (p00_wmax > 1u)
-        (void)cnd_broadcast((cnd_t*)&p00_fut->p99_cnd);
+        (void)pthread_cond_broadcast((pthread_cond_t*)&p00_fut->p99_cnd);
     else
-        (void)cnd_signal((cnd_t*)&p00_fut->p99_cnd);
+        (void)pthread_cond_signal((pthread_cond_t*)&p00_fut->p99_cnd);
     p00_fut->p99_waiting -= p00_wmax;
     p00_fut->p99_awaking += p00_wmax;
     return p00_wmin;
@@ -107,7 +107,7 @@ void p99_futex_wakeup(p99_futex volatile* p00_fut,
   if (p00_wmax < p00_wmin) p00_wmax = p00_wmin;
   if (p00_wmax) do {
       unsigned p00_wok = 0;
-      P99_MUTUAL_EXCLUDE(*(mtx_t*)&p00_fut->p99_mut) {
+      P99_MUTUAL_EXCLUDE(*(pthread_mutex_t*)&p00_fut->p99_mut) {
         p00_wok = p00_futex_wakeup(p00_fut, p00_wmin, p00_wmax);
       }
       p00_wmax -= p00_wok;
@@ -119,16 +119,16 @@ p99_inline
 void p00_futex_wait(p99_futex volatile* p00_fut) {
   ++p00_fut->p99_waiting;
   /* This loop captures spurious wakeups as they may happen for
-     cnd_wait. */
+     pthread_cond_wait. */
   do {
-    (void)cnd_wait((cnd_t*)&p00_fut->p99_cnd, (mtx_t*)&p00_fut->p99_mut);
+    (void)pthread_cond_wait((pthread_cond_t*)&p00_fut->p99_cnd, (pthread_mutex_t*)&p00_fut->p99_mut);
   } while (!p00_fut->p99_awaking);
   --p00_fut->p99_awaking;
 }
 
 P99_WEAK(p99_futex_wait)
 void p99_futex_wait(p99_futex volatile* p00_fut) {
-  P99_MUTUAL_EXCLUDE(*(mtx_t*)&p00_fut->p99_mut)
+  P99_MUTUAL_EXCLUDE(*(pthread_mutex_t*)&p00_fut->p99_mut)
   p00_futex_wait(p00_fut);
 }
 
@@ -138,7 +138,7 @@ unsigned p99_futex_add(p99_futex volatile* p00_fut, unsigned p00_hmuch,
                        unsigned p00_wmin, unsigned p00_wmax) {
   unsigned p00_ret = 0;
   if (p00_wmax < p00_wmin) p00_wmax = p00_wmin;
-  P99_MUTUAL_EXCLUDE(*(mtx_t*)&p00_fut->p99_mut) {
+  P99_MUTUAL_EXCLUDE(*(pthread_mutex_t*)&p00_fut->p99_mut) {
     p00_ret = p00_fut->p99_cnt;
     register unsigned const p00_des = p00_ret + p00_hmuch;
     p00_fut->p99_cnt = p00_des;
@@ -160,7 +160,7 @@ unsigned p99_futex_exchange(p99_futex volatile* p00_fut, unsigned p00_desired,
                             unsigned p00_wmin, unsigned p00_wmax) {
   volatile unsigned p00_act = 0;
   if (p00_wmax < p00_wmin) p00_wmax = p00_wmin;
-  P99_MUTUAL_EXCLUDE(*(mtx_t*)&p00_fut->p99_mut) {
+  P99_MUTUAL_EXCLUDE(*(pthread_mutex_t*)&p00_fut->p99_mut) {
     p00_act = p00_fut->p99_cnt;
     p00_fut->p99_cnt = p00_desired;
     if (p00_clen && P99_IN_RANGE(p00_desired, p00_cstart, p00_clen)) {
@@ -184,7 +184,7 @@ P00_DOCUMENT_IDENTIFIER_ARGUMENT(P99_FUTEX_COMPARE_EXCHANGE, 1)
                 p99_futex volatile *const p00Mfut = (FUTEX);                           \
                 unsigned volatile p00Mwmin        = 0;                                 \
                 unsigned volatile p00Mwmax        = 0;                                 \
-                P99_MUTUAL_EXCLUDE(*(mtx_t *)&p00Mfut->p99_mut)                        \
+                P99_MUTUAL_EXCLUDE(*(pthread_mutex_t *)&p00Mfut->p99_mut)                        \
                 {                                                                      \
                         for (;;) {                                                     \
                                 register unsigned const ACT = p00Mfut->p99_cnt;        \

@@ -533,7 +533,7 @@ struct p00_inhibitor {
         int p00_a;
 };
 
-p99_inline noreturn void
+p99_inline _Noreturn void
 p00_longjmp(p00_jmp_buf0 *p00_buf, int p00_val)
 {
         p00_buf->p00_code = p00_val;

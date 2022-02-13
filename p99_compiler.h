@@ -242,12 +242,12 @@ signed p00_trailing_comma_in_initializer__(void) {
    implementation, but it could also be that your implementation just
    interprets the standard different. In any case, we can't
    proceed. */
-#      error "The preprocessor is not P99 compatible"
+#      warning "The preprocessor is not P99 compatible"
 #    endif
 #  endif
 #endif
 
-#if !(P99_COMPILER & (P99_COMPILER_CLANG | P99_COMPILER_APPLE))
+#if !defined(__clang__) && !(P99_COMPILER & (P99_COMPILER_CLANG | P99_COMPILER_APPLE | P99_COMPILER_GNU)) && !defined _MSC_VER
 #  ifndef __has_builtin
 #    define __has_builtin(X) p00_has_builtin_ ## X  // Compatibility with non-clang compilers.
 #  endif
@@ -412,10 +412,10 @@ signed p00_trailing_comma_in_initializer__(void) {
 //#  define p00_has_feature_stdatomic_h 1
 #  endif
 
-#  elif P99_COMPILER & P99_COMPILER_PCC
+#elif P99_COMPILER & P99_COMPILER_PCC
 /* # error "The P99 preprocessor files can't work with the pcc compiler, yet" */
 
-#  elif P99_COMPILER & P99_COMPILER_APPLE
+#elif P99_COMPILER & P99_COMPILER_APPLE
 /* For a start the properties for the apple clang fake are just copied
    from clang. Adjust once we know more details. */
 #  if p99_has_attribute(always_inline)
@@ -427,12 +427,16 @@ signed p00_trailing_comma_in_initializer__(void) {
 /* clang has no stdatomic.h, yet */
 #  define __STDC_NO_ATOMICS__ 1
 
-#  elif P99_COMPILER & P99_COMPILER_CLANG
-#  if p99_has_attribute(always_inline)
+#elif P99_COMPILER & P99_COMPILER_CLANG
+//#  if p99_has_attribute(always_inline)
+# ifdef _WIN32
+#    define p99_inline __attribute__((__always_inline__, __weak__)) inline
+# else
 #    define p99_inline __attribute__((__always_inline__)) inline
+# endif
 #    define p99_static_inline static __attribute__((__always_inline__)) inline
      //#  define p99_inline __attribute__((__always_inline__,__gnu_inline__,__weak__)) __inline__
-#  endif
+//#  endif
 /* clang can't nail a variable to a register, yet */
 #  define P99_FIXED_REGISTER(REG)
 /* clang has no stdatomic.h, yet. It can't use the one from gcc, since
@@ -447,7 +451,7 @@ signed p00_trailing_comma_in_initializer__(void) {
 #    define p00_has_feature_stdalign_h 1
 #  endif
 
-#  elif P99_COMPILER & (P99_COMPILER_GNU | P99_COMPILER_OPEN64)
+#elif P99_COMPILER & (P99_COMPILER_GNU | P99_COMPILER_OPEN64)
 #  define p99_static_inline static __attribute__((__always_inline__)) inline
 #  define P99_ATLEAST
 /* gcc prior to version 4.2.1 has the inline keyword but with slightly
@@ -485,6 +489,13 @@ signed p00_trailing_comma_in_initializer__(void) {
 
 #if !defined(static_inline) || defined(P00_DOXYGEN)
 #  define static_inline static inline
+#endif
+#ifndef p99_static_inline
+# ifdef __clang__
+#  define p99_static_inline static __attribute__((__always_inline__)) inline
+# else
+#  define p99_static_inline static inline
+# endif
 #endif
 #if !defined(p99_inline) || defined(P00_DOXYGEN)
 /**
@@ -677,7 +688,7 @@ P00_TENTATIVE_DEF(NAME) T NAME
  ** @{
  **/
 
-#ifndef static_assert
+#if !defined static_assert && !defined __cplusplus
 /**
  ** @brief Evaluate expression @a EXPR at compile time and ensure that
  ** it is fulfilled.
@@ -694,7 +705,8 @@ P00_TENTATIVE_DEF(NAME) T NAME
  ** the macro ::static_assert must be provided by assert.h, which we
  ** include.
  **/
-#  if p99_has_feature(c_static_assert) || defined __cplusplus
+#  if defined _MSC_VER
+#  elif p99_has_feature(c_static_assert) || __has_feature(c_static_assert)
 #    define static_assert _Static_assert
 #  else
 #    define static_assert(EXPR, DIAGSTR)                            \
@@ -730,7 +742,7 @@ typedef __int128_t p99x_int128;
  ** macro is used. For the later, @a T is restricted to simple type names.
  ** Arrays or function pointers can only be used through @c typedef.
  **/
-#if !defined __alignof_is_defined && !defined alignof
+#if !defined __alignof_is_defined && !defined alignof && !defined __cplusplus
 #  define alignof _Alignof
 #  if !p99_has_feature(c_alignof) && !(P99_COMPILER & P99_COMPILER_MICROSOFT)
 #    if p99_has_feature(gnu_alignof)
@@ -750,7 +762,7 @@ typedef __int128_t p99x_int128;
  ** a gcc extension is used. Other than required by C11, this
  ** extension only accepts numerical values for @a X.
  **/
-#if !defined __alignas_is_defined && !defined alignas
+#if !defined __alignas_is_defined && !defined alignas && !defined __cplusplus
 #  define alignas _Alignas
 #  if !p99_has_feature(c_alignas) && !(P99_COMPILER & P99_COMPILER_MICROSOFT)
 #    if p99_has_attribute(aligned)
@@ -775,7 +787,7 @@ typedef __int128_t p99x_int128;
  ** for any other purpose than to ensure alignment. The field names
  ** are obfuscated to make such abuses really difficult.
  **/
-#if !p99_has_feature(c_max_align_t) && !p99_has_extension(c_max_align_t)
+#if !p99_has_feature(c_max_align_t) && !p99_has_extension(c_max_align_t) && !defined __clang__
 typedef union max_align_t max_align_t;
 #  ifndef P00_DOXYGEN
 union max_align_t {
@@ -849,8 +861,8 @@ __attribute__((__aligned__))
 noreturn void p00_f(void);
 static_assert(1);
 
-#  elif !defined(noreturn)
-#  define noreturn _Noreturn
+//#elif !defined(noreturn) && !defined _MSC_VER && !defined __cplusplus && 0
+//#  define noreturn _Noreturn
 #endif
 
 #ifdef P00_DOXYGEN
@@ -861,8 +873,10 @@ static_assert(1);
 #    endif
 #    elif p99_has_feature(pragma_noreturn)
 #    define _Noreturn _Pragma(NORETURN)
+#  elif defined _MSC_VER
+#    define _Noreturn __declspec(noreturn)
 #  else
-#    define _Noreturn /* noreturn feature is not implemented */
+//#    define _Noreturn /* noreturn feature is not implemented */
 #  endif
 #endif
 

@@ -42,7 +42,7 @@
  **/
 
 
-#if p99_has_feature(stdatomic_h) || __has_include("stdatomic.h")
+#if /*__has_feature(stdatomic_h) ||*/ __has_include(<stdatomic.h>) && (!defined _MSC_VER || defined __clang__)
 # include <stdatomic.h>
 # include "p99_atomic_flag.h"
 
@@ -57,8 +57,9 @@ P99_IF_EQ_1(P99_NARG(__VA_ARGS__))                                              
 P99_DECLARE_ATOMIC(float);
 P99_DECLARE_ATOMIC(double);
 
-#else /* Doesn't have C11 atomic expressions. */
-
+#else
+/* Doesn't have C11 atomic expressions. */
+#error foo
 /* #ifndef __NWCC__
  * #  error "This should never be necessary."
  * #endif */

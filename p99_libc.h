@@ -203,11 +203,11 @@ typedef size_t rsize_t;
 
 
 /* implement emulation of some C11 features */
-#if __has_include("stdalign.h")
+#if 0 && __has_include("stdalign.h")
 # include <stdalign.h>
 #endif
 //#if p99_has_feature(stdnoreturn_h)
-#if __has_include("stdnoreturn.h")
+#if 0 && __has_include("stdnoreturn.h")
 # include <stdnoreturn.h>
 #endif
 /* end C11 emulation support */

@@ -574,7 +574,8 @@ P00_DOCUMENT_IDENTIFIER_ARGUMENT(P99_FUTEX_COMPARE_EXCHANGE, 1)
 #if (defined(__linux__) && !defined(NO_FUTEX)) || defined(DOXYGEN)
 #include "p99_futex_linux.h"
 #else
-#include "p99_futex_c11.h"
+// #include "p99_futex_c11.h"
+#include "p99_futex_posix.h"
 #endif
 
 

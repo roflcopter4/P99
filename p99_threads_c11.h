@@ -391,7 +391,7 @@ p44_show_backtrace(void)
 
 /**
  ** @brief Protect the following block or statement with @c
- ** pthread_mutex_t @a MUT.
+ ** mtx_t @a MUT.
  **
  ** @see P99_CRITICAL for a tool that uses a spinlock that is
  ** allocated behind the scene.
@@ -411,10 +411,10 @@ P00_DOCUMENT_PERMITTED_ARGUMENT(P99_MUTUAL_EXCLUDE, 0)
 #   define P00_MUTUAL_EXCLUDE(MUT, UNIQ)                                          \
 P00_BLK_START                                                                    \
 P00_BLK_DECL(int, p00_errNo, 0)                                                  \
-P99_GUARDED_BLOCK(pthread_mutex_t*,                                                        \
+P99_GUARDED_BLOCK(mtx_t*,                                                        \
                   UNIQ,                                                          \
                   &(MUT),                                                        \
-                  (void)(P99_UNLIKELY(p00_errNo = pthread_mutex_lock(UNIQ)) && p00_errNo != EINTR  \
+                  (void)(P99_UNLIKELY(p00_errNo = mtx_lock(UNIQ)) && p00_errNo != EINTR  \
                          && (fprintf(stderr,                                     \
                                      __FILE__ ":"                                \
                                      P99_STRINGIFY(__LINE__) ": lock error for " \
@@ -425,12 +425,12 @@ P99_GUARDED_BLOCK(pthread_mutex_t*,                                             
                          && (P99_UNWIND(-1), 1)                                  \
                          ),                                                      \
                   (void)(UNIQ                                                    \
-                         && pthread_mutex_unlock(UNIQ)))
+                         && mtx_unlock(UNIQ)))
 #  else
 #   define P00_MUTUAL_EXCLUDE(MUT, UNIQ)                        \
 P00_BLK_START                                                  \
-P00_BLK_DECL(pthread_mutex_t*, UNIQ, &(MUT))                             \
-P00_BLK_BEFAFT(pthread_mutex_lock(UNIQ), pthread_mutex_unlock(UNIQ))
+P00_BLK_DECL(mtx_t*, UNIQ, &(MUT))                             \
+P00_BLK_BEFAFT(mtx_lock(UNIQ), mtx_unlock(UNIQ))
 #  endif
 
 p99_inline thrd_t* thrd_t_init(thrd_t *p00_id) {
@@ -467,10 +467,10 @@ char const* thrd2str(char *p00_buf, thrd_t p00_id) {
 #  define P00_MUTUAL_EXCLUDE(MUT, UNIQ)                                          \
 P00_BLK_START                                                                    \
 P00_BLK_DECL(int, p00_errNo, 0)                                                  \
-P99_GUARDED_BLOCK(pthread_mutex_t*,                                                        \
+P99_GUARDED_BLOCK(mtx_t*,                                                        \
                   UNIQ,                                                          \
                   &(MUT),                                                        \
-                  (void)(P99_UNLIKELY(p00_errNo = pthread_mutex_lock(UNIQ)) && p00_errNo != EINTR  \
+                  (void)(P99_UNLIKELY(p00_errNo = mtx_lock(UNIQ)) && p00_errNo != EINTR  \
                          && (fprintf(stderr,                                     \
                                      __FILE__ ":"                                \
                                      P99_STRINGIFY(__LINE__) ": lock error for " \
@@ -481,7 +481,7 @@ P99_GUARDED_BLOCK(pthread_mutex_t*,                                             
                          && (P99_UNWIND(-1), 1)                                  \
                          ),                                                      \
                   (void)(UNIQ                                                    \
-                         && pthread_mutex_unlock(UNIQ)))
+                         && mtx_unlock(UNIQ)))
 # endif
 
 #endif /* p99_threads.h */
