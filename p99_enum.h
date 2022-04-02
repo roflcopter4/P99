@@ -134,7 +134,7 @@ enum T { __VA_ARGS__ ,                                                        \
                /*! upper bound of the @ref T constants */                     \
                P99_PASTE2(T, _amount),                                        \
                /*! the largest @ref T constant */                             \
-               P99_PASTE2(T, _max) = ((size_t)(P99_PASTE2(T, _amount)) - 1u), \
+               P99_PASTE2(T, _max) = ((size_t)(P99_PASTE2(T, _amount)) - 1U), \
                /*! the smallest @ref T constant */                            \
                P99_PASTE2(T, _min) = 0                                        \
 };                                                                            \
@@ -156,7 +156,7 @@ typedef enum T                                                                \
                /*! upper bound of the @ref T constants */                     \
                P99_PASTE2(T, _amount),                                        \
                /*! the largest @ref T constant */                             \
-               P99_PASTE2(T, _max) = ((size_t)(P99_PASTE2(T, _amount)) - 1u), \
+               P99_PASTE2(T, _max) = ((size_t)(P99_PASTE2(T, _amount)) - 1U), \
                /*! the smallest @ref T constant */                            \
                P99_PASTE2(T, _min) = 0                                        \
 } T;                                                                          \
@@ -168,7 +168,7 @@ typedef enum T { __VA_ARGS__ ,                                                \
                /*! upper bound of the @ref T constants */                     \
                P99_PASTE2(T, _amount),                                        \
                /*! the largest @ref T constant */                             \
-               P99_PASTE2(T, _max) = ((size_t)(P99_PASTE2(T, _amount)) - 1u), \
+               P99_PASTE2(T, _max) = ((size_t)(P99_PASTE2(T, _amount)) - 1U), \
                /*! the smallest @ref T constant */                            \
                P99_PASTE2(T, _min) = 0                                        \
 } T;                                                                          \
@@ -289,9 +289,9 @@ P99_IF_LT(P99_NARG(__VA_ARGS__), 3)                            \
  ** @see P99_ENDIANNESS
  **/
 typedef enum p99_endianness {
-  p99_big_endian = 0x01020304u,
-  p99_little_endian = 0x04030201u,
-  p99_pdp_endian = 0x02010403u
+  p99_big_endian    = 0x01020304U,
+  p99_little_endian = 0x04030201U,
+  p99_pdp_endian    = 0x02010403U,
 } p99_endianness;
 
 P99_DECLARE_ENUM_GETNAME(

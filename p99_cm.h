@@ -62,12 +62,12 @@ struct p99_cm {
 
 p99_inline
 bool p00_cm_islocked(unsigned p00_act) {
-  return p00_act & 1u;
+  return p00_act & 1U;
 }
 
 p99_inline
 bool p00_cm_isntlocked(unsigned p00_act) {
-  return ~p00_act & 1u;
+  return ~p00_act & 1U;
 }
 
 /**
@@ -78,8 +78,8 @@ p99_inline
 p99_cm* p99_cm_init(p99_cm* p00_cm) {
   if (p00_cm) {
     *p00_cm = (p99_cm){ .waiters = 0, };
-    p99_futex_init(&p00_cm->p00_c, 0u);
-    p99_futex_init(&p00_cm->p00_m, 0u);
+    p99_futex_init(&p00_cm->p00_c, 0U);
+    p99_futex_init(&p00_cm->p00_m, 0U);
   }
   return p00_cm;
 }
@@ -113,14 +113,14 @@ void p00_cm_signal(p99_cm volatile* p00_cm) {
        lock. Nevertheless there is a small window, where we may have
        doubled a waiter thread. Therefore we force a busy wait if
        necessary, until we have woken up someone. */
-    p99_futex_wakeup(&p00_cm->p00_c, 1u, 1u);
+    p99_futex_wakeup(&p00_cm->p00_c, 1U, 1U);
     --p00_cm->waiters;
   }
 }
 
 p99_inline
 void p00_cm_unlock(p99_cm volatile* p00_cm) {
-  p99_futex_exchange(&p00_cm->p00_m, p00_cm_unlocked, p00_cm_unlocked, 1u, 0u, 1u);
+  p99_futex_exchange(&p00_cm->p00_m, p00_cm_unlocked, p00_cm_unlocked, 1U, 0U, 1U);
 }
 
 /**
@@ -157,7 +157,7 @@ void p99_cm_lock(p99_cm volatile* p00_cm) {
                              p00_act == p00_cm_unlocked,
                              p00_cm_locked,
                              // never wake up anyone
-                             0u, 0u);
+                             0U, 0U);
 }
 
 /**
@@ -169,7 +169,7 @@ void p99_cm_lock(p99_cm volatile* p00_cm) {
  **/
 p99_inline
 bool p99_cm_trylock(p99_cm volatile* p00_cm) {
-  return p99_futex_exchange(&p00_cm->p00_m, p00_cm_locked, 0u, 0u, 0u, 0u);
+  return p99_futex_exchange(&p00_cm->p00_m, p00_cm_locked, 0U, 0U, 0U, 0U);
 }
 
 /**

@@ -11,9 +11,10 @@
 /* without even the implied warranty of merchantability or fitness for a      */
 /* particular purpose.                                                        */
 /*                                                                            */
+
+#pragma once
 #ifndef P99_ATOMIC_H
 #define P99_ATOMIC_H 1
-#pragma once
 
 #include "p99_enum.h"
 #include "p99_generic.h"
@@ -44,6 +45,7 @@
 
 #if /*__has_feature(stdatomic_h) ||*/ __has_include(<stdatomic.h>) && (!defined _MSC_VER || defined __clang__)
 # include <stdatomic.h>
+
 # include "p99_atomic_flag.h"
 
 # define P00_DECLARE_ATOMIC2(T, ...) typedef _Atomic(T) __VA_ARGS__

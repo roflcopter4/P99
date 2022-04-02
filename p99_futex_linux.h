@@ -11,6 +11,7 @@
 /* particular purpose.                                                        */
 /*                                                                            */
 
+#pragma once
 #include "p00_pragmas.h"
 
 #if !defined(P99_FUTEX_LINUX_H) && !defined(P00_DOXYGEN)
@@ -18,7 +19,7 @@
 
 #include "p99_atomic.h"
 #include "p99_threads.h"
-#if !defined(ATOMIC_VAR_INIT) && defined(__GNUC__)
+#if !defined P99_ATOMIC_H  && defined(__GNUC__)
 #  include "p99_atomic.h"
 #endif
 #include "p99_posix_default.h"
@@ -242,7 +243,7 @@ p00_futex_broadcast(int *uaddr)
 }
 
 #ifndef P99_FUTEX_INITIALIZER
-#  define P99_FUTEX_INITIALIZER(INITIAL) ATOMIC_VAR_INIT(INITIAL)
+#  define P99_FUTEX_INITIALIZER(INITIAL) (INITIAL)
 #endif
 
 p99_inline p99_futex *

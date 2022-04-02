@@ -113,7 +113,7 @@ void p99_notifier_block(p99_notifier volatile* p00_n, unsigned p00_v) {
                              /* never update */
                              p00_act,
                              /* never wakeup others */
-                             0u, 0u);
+                             0U, 0U);
 }
 
 #ifndef DOXYGEN
@@ -154,9 +154,9 @@ void p99_notifier_set(p99_notifier volatile* p00_n, unsigned p00_v) {
                                // the new value
                                p00_v,
                                // no enforced wake up
-                               0u,
+                               0U,
                                // wake up all waiters only if there was a change
-                               ((p00_l != p00_v) ? P99_FUTEX_MAX_WAITERS : 0u));
+                               ((p00_l != p00_v) ? P99_FUTEX_MAX_WAITERS : 0U));
   else
     P99_FUTEX_COMPARE_EXCHANGE(p00_n,
                                // name of the local variable
@@ -166,7 +166,7 @@ void p99_notifier_set(p99_notifier volatile* p00_n, unsigned p00_v) {
                                // the new value
                                p00_v,
                                // never wake up anybody
-                               0u, 0u);
+                               0U, 0U);
 }
 
 #ifndef DOXYGEN
@@ -184,7 +184,7 @@ void p99_notifier_set(p99_notifier volatile* p00_n, unsigned p00_v) {
  **/
 p99_inline
 void p99_notifier_unset(p99_notifier volatile* p00_n) {
-  p99_futex_exchange(p00_n, 0u, 1u, 0u, 0u, 0u);
+  p99_futex_exchange(p00_n, 0U, 1U, 0U, 0U, 0U);
 }
 
 /**

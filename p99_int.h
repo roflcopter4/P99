@@ -1455,8 +1455,8 @@ union p00_endian_16 {
 #endif /* P99_WANT_INT_INLINES */
 
 
-#define P00_HTON0(N, X, I) [I] = (0xFF & ((X)>>((N - (I + 1))*CHAR_BIT)))
-#define P00_HTON(N, X) P99_FOR(N, N, P00_SEQ, P00_HTON0, P99_DUPL(N, X))
+#define P00_HTON0(N, X, I) [I] = (0xFF & ((X) >> (((N) - ((I) + 1)) * CHAR_BIT)))
+#define P00_HTON(N, X)     P99_FOR(N, N, P00_SEQ, P00_HTON0, P99_DUPL(N, X))
 #define P99_HTON_INITIALIZER(N, X) { .p00_c = { P00_HTON(N, X) } }
 
 /**
@@ -1487,7 +1487,7 @@ P00_DOCUMENT_PERMITTED_ARGUMENT(P99_HTONL, 1)
 #define P99_HTONL(X) P99_HTON(4, X)
 
 
-#define P00_NTOH0(N, X, I) (((P99_PASTE2(p00_uint_byte_, N))((X).p00_c[I]))<<((N - (I + 1))*CHAR_BIT))
+#define P00_NTOH0(N, X, I) (((P99_PASTE2(p00_uint_byte_, N))((X).p00_c[I]))<<(((N) - ((I) + 1))*CHAR_BIT))
 #define P00_NTOH(N, X, XX) P99_FOR(N, N, P00_BOR, P00_NTOH0, P99_DUPL(N, XX))
 #define P99_NTOH_INITIALIZER(N, X) { .p00_i = (X) }
 

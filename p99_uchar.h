@@ -26,7 +26,7 @@ typedef uint_least16_t char16_t;
 typedef uint_least32_t char32_t;
 
 _Static_assert(sizeof(L"äß") == sizeof(U"äß"),
-               "we need to wchar_t to represend unicode for this to work");
+               "we need to wchar_t to represent unicode for this to work");
 
 union p00_mbstate {
         unsigned char p00_bytes[sizeof(mbstate_t)];
